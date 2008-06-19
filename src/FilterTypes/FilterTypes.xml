@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xi="http://www.w3.org/2001/XInclude"
+	xsi:schemaLocation="http://docbook.org/ns/docbook ../../docbook-5.0/xsd/docbook.xsd " xml:id="filtertypes">
+
+	<title>Filter Types</title>
+
+	<para>
+		This section explains all default filter types which have been defined in Compose*. Not all filter types are
+		available in all platforms.
+	</para>
+
+	<para>
+		Each filter type contains a behavior description. Below is exaplained what each behavior element means.
+
+		<variablelist>
+			<varlistentry>
+				<term>Filter activity</term>
+				<listitem>
+					<para>
+						Defines where in the message flow the filter has an activity. There are four options:
+						<simplelist type="inline">
+							<member>Accept-call</member>
+							<member>Reject-call</member>
+							<member>Accept-return</member>
+							<member>Reject-return</member>
+						</simplelist>
+						. When the matching expression matches the accept-* flow is taken. Otherwise the reject-* flow
+						is used. The message is in the *-call flow when it has not be placed in the return flow. See the
+						message flow behavior.
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term>Message flow</term>
+				<listitem>
+					<para>
+						This defines how this filter (when executed) changes the message flow. There are three possible
+						values. Continue means that the message will continue to the next filter element. Return means
+						that the message will enter the return flow. And exit means that the message will not be
+						processed by any filters.
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term>Message substitution</term>
+				<listitem>
+					<para>
+						Defines if this filter will substitute the current message with the substituted message. The
+						substituted message is modified in the assignment part.
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term>Resource operations</term>
+				<listitem>
+					<para>This defines what operations the filter type will perform and on what resources.</para>
+				</listitem>
+			</varlistentry>
+		</variablelist>
+	</para>
+
+	<xi:include href="DispatchFilter.xml" />
+	<xi:include href="ErrorFilter.xml" />
+	<xi:include href="BeforeFilter.xml" />
+	<xi:include href="AfterFilter.xml" />
+	<xi:include href="MetaFilter.xml" />
+
+</chapter>

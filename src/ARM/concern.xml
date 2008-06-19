@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://docbook.org/ns/docbook ../../docbook-5.0/xsd/docbook.xsd" xml:id="concern">
+	<title>Concern</title>
+	<para>
+		Concerns are the distinctive building blocks of a Compose* application, in addition to the building blocks of
+		the base language. Conceptually concerns are an extension to classes. Concerns are declared in files with a
+		<emphasis>.cps</emphasis>
+		extension.
+	</para>
+	<para>
+		A concern has three different parts: zero or more filter modules, an optional superimposition part, and an
+		optional implementation part. The filter modules are superimposed on classes by the filter module binding field
+		of the superimposition. The implementation part contains language dependent code of the concern.
+	</para>
+	<section xml:id="concern.syntax">
+		<title>Syntax</title>
+		<figure xml:id="concern.grammar">
+			<title>Concern syntax</title>
+			<programlisting language="EBNF" linenumbering="numbered"><![CDATA[Concern = 'concern' Identifier [ConcernParameters] ['in' Namespace] ConcernBlock;
+ConcernParameters = '(' Identifier ':' Type {',' Identifier ':' Type } ')';
+Type = Fqn;
+Fqn = Identifier {'.' Identifier};
+Namespace = Fqn;
+ConcernBlock = '{' {FilterModule} [SuperImposition] [Implementation] '}';
+]]></programlisting>
+		</figure>
+		<para>
+			The syntax for a concern definition is shown in
+			<xref xlink:href="#concern.grammar" />
+			. A concern name must be unique for the namespace where it is declared. It often has the same name as the
+			<emphasis>.cps</emphasis>
+			file in which it is declared, but this is not a requirement. It is not possible to place two concerns in one
+			file. The ordering of the filter modules, superimposition, and implementation is fixed.
+		</para>
+	</section>
+	<section xml:id="concern.semantics">
+		<title>Semantics</title>
+		<para>
+			The concern is the main language entity of Compose*, it consists of one or more filter modules, an optional
+			superimposition part, and an optional implementation part. How these are combined depends on how you use a
+			Compose* concern. There are two different types of usage of a concern. We will look here to the usage that
+			comes from the conceptual idea, which assumes that a class is a concern. This means that every class can be
+			written as a concern, with an implementation part and one or more filter modules. To superimpose these
+			concerns onto other classes, a concern is used with a superimposition part; this concern can be seen as a
+			sort of aspect specification.
+		</para>
+	</section>
+	<section xml:id="concern.examples">
+		<title>Examples</title>
+		<example xml:id="concern.concerntemplate">
+			<title>Abstract example of a concern</title>
+			<programlisting language="Composestar" linenumbering="numbered"><![CDATA[concern aConcern in aNamespace {
+  filtermodule A {
+    ...
+  }
+  
+  filtermodule B {
+    ...
+  }
+  
+  superimposition {
+    ...
+  }
+  
+  implementation {
+    ...
+  }
+}]]></programlisting>
+		</example>
+		<para>
+			A concern heading consists of a concern name, optional concern parameters, and an optional namespace
+			declaration. If no namespace is specified, the concern is located in the root of a project. The namespace
+			has identical semantics as namespaces in other languages (like Java and C#).
+		</para>
+		<para>
+			In the concern it is possible to define one or more filter modules, one superimposition block, and an
+			implementation part. A possible concern is demonstrated in
+			<xref xlink:href="#concern.concerntemplate" />
+			.
+		</para>
+	</section>
+</chapter>

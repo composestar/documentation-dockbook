@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://docbook.org/ns/docbook ../../docbook-5.0/xsd/docbook.xsd " xml:id="filtertypes_dispatch">
+
+	<title>Dispatch/Send</title>
+
+	<para>
+		When the message is accepted it will dispatch the message to set target and selector. After the dispatch the
+		message will enter the return flow. The dispatch and send filter are identical in their behavior, except that
+		the dispatch filter is used in the input filters where the send filter is used in the output filters.
+	</para>
+
+	<section>
+		<title>Behavior</title>
+
+		<variablelist>
+			<varlistentry>
+				<term>Filter activity</term>
+				<listitem>
+					<simpara>Accept-call</simpara>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term>Message flow</term>
+				<listitem>
+					<simpara>Return</simpara>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term>Message substitution</term>
+				<listitem>
+					<simpara>Yes</simpara>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term>Resource operations</term>
+				<listitem>
+					<simpara>...</simpara>
+				</listitem>
+			</varlistentry>
+		</variablelist>
+	</section>
+
+	<section>
+		<title>Examples</title>
+
+		<para>...</para>
+	</section>
+
+</section>

@@ -1,0 +1,542 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://docbook.org/ns/docbook ../../docbook-5.0/xsd/docbook.xsd " xml:id="canonfilters">
+	<title>Canonical Filter Specification</title>
+
+	<para>
+		The canonical filter specification allows a more fine grained definition for message matching and substitution
+		actions.
+	</para>
+
+	<section>
+		<title>Syntax</title>
+
+		<para>
+			The basic syntax for the canonical filter elements in shown in
+			<xref xlink:href="#canonfilters.syntax.template" />
+			. The complete syntax is described by the grammar defined in
+			<xref xlink:href="#canonfilters.grammar" />
+			.
+		</para>
+
+		<example xml:id="canonfilters.syntax.template">
+			<title>Canonical Filter Definition Template</title>
+			<programlistingco>
+				<areaspec>
+					<area coords="1 47" xml:id="canonfilters.syntax.template.filter" />
+					<area coords="2 22" xml:id="canonfilters.syntax.template.expr" />
+					<area coords="4 14" xml:id="canonfilters.syntax.template.assignments" />
+					<area coords="7 5" xml:id="canonfilters.syntax.template.oper" />
+					<area coords="7 28" xml:id="canonfilters.syntax.template.noexpr" />
+				</areaspec>
+				<programlisting language="composestar" xml:space="preserve"><![CDATA[FilterName : FilterType ( FilterArguments ) = 
+	( MatchingExpression )
+	{
+		Assignment;
+		Assignment; 
+	}
+	cor ( MatchingExpression )
+]]></programlisting>
+			</programlistingco>
+			<calloutlist>
+				<callout arearefs="canonfilters.syntax.template.filter">
+					<para>
+						The filter declaration for canonical filters is identical to the notation used for the classical
+						filters.
+					</para>
+				</callout>
+				<callout arearefs="canonfilters.syntax.template.expr">
+					<para>
+						The expression that needs to evaluate to true for the message to be accepted by the current
+						filter definition. The syntax for these expressions will be explained in
+						<xref xlink:href="#canonfilters.syntax.matchexpr" />
+						.
+					</para>
+				</callout>
+				<callout arearefs="canonfilters.syntax.template.assignments">
+					<para>
+						Assignments to be performed when the message matches. Assignments will be further discussed in
+						<xref xlink:href="#canonfilters.syntax.assignments" />
+						.
+					</para>
+				</callout>
+				<callout arearefs="canonfilters.syntax.template.oper">
+					<para>
+						The operators that links multiple filter elements in a filter definition. Currently there is
+						only a single operator defined, namely the conditional
+						<emphasis>or</emphasis>
+						operator:
+						<function>cor</function>
+						.
+					</para>
+				</callout>
+				<callout arearefs="canonfilters.syntax.template.noexpr">
+					<para>
+						The assignment part is optional. When not assignments are needed this block can simply be
+						omitted. An empty assignment block is also allowed.
+					</para>
+				</callout>
+			</calloutlist>
+		</example>
+
+		<productionset xml:id="canonfilters.grammar">
+			<title>Canonical Filter Grammar</title>
+
+			<production>
+				<lhs>Filter</lhs>
+				<rhs>
+					Identifier ':' FilterType '='
+					<nonterminal def="#canonfilters.grammar.CanonFilterElms">CanonFilterElms</nonterminal>
+				</rhs>
+			</production>
+
+			<production xml:id="canonfilters.grammar.CanonFilterElms">
+				<lhs>CanonFilterElms</lhs>
+				<rhs>
+					<nonterminal def="#canonfilters.grammar.CanonFilterElm">CanonFilterElm</nonterminal>
+					{
+					<nonterminal def="#canonfilters.grammar.CanonFilterElmOp">CanonFilterElmOp</nonterminal>
+					<nonterminal def="#canonfilters.grammar.CanonFilterElm">CanonFilterElm</nonterminal>
+					}
+				</rhs>
+			</production>
+
+			<production xml:id="canonfilters.grammar.CanonFilterElmOp">
+				<lhs>CanonFilterElmOp</lhs>
+				<rhs>'cor'</rhs>
+			</production>
+
+			<production xml:id="canonfilters.grammar.CanonFilterElm">
+				<lhs>CanonFilterElm</lhs>
+				<rhs>
+					'('
+					<nonterminal def="#canonfilters.grammar.MatchingExpression">MatchingExpression</nonterminal>
+					')' [ '{' {
+					<nonterminal def="#canonfilters.grammar.CanonAssignment">CanonAssignment</nonterminal>
+					} '}' ]
+				</rhs>
+			</production>
+
+			<production xml:id="canonfilters.grammar.MatchingExpression">
+				<lhs>MatchingExpression</lhs>
+				<rhs>
+					<nonterminal def="#canonfilters.grammar.AndExpr">AndExpr</nonterminal>
+					[ '|'
+					<nonterminal def="#canonfilters.grammar.MatchingExpression">MatchingExpression</nonterminal>
+					]
+				</rhs>
+			</production>
+
+			<production xml:id="canonfilters.grammar.AndExpr">
+				<lhs>AndExpr</lhs>
+				<rhs>
+					<nonterminal def="#canonfilters.grammar.UnaryExpr">UnaryExpr</nonterminal>
+					[ '&amp;'
+					<nonterminal def="#canonfilters.grammar.AndExpr">AndExpr</nonterminal>
+					]
+				</rhs>
+			</production>
+
+			<production xml:id="canonfilters.grammar.UnaryExpr">
+				<lhs>UnaryExpr</lhs>
+				<rhs>
+					['!'] (
+					<nonterminal def="#canonfilters.grammar.Operand">Operand</nonterminal>
+					| '('
+					<nonterminal def="#canonfilters.grammar.CompExpr">CompExpr</nonterminal>
+					')' ) |
+					<nonterminal def="#canonfilters.grammar.MatchingExpression">MatchingExpression</nonterminal>
+				</rhs>
+			</production>
+
+			<production xml:id="canonfilters.grammar.Operand">
+				<lhs>Operand</lhs>
+				<rhs>'True' | 'False' | Identifier</rhs>
+			</production>
+
+			<production xml:id="canonfilters.grammar.CompExpr">
+				<lhs>CompExpr</lhs>
+				<rhs>
+					<nonterminal def="#canonfilters.grammar.BaseMessage">BaseMessage</nonterminal>
+					<nonterminal def="#canonfilters.grammar.CompExprOp">CompExprOp</nonterminal>
+					<nonterminal def="#canonfilters.grammar.CompExprRhs">CompExprRhs</nonterminal>
+				</rhs>
+			</production>
+
+			<production xml:id="canonfilters.grammar.CompExprOp">
+				<lhs>CompExprOp</lhs>
+				<rhs>'==' | '$=' | '~=' | '@='</rhs>
+			</production>
+
+			<production xml:id="canonfilters.grammar.BaseMessage">
+				<lhs>BaseMessage</lhs>
+				<rhs>'target' | 'selector' | 'message.' ( 'target' | 'selector' | 'server' | 'sender' | 'self' )</rhs>
+			</production>
+
+			<production xml:id="canonfilters.grammar.CompExprRhs">
+				<lhs>CompExprRhs</lhs>
+				<rhs>
+					<nonterminal def="#canonfilters.grammar.ListOfCompExprRhs">ListOfCompExprRhs</nonterminal>
+					|
+					<nonterminal def="#canonfilters.grammar.SingleCompExprRhs">SingleCompExprRhs</nonterminal>
+				</rhs>
+			</production>
+
+			<production xml:id="canonfilters.grammar.ListOfCompExprRhs">
+				<lhs>ListOfCompExprRhs</lhs>
+				<rhs>
+					'['
+					<nonterminal def="#canonfilters.grammar.SingleCompExprRhs">SingleCompExprRhs</nonterminal>
+					{ ','
+					<nonterminal def="#canonfilters.grammar.SingleCompExprRhs">SingleCompExprRhs</nonterminal>
+					} ']'
+				</rhs>
+			</production>
+
+			<production xml:id="canonfilters.grammar.SingleCompExprRhs">
+				<lhs>SingleCompExprRhs</lhs>
+				<rhs>
+					FullyQualifiedName |
+					<nonterminal def="#canonfilters.grammar.Literal">Literal</nonterminal>
+					| 'inner' | FilterModuleParameter |
+					<nonterminal def="#canonfilters.grammar.BaseMessage">BaseMessage</nonterminal>
+				</rhs>
+			</production>
+
+			<production xml:id="canonfilters.grammar.Literal">
+				<lhs>Literal</lhs>
+				<rhs>''' ? string data ? ''' | '"' ? string data ? '"'</rhs>
+			</production>
+
+			<production xml:id="canonfilters.grammar.CanonAssignment">
+				<lhs>CanonAssignment</lhs>
+				<rhs>
+					<nonterminal def="#canonfilters.grammar.AssignmentLhs">AssignmentLhs</nonterminal>
+					'='
+					<nonterminal def="#canonfilters.grammar.AssignmentRhs">AssignmentRhs</nonterminal>
+					';'
+				</rhs>
+			</production>
+
+			<production xml:id="canonfilters.grammar.AssignmentLhs">
+				<lhs>AssignmentLhs</lhs>
+				<rhs>'target' | 'selector' | ( 'message.' Identifier ) | ('filter.' Identifier)</rhs>
+			</production>
+
+			<production xml:id="canonfilters.grammar.AssignmentRhs">
+				<lhs>AssignmentRhs</lhs>
+				<rhs>
+					'target' | 'selector' | ( 'message.' Identifier ) | ('filter.' Identifier) | FullyQualifiedName |
+					<nonterminal def="#canonfilters.grammar.Literal">Literal</nonterminal>
+					| 'inner' | FilterModuleParameter
+				</rhs>
+			</production>
+
+		</productionset>
+
+		<section xml:id="canonfilters.syntax.matchexpr">
+			<title>Matching Expressions</title>
+			<para>
+				A matching expression is an expression that evaluates to a boolean value. The matching expression
+				defines if a message is accepted by the current filter. Only when the message is accepted the filter
+				will be executed.
+			</para>
+			<para>
+				The expression is a combination of condition references and compare statements combined with boolean
+				operators like
+				<emphasis>or</emphasis>
+				(
+				<code>true | false</code>
+				) ,
+				<emphasis>and</emphasis>
+				(
+				<code>true &amp; false</code>
+				) and
+				<emphasis>not</emphasis>
+				(
+				<code>!true</code>
+				) . Sub-expressions can be created using parenthesis:
+				<code>(true | !(true &amp; false))</code>
+				.
+			</para>
+			<para>
+				Condition references are the names to conditions as defined in the current filter modules. Besides
+				condition references there are also to the constants
+				<constant>true</constant>
+				and
+				<constant>false</constant>
+				.
+			</para>
+			<para>
+				The compare statements check if of a message property to matches with a given value. Compare statements
+				have consist of three parts: left hand side, matching operator, and the right hand side. The following
+				matching operators have been defined:
+				<variablelist>
+					<varlistentry>
+						<term>
+							Instance/name matching (
+							<code>==</code>
+							)
+						</term>
+						<listitem>
+							<simpara>
+								Returns true when both sides are the same instance (for objects) or have the same name
+								(for selectors).
+							</simpara>
+						</listitem>
+					</varlistentry>
+					<varlistentry>
+						<term>
+							Signature matching (
+							<code>$=</code>
+							)
+						</term>
+						<listitem>
+							<simpara>
+								Returns true when the right hand side contains the signature implied by the left had
+								side.
+							</simpara>
+						</listitem>
+					</varlistentry>
+					<varlistentry>
+						<term>
+							Compatibility matching (
+							<code>~=</code>
+							)
+						</term>
+						<listitem>
+							<simpara>Returns true when both sides are compatible.</simpara>
+						</listitem>
+					</varlistentry>
+					<varlistentry>
+						<term>
+							Annotation matching (
+							<code>@=</code>
+							)
+						</term>
+						<listitem>
+							<simpara>
+								Returns true of the left hand side contains the annotation as identifier by the right
+								hand side.
+							</simpara>
+						</listitem>
+					</varlistentry>
+				</variablelist>
+				More information about the semantics of these operators in explained in ... . To negate a compare
+				statement it needs to be wrappen in a subexpression:
+				<code>!(target == inner)</code>
+				. The right hand side of the matching operator can contain a list of elements. The list is created by
+				enclosing a comma separated list of elements with square brackets. With a list the compare statement
+				will be
+				<code>true</code>
+				when the left hand side matches with at least one element from the list. For example, the following two
+				matching expressions are identical:
+				<programlisting language="composestar"><![CDATA[(selector == 'foo' | selector == 'bar' | selector == ?quux)
+(selector == ['foo', 'bar', ?quux])]]></programlisting>
+			</para>
+		</section>
+
+		<section xml:id="canonfilters.syntax.assignments">
+			<title>Assignments</title>
+			<para>
+				The assignment part contains entries where message and filter properties are assigned new values. The
+				syntax is much like flat configuration files:
+				<code>someVariable = newValue;</code>
+				. The available variables and allowed values are discussed in ... .
+			</para>
+			<para>
+				The assignment part of a filter element can contain zero or more assignments. The whole block can be
+				omitted when no assignments are needed. Each assignment is terminated with a semicolon (
+				<code>;</code>
+				). The value only contains a simple new value, there are no expressions possible.
+			</para>
+		</section>
+
+	</section>
+
+	<section xml:id="canonfilters.semantics">
+		<title>Semantics</title>
+		<para></para>
+
+		<section xml:id="canonfilters.semantics.matchexpr">
+			<title>Matching Expression</title>
+			<para></para>
+		</section>
+
+		<section xml:id="canonfilters.semantics.assignments">
+			<title>Assignments</title>
+			<para></para>
+		</section>
+
+		<section xml:id="canonfilters.semantics.fmparams">
+			<title>Filter Module Parameters</title>
+			<para>
+				Filter module parameters can be in the matching expressions and assignment parts. The section will
+				explain how the parameters are used. As a reminder, the values for the filter module parameters are
+				provided by an external source during the binding. The value types are not strictly defined, it could be
+				a literal but also a program element. A single filter module parameter is prefixed with a single
+				question mark
+				<code>?singleFMP</code>
+				, and a filter module parameter list is prefixed with two question marks
+				<code>??fmpList</code>
+				. The filter module parameter list can contain different value types.
+			</para>
+
+			<section>
+				<title>Matching Expression</title>
+				<para>
+					Filter module parameters can only be used on the right hand side of compare statements. A filter
+					module parameter list will be regarded just like a list construction. When a filter module parameter
+					is used in a list all values of the filter module parameter are added to the list. For example: we
+					have the following filter module parameters:
+					<code>?fmp = 'foo'; ??lst = ['bar', 'quux'];</code>
+					And the following matching expression:
+					<programlisting language="composestar"><![CDATA[(selector == ?fmp) | 
+(selector == ??lst) |
+(selector == ['item', ?fmp]) |
+(selector == ['item', ??lst]) |
+(selector == ['item', ?fmp, ??lst])]]></programlisting>
+					This will internally be interpreted as:
+					<programlisting language="composestar"><![CDATA[(selector == 'foo') | 
+(selector == ['bar', 'quux']) |
+(selector == ['item', 'foo']) |
+(selector == ['item', 'bar', 'quux']) |
+(selector == ['item', 'foo', 'bar', 'quux'])]]></programlisting>
+				</para>
+				<para>
+					The matching operators expect certain types to be on the right hand side. However, filter module
+					parameters can contain any type. When the filter module parameters are processed only compatible
+					values will be used, the other values are silently ignored. When the filter module does not contain
+					a single compatible type a warning will be issued, in this case the compare statement will result in
+					a constant
+					<code>false</code>
+					. See ... for information about what value types the compare operators expect.
+				</para>
+			</section>
+		</section>
+
+	</section>
+
+	<section xml:id="canonfilters.examples">
+		<title>Examples</title>
+		<example>
+			<title>Example of canonical filters</title>
+			<programlisting language="composestar"><![CDATA[filtermodule FM1 (?type, ??methods)
+{
+	internals
+		foo : ?type;
+	conditions
+		isActive : foo.isActive();
+	inputfilters
+		toFoo : Dispatch = (
+				(!isActive & selector == "activate")
+				| (isActive & selector == ??methods & selector %= foo)
+			)
+			{
+				target = foo;
+			};
+		raiseError : Exception = (selector == ??methods) 
+			{
+				filter.exception = "Example.Exception.InactiveException"; 
+			}
+}]]></programlisting>
+		</example>
+	</section>
+
+	<section xml:id="canonfilters.conversion">
+		<title>Conversion</title>
+		<para>Below are some examples how to convert the classical notation to the canonical definition.</para>
+
+		<informalexample>
+			<programlisting language="composestar"><![CDATA[Dispatch = { [*.bar] *.quux }]]></programlisting>
+			<programlisting language="composestar"><![CDATA[Dispatch = (selector == 'bar') { selector = 'quux'; } ]]></programlisting>
+		</informalexample>
+		<para>
+			The classic notation does not force a matching on the target, so the target is not included in the
+			expression. In the classic notation
+			<code>bar</code>
+			and
+			<code>quux</code>
+			are literals and not variables, in the canonical notation they should be written as literals.
+		</para>
+
+		<informalexample>
+			<programlisting language="composestar"><![CDATA[Dispatch = { True ~> [*.bar] *.quux }]]></programlisting>
+			<programlisting language="composestar"><![CDATA[Dispatch = (!(selector == 'bar')) { selector = 'quux'; }]]></programlisting>
+		</informalexample>
+		<para>The disable operator is easily substituted with a not operator in the matching expression.</para>
+
+		<informalexample>
+			<programlisting language="composestar"><![CDATA[Dispatch = { [*.bar] foo.* }]]></programlisting>
+			<programlisting language="composestar"><![CDATA[Dispatch = (selector == 'bar') { target = foo; }]]></programlisting>
+		</informalexample>
+		<para>
+			<code>foo</code>
+			is declared as either and internal or external.
+		</para>
+
+		<informalexample>
+			<programlisting language="composestar"><![CDATA[Dispatch = { <foo.*> foo.* }]]></programlisting>
+			<programlisting language="composestar"><![CDATA[Dispatch = (selector %= foo) { target = foo; }]]></programlisting>
+		</informalexample>
+		<para>Signature matching is performed between a selector and an object.</para>
+
+		<informalexample>
+			<programlisting language="composestar"><![CDATA[Dispatch = { c1 | c2 => [*.bar] }]]></programlisting>
+			<programlisting language="composestar"><![CDATA[Dispatch = ((c1 | c2) & selector == 'bar')]]></programlisting>
+		</informalexample>
+		<para>
+			The assignment part can often be empty because the filter does not rely on assignments to be made. When the
+			assignment part is empty is can also be omitted in the canonical notation.
+		</para>
+
+		<informalexample>
+			<programlisting language="composestar"><![CDATA[Dispatch = { [*.bar] *.quux, [*.quux] *.bar }]]></programlisting>
+			<programlisting language="composestar"><![CDATA[Dispatch = (selector == 'bar') { selector = 'quux'; } 
+		cor (selector == "quux") { selector = "bar"; }]]></programlisting>
+		</informalexample>
+		<para>This example shows how to define multiple filter elements with a single filter.</para>
+
+		<informalexample>
+			<programlisting language="composestar"><![CDATA[Dispatch = { {[*.bar], [*.baz]} *.quux }]]></programlisting>
+			<programlisting language="composestar"><![CDATA[Dispatch = (selector == 'bar' | selector == 'baz') { selector = 'quux'; }
+// or
+Dispatch = (selector == ['bar', 'baz']) { selector = 'quux'; }]]></programlisting>
+		</informalexample>
+		<para>
+			Matching different selectors can be done by using either a list of selectors or by writing the complete
+			matching expression. Both notations have exactly the same effect.
+		</para>
+
+		<informalexample>
+			<programlisting language="composestar"><![CDATA[Before = { [*.bar] foo.quux }]]></programlisting>
+			<programlisting language="composestar"><![CDATA[Before = ( selector == "bar" ) { filter.target = foo; filter.selector = "quux"; }]]></programlisting>
+		</informalexample>
+		<para>
+			The
+			<type>Before</type>
+			filter executes a defined method, it does not substitute anything in the message. Previously the
+			substitution part was used to provide what method should be called.
+		</para>
+
+		<informalexample>
+			<programlisting language="composestar"><![CDATA[Exception(exception="java.lang.UnsupportedMethod") = { [*.bar] }]]></programlisting>
+			<programlisting language="composestar"><![CDATA[Exception = (selector == "bar") { filter.exception = "java.lang.UnsupportedMethod"; }
+// or
+Exception(exception="java.lang.UnsupportedMethod") = ( selector == "bar" )]]></programlisting>
+		</informalexample>
+		<para>
+			With canonical filters the filter arguments can be set in the assignment part. But they can also be given as
+			arguments directly. In the latter case the argument will apply to all filter elements, while in the former
+			case it will only apply to the current filter element.
+		</para>
+
+	</section>
+
+	<section xml:id="canonfilters.faq">
+		<title>FAQ</title>
+		<para></para>
+	</section>
+
+</chapter>

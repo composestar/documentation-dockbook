@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<book version="5.0" xsi:schemaLocation="http://docbook.org/ns/docbook ../docbook-5.0/xsd/docbook.xsd"
+	xmlns="http://docbook.org/ns/docbook" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xlink="http://www.w3.org/1999/xlink"
+	xmlns:xi="http://www.w3.org/2001/XInclude" status="draft">
+	<title>Canonical Filter Specification</title>
+
+	<info>
+		<author>
+			<personname>Michiel Hendriks</personname>
+		</author>
+
+		<productname>Compose*</productname>
+		<pubdate><?dbtimestamp format="Y-m-d H:M:S" padding="1"?></pubdate>
+	</info>
+
+	<xi:include href="CanonicalFilterSpec/CanonicalFilters.xml" />
+	<xi:include href="FilterTypes/FilterTypes.xml" />
+</book>
