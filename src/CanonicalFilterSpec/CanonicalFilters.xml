@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <chapter xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://docbook.org/ns/docbook ../../docbook-5.0/xsd/docbook.xsd " xml:id="canonfilters">
+	xsi:schemaLocation="http://docbook.org/ns/docbook ../../lib/docbook-5/xsd/docbook.xsd " xml:id="canonfilters">
 	<title>Canonical Filter Specification</title>
 
 	<para>
@@ -30,14 +30,14 @@
 					<area coords="7 5" xml:id="canonfilters.syntax.template.oper" />
 					<area coords="7 28" xml:id="canonfilters.syntax.template.noexpr" />
 				</areaspec>
-				<programlisting language="composestar" xml:space="preserve"><![CDATA[FilterName : FilterType ( FilterArguments ) = 
+				<programlisting language="composestar" xml:space="preserve">FilterName : FilterType ( FilterArguments ) = 
 	( MatchingExpression )
 	{
 		Assignment;
-		Assignment; 
+		Assignment;
 	}
 	cor ( MatchingExpression )
-]]></programlisting>
+</programlisting>
 			</programlistingco>
 			<calloutlist>
 				<callout arearefs="canonfilters.syntax.template.filter">
@@ -276,7 +276,7 @@
 					<varlistentry>
 						<term>
 							Instance/name matching (
-							<code>==</code>
+							<code language="composestar">==</code>
 							)
 						</term>
 						<listitem>
@@ -289,7 +289,7 @@
 					<varlistentry>
 						<term>
 							Signature matching (
-							<code>$=</code>
+							<code language="composestar">$=</code>
 							)
 						</term>
 						<listitem>
@@ -302,7 +302,7 @@
 					<varlistentry>
 						<term>
 							Compatibility matching (
-							<code>~=</code>
+							<code language="composestar">~=</code>
 							)
 						</term>
 						<listitem>
@@ -312,7 +312,7 @@
 					<varlistentry>
 						<term>
 							Annotation matching (
-							<code>@=</code>
+							<code language="composestar">@=</code>
 							)
 						</term>
 						<listitem>
@@ -325,7 +325,7 @@
 				</variablelist>
 				More information about the semantics of these operators in explained in ... . To negate a compare
 				statement it needs to be wrappen in a subexpression:
-				<code>!(target == inner)</code>
+				<code language="composestar">!(target == inner)</code>
 				. The right hand side of the matching operator can contain a list of elements. The list is created by
 				enclosing a comma separated list of elements with square brackets. With a list the compare statement
 				will be
@@ -342,7 +342,7 @@
 			<para>
 				The assignment part contains entries where message and filter properties are assigned new values. The
 				syntax is much like flat configuration files:
-				<code>someVariable = newValue;</code>
+				<code language="composestar">someVariable = newValue;</code>
 				. The available variables and allowed values are discussed in ... .
 			</para>
 			<para>
@@ -359,6 +359,217 @@
 		<title>Semantics</title>
 		<para></para>
 
+		<section xml:id="canonfilters.semantics.types">
+			<title>Types</title>
+			<para>
+				There are a couple of different types used in both the matching expressions and assignment part. These
+				types determine how certain elements work.
+			</para>
+			<variablelist>
+				<varlistentry>
+					<term>Object</term>
+					<listitem>
+						<para>
+							Or rather,
+							<emphasis>instance</emphasis>
+							. Variables of the type object are:
+							<simplelist type="inline">
+								<member>internals</member>
+								<member>externals</member>
+								<member>
+									<code language="composestar">target</code>
+								</member>
+								<member>
+									<code language="composestar">inner</code>
+								</member>
+								<member>
+									<code language="composestar">message.target</code>
+								</member>
+								<member>
+									<code language="composestar">message.sender</code>
+								</member>
+								<member>
+									<code language="composestar">message.self</code>
+								</member>
+								<member>
+									<code language="composestar">message.server</code>
+								</member>
+							</simplelist>
+							New objects can be created through internals and externals in the current filter module,
+							otherwise only the existing objects (see the previously mentioned list) can be used.
+						</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>Selector</term>
+					<listitem>
+						<para>
+							Only the variable
+							<code language="composestar">selector</code>
+							(and therefore
+							<code language="composestar">message.selector</code>
+							) has this type. A selector is much like a method signature, except that the selector can
+							contain wildcards for the return type and accepted arguments.
+						</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>Literal</term>
+					<listitem>
+						<para>
+							A literal is a string enclosed by quotes (double quotes are allowed). For example:
+							<code language="composestar">'this is a literal'</code>
+							or
+							<code language="composestar">"this is also a string"</code>
+							. Literals are used
+							<emphasis>as is</emphasis>
+							, no preprocessing is performed on these values.
+						</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>Fully Qualified Name (FQN)</term>
+					<listitem>
+						<para>
+							A fully qualified name is resolved to a program element using the language model of the base
+							program. A FQN is a combination of identifiers and periods, for example:
+							<code language="composestar">thisIsAFQN</code>
+							or
+							<code language="composestar">this.is.also.a.fully.qualifiedName</code>
+							. A FQN looks much like a reference to an internal/external/condition, they also use an
+							identifier. Locally declared identifiers have precedence over fully qualified name. This
+							means that if a identifier is encountered in either the matching expression or assignment
+							part, it will be looked up in the existing name table for internals/externals/conditions and
+							predefined variables (like:
+							<code language="composestar">target</code>
+							,
+							<code language="composestar">selector</code>
+							,
+							<code language="composestar">message.*</code>
+							, etc.).
+						</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>Program Elements</term>
+					<listitem>
+						<para>
+							Program elements can not be entered directly in the source code. Program elements are
+							entities in the language model of the base program which is created during compilation.
+							Program elements are only indirectly available through a lookup, a lookup can be created
+							through a FQN or through filter module parameters. A filter module parameter can contain a
+							(set of) program elements when it was passed a superimposition selector. Filter module
+							conditions can also be used as a program element (in this case a method program elements),
+							but only at places where program elements can be used.
+						</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+
+			<example xml:id="canonfilters.semantics.types.example">
+				<title>Usage of different types</title>
+				<programlistingco>
+					<areaspec>
+						<area coords="8 23" xml:id="canonfilters.semantics.types.example.internal" />
+						<area coords="9 23" xml:id="canonfilters.semantics.types.example.condition" />
+						<area coords="10 33" xml:id="canonfilters.semantics.types.example.fqnTypo" />
+						<area coords="11 34" xml:id="canonfilters.semantics.types.example.target" />
+						<area coords="12 38" xml:id="canonfilters.semantics.types.example.fqn" />
+						<area coords="13 34" xml:id="canonfilters.semantics.types.example.literal" />
+						<area coords="14 28" xml:id="canonfilters.semantics.types.example.fmparam" />
+					</areaspec>
+					<programlisting language="composestar"><![CDATA[filtermodule ExampleFM(?myParam) {
+	internals
+		foo : FQNExample.MyClass;
+	conditions
+		bar : foo.test();
+	inputfilters
+		f1 : Dispatch = ( true ) {
+			filter.item1 = foo;
+			filter.item2 = bar;
+			filter.item3 = filters.item1;
+			filter.item4 = message.target;
+			filter.item5 = FQNExample.MyClass;
+			filter.item6 = 'hello world!';
+			filter.item7 = ?myParam;
+		}
+}]]></programlisting>
+					<calloutlist>
+						<callout arearefs="canonfilters.semantics.types.example.internal">
+							<simpara>
+								<code language="composestar">filter.item1</code>
+								will contain a value of type object.
+								<code language="composestar">foo></code>
+								refers to an internal, which is an instance of the class
+								<code language="composestar">FQNExample.MyClass</code>
+								.
+							</simpara>
+						</callout>
+						<callout arearefs="canonfilters.semantics.types.example.condition">
+							<simpara>
+								<code language="composestar">bar</code>
+								is a condition registered in this filter module, a condition is a reference to a method,
+								therefore
+								<code language="composestar">filter.item2</code>
+								will contain a value of the type program elements. More sepecifically a method program
+								elements.
+							</simpara>
+						</callout>
+						<callout arearefs="canonfilters.semantics.types.example.fqnTypo">
+							<simpara>
+								<code language="composestar">filters.something</code>
+								contains a typo, my mistake an
+								<emphasis>s</emphasis>
+								was added to the word
+								<code language="composestar">filter</code>
+								. As a result
+								<code language="composestar">filters.item1</code>
+								is regarded as a FQN and will be resolved in the language model of the base program.
+								When no such element can be found a warning will be issued, and the resulting value is
+								<emphasis>void</emphasis>
+								.
+							</simpara>
+						</callout>
+						<callout arearefs="canonfilters.semantics.types.example.target">
+							<simpara>
+								<code language="composestar">message.target</code>
+								is an object, therefore the value of
+								<code language="composestar">filter.item4</code>
+								will be of type object.
+							</simpara>
+						</callout>
+						<callout arearefs="canonfilters.semantics.types.example.fqn">
+							<simpara>
+								The current filter module does not contain a declaration with the name
+								<code language="composestar">FQNExample.MyClasst</code>
+								, so this entry is considered to be a fully qualified name and is resolved to a program
+								element. This program element resolved to a type, not to an object. An object is an
+								instance of a type, and instances are not present in the language model.
+							</simpara>
+						</callout>
+						<callout arearefs="canonfilters.semantics.types.example.literal">
+							<simpara>
+								<code language="composestar">'hello world!'</code>
+								is a literal,
+								<code language="composestar">filter.item6</code>
+								will contain exactly that value (without the quotes).
+							</simpara>
+						</callout>
+						<callout arearefs="canonfilters.semantics.types.example.fmparam">
+							<simpara>
+								<code language="composestar">?myParam</code>
+								is a filter module parameter. Its contents is unknown. Therefore the value of
+								<code language="composestar">filter.item7</code>
+								will not be known until this filter module has been instantiated. The value will most
+								likely be a program element or a literal.
+							</simpara>
+						</callout>
+					</calloutlist>
+				</programlistingco>
+			</example>
+
+		</section>
+
 		<section xml:id="canonfilters.semantics.matchexpr">
 			<title>Matching Expression</title>
 			<para></para>
@@ -366,7 +577,170 @@
 
 		<section xml:id="canonfilters.semantics.assignments">
 			<title>Assignments</title>
-			<para></para>
+			<para>
+				In the assignment certain variables can be given a new value. Not all variables can be assigned a new
+				value. Below is an overview of all variables, if they can be written and what types they accept for
+				assignment.
+			</para>
+
+			<table frame="all" rules="all">
+				<caption>Variable assignments</caption>
+				<thead>
+					<tr>
+						<th>Variable</th>
+						<th>Writable</th>
+						<th>Accepted Type</th>
+						<th>Comment</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>
+							<code>target</code>
+							/
+							<code>message.target</code>
+						</td>
+						<td>Yes</td>
+						<td>Object</td>
+						<td>
+							A target always points to an object instance, therefore it can only accept objects as new
+							value. So on the right hand side of the assignment operator can for example be a reference
+							to an internal, external,
+							<code>inner</code>
+							.
+						</td>
+					</tr>
+					<tr>
+						<td rowspan="3">
+							<code>selector</code>
+							/
+							<code>message.selector</code>
+						</td>
+						<td rowspan="3">Yes</td>
+						<td>Literal</td>
+						<td>
+							The literal is converted to a selector with the return value and arguments set to a
+							wildcard. This is the most common assignment for selectors, and the only way to directly set
+							a new value for a selector in the source code.
+						</td>
+					</tr>
+					<tr>
+						<td>Program Element (Method)</td>
+						<td>
+							The program element is converted to a selector. This selector is more specific than the
+							selector created from the literal. This selector has complete information regarding the
+							return type and accepted arguments.
+						</td>
+					</tr>
+					<tr>
+						<td>Selector</td>
+						<td>
+							The selector variable has the type selector, so it can always be assigned a different
+							selector value. Because selectors can not be directly created assigning a new selector can
+							only be done by first saving a selector in a message property.
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<code>inner</code>
+						</td>
+						<td>No</td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>
+							<code>message.sender</code>
+						</td>
+						<td>No</td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>
+							<code>message.server</code>
+						</td>
+						<td>No</td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>
+							<code>message.self</code>
+						</td>
+						<td>No</td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>
+							<code>message.sender</code>
+						</td>
+						<td>No</td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>External/Internal/Condition</td>
+						<td>No</td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>
+							<code>message.</code>
+							<emphasis>property</emphasis>
+						</td>
+						<td>Yes</td>
+						<td>Any type</td>
+						<td>
+							Where
+							<emphasis>property</emphasis>
+							is any identifier other than target, selector, sender, server, or self. Message properties
+							will be carried over to the next filter. They can contain any type, how these properties are
+							interpreted is up to the filter type using them.
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<code>filter.</code>
+							<emphasis>property</emphasis>
+						</td>
+						<td>Yes</td>
+						<td>Any type</td>
+						<td>
+							The filter arguments can contain any value, it is up to the filter type to interpreter them.
+						</td>
+					</tr>
+				</tbody>
+			</table>
+
+			<section>
+				<title>The Message and Filter Structures</title>
+				<para>
+					In the assignment part there are two special structures:
+					<code>message.</code>
+					<emphasis>property</emphasis>
+					and
+					<code>filter.</code>
+					<emphasis>property</emphasis>
+					. Where property is an identifier specifying which property to set. The message structure contains
+					some reserved names, but other than that all identifiers can be used.
+				</para>
+				<para>
+					The message structure can be used to pass certain information on to other filters. The other filters
+					must ofcourse be aware of these properties and how to interpret these values.
+				</para>
+				<para>
+					The filter structure is in fact nothing more than local access to the filter arguments. It can be
+					used to override the filter arguments set in the filter definition for a specific filter element.
+					Other than that it is identical to the filter arguments. How the filter arguments are used depends
+					on the user filter type. See ... for more information. Filter arguments are not carried on to the
+					next filter, they are specific for the current filter. To pass information to other filters you will
+					need to use message properties.
+				</para>
+			</section>
+
 		</section>
 
 		<section xml:id="canonfilters.semantics.fmparams">
@@ -377,9 +751,9 @@
 				provided by an external source during the binding. The value types are not strictly defined, it could be
 				a literal but also a program element. A single filter module parameter is prefixed with a single
 				question mark
-				<code>?singleFMP</code>
+				<code language="composestar">?singleFMP</code>
 				, and a filter module parameter list is prefixed with two question marks
-				<code>??fmpList</code>
+				<code language="composestar">??fmpList</code>
 				. The filter module parameter list can contain different value types.
 			</para>
 
@@ -390,7 +764,7 @@
 					module parameter list will be regarded just like a list construction. When a filter module parameter
 					is used in a list all values of the filter module parameter are added to the list. For example: we
 					have the following filter module parameters:
-					<code>?fmp = 'foo'; ??lst = ['bar', 'quux'];</code>
+					<code language="composestar">?fmp = 'foo'; ??lst = ['bar', 'quux'];</code>
 					And the following matching expression:
 					<programlisting language="composestar"><![CDATA[(selector == ?fmp) | 
 (selector == ??lst) |

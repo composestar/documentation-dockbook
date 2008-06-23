@@ -15,6 +15,11 @@
   <escape>\</escape>
 </highlighter>
 
+<highlighter type='string'>
+  <string>'</string>
+  <escape>\</escape>
+</highlighter>
+
 <wholehighlighter type='regex'>
   <pattern>\?(\?)?[a-zA-Z_][a-zA-Z_0-9]*</pattern>
   <style>tag</style>
@@ -29,7 +34,7 @@
   <keyword>inputfilters</keyword>
   <keyword>outputfilters</keyword>
   <keyword>if</keyword>
-  <keyword>or</keyword>
+  <keyword>cor</keyword>
   <keyword>target</keyword>
   <keyword>selector</keyword>
   <keyword>inner</keyword>

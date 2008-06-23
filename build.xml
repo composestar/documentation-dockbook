@@ -29,6 +29,7 @@
 				</fileset>
 			</classpath>
 			<param name="use.extensions" expression="1" />
+			<param name="callouts.extension" expression="1" />
 			<param name="ebnf.assignment" expression="=" />
 			<param name="ebnf.statement.terminator" expression=";" />
 			<param name="generate.toc" expression="
