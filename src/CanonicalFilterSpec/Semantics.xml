@@ -1,0 +1,788 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://docbook.org/ns/docbook ../../lib/docbook-5/xsd/docbook.xsd"
+	xml:id="canonfilters.semantics">
+	<title>Semantics</title>
+	<para></para>
+
+	<section xml:id="canonfilters.semantics.types">
+		<title>Types</title>
+		<para>
+			There are a couple of different types used in both the matching expressions and assignment part. These types
+			determine how certain elements work.
+		</para>
+		<variablelist>
+			<varlistentry>
+				<term>Object</term>
+				<listitem>
+					<para>
+						Or rather,
+						<emphasis>instance</emphasis>
+						. Variables of the type object are:
+						<simplelist type="inline">
+							<member>internals</member>
+							<member>externals</member>
+							<member>
+								<code language="composestar">target</code>
+							</member>
+							<member>
+								<code language="composestar">inner</code>
+							</member>
+							<member>
+								<code language="composestar">message.target</code>
+							</member>
+							<member>
+								<code language="composestar">message.sender</code>
+							</member>
+							<member>
+								<code language="composestar">message.self</code>
+							</member>
+							<member>
+								<code language="composestar">message.server</code>
+							</member>
+						</simplelist>
+						New objects can be created through internals and externals in the current filter module,
+						otherwise only the existing objects (see the previously mentioned list) can be used.
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term>Selector</term>
+				<listitem>
+					<para>
+						Only the variable
+						<code language="composestar">selector</code>
+						(and therefore
+						<code language="composestar">message.selector</code>
+						) has this type. A selector is much like a method signature, except that the selector can
+						contain wildcards for the return type and accepted arguments.
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term>Literal</term>
+				<listitem>
+					<para>
+						A literal is a string enclosed by quotes (double quotes are allowed). For example:
+						<code language="composestar">'this is a literal'</code>
+						or
+						<code language="composestar">"this is also a string"</code>
+						. Literals are used
+						<emphasis>as is</emphasis>
+						, no preprocessing is performed on these values.
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term>Fully Qualified Name (FQN)</term>
+				<listitem>
+					<para>
+						A fully qualified name is resolved to a program element using the language model of the base
+						program. A FQN is a combination of identifiers and periods, for example:
+						<code language="composestar">thisIsAFQN</code>
+						or
+						<code language="composestar">this.is.also.a.fully.qualifiedName</code>
+						. A FQN looks much like a reference to an internal/external/condition, they also use an
+						identifier. Locally declared identifiers have precedence over fully qualified name. This means
+						that if a identifier is encountered in either the matching expression or assignment part, it
+						will be looked up in the existing name table for internals/externals/conditions and predefined
+						variables (like:
+						<code language="composestar">target</code>
+						,
+						<code language="composestar">selector</code>
+						,
+						<code language="composestar">message.*</code>
+						, etc.).
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term>Program Elements</term>
+				<listitem>
+					<para>
+						Program elements can not be entered directly in the source code. Program elements are entities
+						in the language model of the base program which is created during compilation. Program elements
+						are only indirectly available through a lookup, a lookup can be created through a FQN or through
+						filter module parameters. A filter module parameter can contain a (set of) program elements when
+						it was passed a superimposition selector. Filter module conditions can also be used as a program
+						element (in this case a method program elements), but only at places where program elements can
+						be used.
+					</para>
+				</listitem>
+			</varlistentry>
+		</variablelist>
+
+		<example xml:id="canonfilters.semantics.types.example">
+			<title>Usage of different types</title>
+			<programlistingco>
+				<areaspec>
+					<area coords="8 23" xml:id="canonfilters.semantics.types.example.internal" />
+					<area coords="9 23" xml:id="canonfilters.semantics.types.example.condition" />
+					<area coords="10 33" xml:id="canonfilters.semantics.types.example.fqnTypo" />
+					<area coords="11 34" xml:id="canonfilters.semantics.types.example.target" />
+					<area coords="12 38" xml:id="canonfilters.semantics.types.example.fqn" />
+					<area coords="13 34" xml:id="canonfilters.semantics.types.example.literal" />
+					<area coords="14 28" xml:id="canonfilters.semantics.types.example.fmparam" />
+				</areaspec>
+				<programlisting language="composestar"><![CDATA[filtermodule ExampleFM(?myParam) {
+	internals
+		foo : FQNExample.MyClass;
+	conditions
+		bar : foo.test();
+	inputfilters
+		f1 : Dispatch = ( true ) {
+			filter.item1 = foo;
+			filter.item2 = bar;
+			filter.item3 = filters.item1;
+			filter.item4 = message.target;
+			filter.item5 = FQNExample.MyClass;
+			filter.item6 = 'hello world!';
+			filter.item7 = ?myParam;
+		}
+}]]></programlisting>
+				<calloutlist>
+					<callout arearefs="canonfilters.semantics.types.example.internal">
+						<simpara>
+							<code language="composestar">filter.item1</code>
+							will contain a value of type object.
+							<code language="composestar">foo</code>
+							refers to an internal, which is an instance of the class
+							<code language="composestar">FQNExample.MyClass</code>
+							.
+						</simpara>
+					</callout>
+					<callout arearefs="canonfilters.semantics.types.example.condition">
+						<simpara>
+							<code language="composestar">bar</code>
+							is a condition registered in this filter module, a condition is a reference to a method,
+							therefore
+							<code language="composestar">filter.item2</code>
+							will contain a value of the type program elements. More sepecifically a method program
+							elements.
+						</simpara>
+					</callout>
+					<callout arearefs="canonfilters.semantics.types.example.fqnTypo">
+						<simpara>
+							<code language="composestar">filters.something</code>
+							contains a typo, my mistake an
+							<emphasis>s</emphasis>
+							was added to the word
+							<code language="composestar">filter</code>
+							. As a result
+							<code language="composestar">filters.item1</code>
+							is regarded as a FQN and will be resolved in the language model of the base program. When no
+							such element can be found a warning will be issued, and the resulting value is
+							<emphasis>void</emphasis>
+							.
+						</simpara>
+					</callout>
+					<callout arearefs="canonfilters.semantics.types.example.target">
+						<simpara>
+							<code language="composestar">message.target</code>
+							is an object, therefore the value of
+							<code language="composestar">filter.item4</code>
+							will be of type object.
+						</simpara>
+					</callout>
+					<callout arearefs="canonfilters.semantics.types.example.fqn">
+						<simpara>
+							The current filter module does not contain a declaration with the name
+							<code language="composestar">FQNExample.MyClasst</code>
+							, so this entry is considered to be a fully qualified name and is resolved to a program
+							element. This program element resolved to a type, not to an object. An object is an instance
+							of a type, and instances are not present in the language model.
+						</simpara>
+					</callout>
+					<callout arearefs="canonfilters.semantics.types.example.literal">
+						<simpara>
+							<code language="composestar">'hello world!'</code>
+							is a literal,
+							<code language="composestar">filter.item6</code>
+							will contain exactly that value (without the quotes).
+						</simpara>
+					</callout>
+					<callout arearefs="canonfilters.semantics.types.example.fmparam">
+						<simpara>
+							<code language="composestar">?myParam</code>
+							is a filter module parameter. Its contents is unknown. Therefore the value of
+							<code language="composestar">filter.item7</code>
+							will not be known until this filter module has been instantiated. The value will most likely
+							be a program element or a literal.
+						</simpara>
+					</callout>
+				</calloutlist>
+			</programlistingco>
+		</example>
+
+	</section>
+
+	<section xml:id="canonfilters.semantics.matchexpr">
+		<title>Matching Expression</title>
+		<para>
+			The matching expression is constructed from a combination of boolean statements and boolean operators. There
+			are three boolean operators, the
+			<code>&amp;</code>
+			(
+			<emphasis>and</emphasis>
+			) and
+			<code>|</code>
+			(
+			<emphasis>or</emphasis>
+			) operators expect a boolean statement on each side. The third boolean operator is the not operator
+			<code>!</code>
+			which expects a single boolean statement on the right side. There are four types of boolean statements:
+			<variablelist>
+				<varlistentry>
+					<term>Constant</term>
+					<listitem>
+						<simpara>
+							Either
+							<code>True</code>
+							or
+							<code>False</code>
+							. Although the false constant might not be very useful, the true constant can be used to
+							always match a message.
+						</simpara>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>Conditional</term>
+					<listitem>
+						<simpara>
+							These are the conditions defined in the filter module. These conditions can only be
+							evaluated at runtime because they require the execution of the referred to method to get the
+							boolean value.
+						</simpara>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>Compare statement</term>
+					<listitem>
+						<simpara>
+							A statement that compares two entities according to a given rule set. The result would be
+							either true or false. More about the compare statements can be found in
+							<xref xlink:href="#canonfilters.semantics.matchexpr.opers" />
+							. In order to avoid confusion compare statements must be placed in a compound statement in
+							order to negate them.
+						</simpara>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>Compound statement</term>
+					<listitem>
+						<simpara>
+							A compound statement is nothing more than a matching expression enclosed within braces.
+						</simpara>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</para>
+
+		<section xml:id="canonfilters.semantics.matchexpr.opers">
+			<title>Compare Statements</title>
+
+			<para>
+				Below is an overview of all compare operators and what arguments types they support. The left hand side
+				of the operator can only contain a selector or object variable. The right hand side can always contain a
+				list of elements that are allowed for the used operator. This list may contain any combination of
+				allowed right hand parameter types. For example:
+				<code language="composestar">target ~= [myList, java.util.AbstractList]</code>
+			</para>
+
+			<para>
+				The allowed variables on the left hand side is restricted to the following set:
+				<simplelist type="inline">
+					<member>
+						<code language="composestar">target</code>
+					</member>
+					<member>
+						<code language="composestar">selector</code>
+					</member>
+					<member>
+						<code language="composestar">message.</code>
+						<emphasis>property</emphasis>
+					</member>
+				</simplelist>
+				. Only message properties that contain a selector or object type are legal. If the property contains any
+				other data the compare will always result in false. The following message properties are always safe to
+				be used:
+				<simplelist type="inline">
+					<member>
+						<code language="composestar">message.target</code>
+					</member>
+					<member>
+						<code language="composestar">message.selector</code>
+					</member>
+					<member>
+						<code language="composestar">message.server</code>
+					</member>
+					<member>
+						<code language="composestar">message.self</code>
+					</member>
+				</simplelist>
+				. The
+				<code language="composestar">message.sender</code>
+				is theoretically safe, however but in practice this is not always the case (it could be unset).
+			</para>
+
+			<para>
+				All variables that can be used in the left hand side can also be used on the right hand side.
+				Additionally the following variables are also allowed:
+				<simplelist type="inline">
+					<member>
+						<code language="composestar">inner</code>
+					</member>
+					<member>internals</member>
+					<member>externals</member>
+					<member>conditions</member>
+					<member>filter module parameters</member>
+				</simplelist>
+				. Constants like literals and fully qualified names are also allowed.
+			</para>
+
+			<table frame="all" rules="all">
+				<caption>Compare Operators</caption>
+				<thead>
+					<tr>
+						<th>Operator</th>
+						<th>Left hand side</th>
+						<th>Right hand side</th>
+						<th>Comments</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td rowspan="4">
+							<code language="composestar">==</code>
+						</td>
+						<td>Object</td>
+						<td>Object</td>
+						<td>
+							<emphasis>Instance matching.</emphasis>
+							Returns true when the left hand side and the right hand side are the same instance.
+						</td>
+					</tr>
+					<tr>
+						<td rowspan="3">Selector</td>
+						<td>Literal</td>
+						<td>
+							<emphasis>Name matching.</emphasis>
+							The name part of the selector is matched with the literal. Possible values of the return and
+							argument types in the selector are ignored.
+						</td>
+					</tr>
+					<tr>
+						<td>Program Element (Method)</td>
+						<td>
+							<emphasis>Method instance matching.</emphasis>
+							The selector will be resolved to methods in the current target that match the selector
+							(respecting wildcards in the return and arguments). This operator will return true if the
+							method on the right hand side is in the list of resolved methods. This form is usually used
+							in conjunction with filter module parameters that contain method program elements. These
+							program elements are usually very specifically selected, and therefore this comparison is
+							performed to the letter. To compare on only the signature of a method use the method
+							signature matching listed below.
+						</td>
+					</tr>
+					<tr>
+						<td>Selector</td>
+						<td>
+							<emphasis>Instance matching.</emphasis>
+							Will be true when both selectors have identical properties for name, return type and
+							selector. This form is rarely used, it can only be used when a selector is stored in a
+							message property by an earlier filter.
+						</td>
+					</tr>
+					<tr>
+						<td rowspan="4">
+							<code language="composestar">$=</code>
+						</td>
+						<td rowspan="4">Selector</td>
+						<td>Type Program Element</td>
+						<td>
+							<emphasis>Signature matching.</emphasis>
+							This operator returns true if the type program element on the right hand side contains a
+							method that has a signature that matches the selector. The signature is matches against the
+							name, return type and arguments set in the selector. In the return or argument fields of the
+							selector contain wildcards they will be ignored. This form is usually used with filter
+							module parameters.
+						</td>
+					</tr>
+					<tr>
+						<td>Object</td>
+						<td>
+							<emphasis>Signature matching.</emphasis>
+							Just like the signature matching above, the type of the object is used as the type program
+							element. This is the most commonly used for of signature matching.
+						</td>
+					</tr>
+					<tr>
+						<td>Fully Qualified Name</td>
+						<td>
+							<emphasis>Signature matching.</emphasis>
+							The fully qualified name is resolved to a type program element. After that the signature
+							matching rules apply.
+						</td>
+					</tr>
+					<tr>
+						<td>Program Element (Method)</td>
+						<td>
+							<emphasis>Method signature matching.</emphasis>
+							This will return true if the selector matches the signature of the given method. Wildcards
+							in the selector are respected. This is a less strict method comparison than the method
+							instance matching.
+						</td>
+					</tr>
+					<tr>
+						<td rowspan="6">
+							<code language="composestar">~=</code>
+						</td>
+						<td rowspan="3">Object</td>
+						<td>Type Program Element</td>
+						<td>
+							<emphasis>Compatibility matching.</emphasis>
+							Returns true if the object on the left hand size could be assigned to a variable of the type
+							in the right hand side. This basically means that the type on the right hand side is in the
+							parent type list of the type of the object on the left hand side. Or, in case the type in
+							the right hand side is an interface, the object's type implements the interface on the right
+							hand side.
+						</td>
+					</tr>
+					<tr>
+						<td>Object</td>
+						<td>
+							<emphasis>Compatibility matching.</emphasis>
+							Just like the compatibility matching above, the type of the object on the right hand side is
+							used as the type program element.
+						</td>
+					</tr>
+					<tr>
+						<td>Fully Qualified Name</td>
+						<td>
+							<emphasis>Compatibility matching.</emphasis>
+							The fully qualified name is resolved to a type program element. After that the compatibility
+							matching between an object and type applies.
+						</td>
+					</tr>
+					<tr>
+						<td rowspan="3">Selector</td>
+						<td>Literal</td>
+						<td>
+							<emphasis>Compatibility matching.</emphasis>
+							The literal is used to look up all methods in the current target that have a name matching
+							the literal. The selector is matched against the signatures of these methods according to
+							the signature matching rules (the name was already given). If any method signature matches
+							with the selector this compare statement will be true. If the current target does not have a
+							method with the given name, or no signature matches, it will result in false.
+						</td>
+					</tr>
+					<tr>
+						<td>Method Program Element</td>
+						<td>
+							<emphasis>Compatibility matching.</emphasis>
+							Matches if the return type and arguments given in the selector match those of the method
+							given in the right hand side. Wildcards in the selector are respected, in this case the
+							selector would match any method.
+						</td>
+					</tr>
+					<tr>
+						<td>Selector</td>
+						<td>
+							<emphasis>Compatibility matching.</emphasis>
+							Matches if the return and type arguments are the same (wildcards are respected). So
+							bascially, only the name is ignored.
+						</td>
+					</tr>
+					<tr>
+						<td rowspan="4">
+							<code language="composestar">@=</code>
+						</td>
+						<td rowspan="2">Object</td>
+						<td>Annotation Program Element</td>
+						<td>
+							<emphasis>Annotation matching.</emphasis>
+							This operator will match when the type of the object on the left hand side contains the
+							annotation given on the right hand side.
+						</td>
+					</tr>
+					<tr>
+						<td>Fully Qualified Name</td>
+						<td>
+							<emphasis>Annotation matching.</emphasis>
+							The fully qualified name is resolved to an annotation program element after which it is
+							compared along the same rules as listen above.
+						</td>
+					</tr>
+					<tr>
+						<td rowspan="2">Selector</td>
+						<td>Annotation Program Element</td>
+						<td>
+							<emphasis>Annotation matching.</emphasis>
+							Using the selector a selection is made of methods in the current target. If any of these
+							methods contains the annotation given in the right hand side this operator will return true.
+							In any other case it will return false.
+						</td>
+					</tr>
+					<tr>
+						<td>Fully Qualified Name</td>
+						<td>
+							<emphasis>Annotation matching.</emphasis>
+							The fully qualified name is resolved to an annotation program element after which it is
+							compared along the same rules as listen above.
+						</td>
+					</tr>
+				</tbody>
+			</table>
+
+		</section>
+	</section>
+
+	<section xml:id="canonfilters.semantics.assignments">
+		<title>Assignments</title>
+		<para>
+			In the assignment certain variables can be given a new value. Not all variables can be assigned a new value.
+			Below is an overview of all variables, if they can be written and what types they accept for assignment.
+		</para>
+
+		<table frame="all" rules="all">
+			<caption>Variable assignments</caption>
+			<thead>
+				<tr>
+					<th>Variable</th>
+					<th>Writable</th>
+					<th>Accepted Type</th>
+					<th>Comment</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>
+						<code language="composestar">target</code>
+						/
+						<code language="composestar">message.target</code>
+					</td>
+					<td>Yes</td>
+					<td>Object</td>
+					<td>
+						A target always points to an object instance, therefore it can only accept objects as new value.
+						So on the right hand side of the assignment operator can for example be a reference to an
+						internal, external,
+						<code>inner</code>
+						.
+					</td>
+				</tr>
+				<tr>
+					<td rowspan="3">
+						<code language="composestar">selector</code>
+						/
+						<code language="composestar">message.selector</code>
+					</td>
+					<td rowspan="3">Yes</td>
+					<td>Literal</td>
+					<td>
+						The literal is converted to a selector with the return value and arguments set to a wildcard.
+						This is the most common assignment for selectors, and the only way to directly set a new value
+						for a selector in the source code.
+					</td>
+				</tr>
+				<tr>
+					<td>Program Element (Method)</td>
+					<td>
+						The program element is converted to a selector. This selector is more specific than the selector
+						created from the literal. This selector has complete information regarding the return type and
+						accepted arguments.
+					</td>
+				</tr>
+				<tr>
+					<td>Selector</td>
+					<td>
+						The selector variable has the type selector, so it can always be assigned a different selector
+						value. Because selectors can not be directly created assigning a new selector can only be done
+						by first saving a selector in a message property.
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<code language="composestar">inner</code>
+					</td>
+					<td>No</td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>
+						<code language="composestar">message.sender</code>
+					</td>
+					<td>No</td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>
+						<code language="composestar">message.server</code>
+					</td>
+					<td>No</td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>
+						<code language="composestar">message.self</code>
+					</td>
+					<td>No</td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>
+						<code language="composestar">message.sender</code>
+					</td>
+					<td>No</td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>External/Internal/Condition</td>
+					<td>No</td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>
+						<code language="composestar">message.</code>
+						<emphasis>property</emphasis>
+					</td>
+					<td>Yes</td>
+					<td>Any type</td>
+					<td>
+						Where
+						<emphasis>property</emphasis>
+						is any identifier other than target, selector, sender, server, or self. Message properties will
+						be carried over to the next filter. They can contain any type, how these properties are
+						interpreted is up to the filter type using them.
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<code language="composestar">filter.</code>
+						<emphasis>property</emphasis>
+					</td>
+					<td>Yes</td>
+					<td>Any type</td>
+					<td>
+						The filter arguments can contain any value, it is up to the filter type to interpreter them.
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
+		<section>
+			<title>Message Substitution</title>
+			<para>
+				Assigning new values to the target and selector results in a direct substitution. Substitution of the
+				message used to be defined by the filter type in the classic filter notation. This was mostly due to the
+				lack of ways to provide information to the filter types like
+				<emphasis>Meta</emphasis>
+				or
+				<emphasis>After</emphasis>
+				.
+			</para>
+			<para>
+				So with the canonical notation it will be possible to send a new message before the current message is
+				dispatched and substitute the message values. For example in
+				<xref xlink:href="#canonfilters.semantics.assignments.beforesubst" />
+				the method
+				<code language="composestar">fooWasCalled</code>
+				of the internal
+				<code language="composestar">someInternal</code>
+				will be called. And the current message will be given the new selector
+				<code language="composestar">bar</code>
+				. Which eventually might lead to the execution of the method
+				<code language="composestar">bar</code>
+				.
+			</para>
+			<example xml:id="canonfilters.semantics.assignments.beforesubst">
+				<title>Before and substitude</title>
+				<programlisting language="composestar"><![CDATA[flt : Before = ( selector == 'foo' ) {
+	selector = 'bar';
+	filter.target = someInternal;
+	filter.selector = 'fooWasCalled';
+}]]></programlisting>
+			</example>
+		</section>
+
+		<section>
+			<title>The Message and Filter Structures</title>
+			<para>
+				In the assignment part there are two special structures:
+				<code language="composestar">message.</code>
+				<emphasis>property</emphasis>
+				and
+				<code language="composestar">filter.</code>
+				<emphasis>property</emphasis>
+				. Where property is an identifier specifying which property to set. The message structure contains some
+				reserved names, but other than that all identifiers can be used.
+			</para>
+			<para>
+				The message structure can be used to pass certain information on to other filters. The other filters
+				must ofcourse be aware of these properties and how to interpret these values.
+			</para>
+			<para>
+				The filter structure is in fact nothing more than local access to the filter arguments. It can be used
+				to override the filter arguments set in the filter definition for a specific filter element. Other than
+				that it is identical to the filter arguments. How the filter arguments are used depends on the used
+				filter type. See ... for more information. Filter arguments are not carried on to the next filter, they
+				are specific for the current filter. To pass information to other filters you will need to use message
+				properties.
+			</para>
+		</section>
+
+	</section>
+
+	<section xml:id="canonfilters.semantics.fmparams">
+		<title>Filter Module Parameters</title>
+		<para>
+			Filter module parameters can be in the matching expressions and assignment parts. The section will explain
+			how the parameters are used. As a reminder, the values for the filter module parameters are provided by an
+			external source during the binding. The value types are not strictly defined, it could be a literal but also
+			a program element. A single filter module parameter is prefixed with a single question mark
+			<code language="composestar">?singleFMP</code>
+			, and a filter module parameter list is prefixed with two question marks
+			<code language="composestar">??fmpList</code>
+			. The filter module parameter list can contain different value types.
+		</para>
+
+		<section>
+			<title>Matching Expression</title>
+			<para>
+				Filter module parameters can only be used on the right hand side of compare statements. A filter module
+				parameter list will be regarded just like a list construction. When a filter module parameter is used in
+				a list all values of the filter module parameter are added to the list. For example: we have the
+				following filter module parameters:
+				<code language="composestar">?fmp = 'foo'; ??lst = ['bar', 'quux'];</code>
+				And the following matching expression:
+				<programlisting language="composestar"><![CDATA[(selector == ?fmp) | 
+(selector == ??lst) |
+(selector == ['item', ?fmp]) |
+(selector == ['item', ??lst]) |
+(selector == ['item', ?fmp, ??lst])]]></programlisting>
+				This will internally be interpreted as:
+				<programlisting language="composestar"><![CDATA[(selector == 'foo') | 
+(selector == ['bar', 'quux']) |
+(selector == ['item', 'foo']) |
+(selector == ['item', 'bar', 'quux']) |
+(selector == ['item', 'foo', 'bar', 'quux'])]]></programlisting>
+			</para>
+			<para>
+				The matching operators expect certain types to be on the right hand side. However, filter module
+				parameters can contain any type. When the filter module parameters are processed only compatible values
+				will be used, the other values are silently ignored. When the filter module does not contain a single
+				compatible type a warning will be issued, in this case the compare statement will result in a constant
+				<code>false</code>
+				. See ... for information about what value types the compare operators expect.
+			</para>
+		</section>
+	</section>
+
+</section>

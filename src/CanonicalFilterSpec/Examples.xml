@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://docbook.org/ns/docbook ../../lib/docbook-5/xsd/docbook.xsd"
+	xml:id="canonfilters.examples">
+	<title>Examples</title>
+	<example>
+		<title>Example of canonical filters</title>
+		<programlisting language="composestar"><![CDATA[filtermodule FM1 (?type, ??methods)
+{
+	internals
+		foo : ?type;
+	conditions
+		isActive : foo.isActive();
+	inputfilters
+		toFoo : Dispatch = (
+				(!isActive & selector == "activate")
+				| (isActive & selector == ??methods & selector %= foo)
+			)
+			{
+				target = foo;
+			};
+		raiseError : Exception = (selector == ??methods) 
+			{
+				filter.exception = "Example.Exception.InactiveException"; 
+			}
+}]]></programlisting>
+	</example>
+</section>

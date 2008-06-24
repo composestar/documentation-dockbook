@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://docbook.org/ns/docbook ../../lib/docbook-5/xsd/docbook.xsd"
+	xml:id="canonfilters.conversion">
+	<title>Conversion</title>
+	<para>Below are some examples how to convert the classical notation to the canonical definition.</para>
+
+	<informalexample>
+		<programlisting language="composestar"><![CDATA[Dispatch = { [*.bar] *.quux }]]></programlisting>
+		<programlisting language="composestar"><![CDATA[Dispatch = (selector == 'bar') { selector = 'quux'; } ]]></programlisting>
+	</informalexample>
+	<para>
+		The classic notation does not force a matching on the target, so the target is not included in the expression.
+		In the classic notation
+		<code>bar</code>
+		and
+		<code>quux</code>
+		are literals and not variables, in the canonical notation they should be written as literals.
+	</para>
+
+	<informalexample>
+		<programlisting language="composestar"><![CDATA[Dispatch = { True ~> [*.bar] *.quux }]]></programlisting>
+		<programlisting language="composestar"><![CDATA[Dispatch = (!(selector == 'bar')) { selector = 'quux'; }]]></programlisting>
+	</informalexample>
+	<para>The disable operator is easily substituted with a not operator in the matching expression.</para>
+
+	<informalexample>
+		<programlisting language="composestar"><![CDATA[Dispatch = { [*.bar] foo.* }]]></programlisting>
+		<programlisting language="composestar"><![CDATA[Dispatch = (selector == 'bar') { target = foo; }]]></programlisting>
+	</informalexample>
+	<para>
+		<code>foo</code>
+		is declared as either and internal or external.
+	</para>
+
+	<informalexample>
+		<programlisting language="composestar"><![CDATA[Dispatch = { <foo.*> foo.* }]]></programlisting>
+		<programlisting language="composestar"><![CDATA[Dispatch = (selector %= foo) { target = foo; }]]></programlisting>
+	</informalexample>
+	<para>Signature matching is performed between a selector and an object.</para>
+
+	<informalexample>
+		<programlisting language="composestar"><![CDATA[Dispatch = { c1 | c2 => [*.bar] }]]></programlisting>
+		<programlisting language="composestar"><![CDATA[Dispatch = ((c1 | c2) & selector == 'bar')]]></programlisting>
+	</informalexample>
+	<para>
+		The assignment part can often be empty because the filter does not rely on assignments to be made. When the
+		assignment part is empty is can also be omitted in the canonical notation.
+	</para>
+
+	<informalexample>
+		<programlisting language="composestar"><![CDATA[Dispatch = { [*.bar] *.quux, [*.quux] *.bar }]]></programlisting>
+		<programlisting language="composestar"><![CDATA[Dispatch = (selector == 'bar') { selector = 'quux'; } 
+		cor (selector == "quux") { selector = "bar"; }]]></programlisting>
+	</informalexample>
+	<para>This example shows how to define multiple filter elements with a single filter.</para>
+
+	<informalexample>
+		<programlisting language="composestar"><![CDATA[Dispatch = { {[*.bar], [*.baz]} *.quux }]]></programlisting>
+		<programlisting language="composestar"><![CDATA[Dispatch = (selector == 'bar' | selector == 'baz') { selector = 'quux'; }
+// or
+Dispatch = (selector == ['bar', 'baz']) { selector = 'quux'; }]]></programlisting>
+	</informalexample>
+	<para>
+		Matching different selectors can be done by using either a list of selectors or by writing the complete matching
+		expression. Both notations have exactly the same effect.
+	</para>
+
+	<informalexample>
+		<programlisting language="composestar"><![CDATA[Before = { [*.bar] foo.quux }]]></programlisting>
+		<programlisting language="composestar"><![CDATA[Before = ( selector == "bar" ) { filter.target = foo; filter.selector = "quux"; }]]></programlisting>
+	</informalexample>
+	<para>
+		The
+		<type>Before</type>
+		filter executes a defined method, it does not substitute anything in the message. Previously the substitution
+		part was used to provide what method should be called.
+	</para>
+
+	<informalexample>
+		<programlisting language="composestar"><![CDATA[Exception(exception="java.lang.UnsupportedMethod") = { [*.bar] }]]></programlisting>
+		<programlisting language="composestar"><![CDATA[Exception = (selector == "bar") { filter.exception = "java.lang.UnsupportedMethod"; }
+// or
+Exception(exception="java.lang.UnsupportedMethod") = ( selector == "bar" )]]></programlisting>
+	</informalexample>
+	<para>
+		With canonical filters the filter arguments can be set in the assignment part. But they can also be given as
+		arguments directly. In the latter case the argument will apply to all filter elements, while in the former case
+		it will only apply to the current filter element.
+	</para>
+
+</section>
