@@ -21,7 +21,7 @@
 </highlighter>
 
 <wholehighlighter type='regex'>
-  <pattern>\?(\?)?[a-zA-Z_][a-zA-Z_0-9]*</pattern>
+  <pattern>\?(\?)?</pattern>
   <style>tag</style>
 </wholehighlighter>
 
@@ -38,7 +38,6 @@
   <keyword>target</keyword>
   <keyword>selector</keyword>
   <keyword>inner</keyword>
-  <keyword>self</keyword>
   <keyword>filter</keyword>
   <keyword>message</keyword>
   <keyword>superimposition</keyword>
