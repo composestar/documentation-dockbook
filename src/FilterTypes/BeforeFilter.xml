@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://docbook.org/ns/docbook ../../docbook-5.0/xsd/docbook.xsd " xml:id="filtertypes_before">
+	xsi:schemaLocation="http://docbook.org/ns/docbook ../../lib/docbook-5/xsd/docbook.xsd " xml:id="filtertypes.before">
 
 	<title>Before</title>
 
@@ -27,12 +27,6 @@
 				</listitem>
 			</varlistentry>
 			<varlistentry>
-				<term>Message substitution</term>
-				<listitem>
-					<simpara>No. The target and selector value of the message are used as filter arguments.</simpara>
-				</listitem>
-			</varlistentry>
-			<varlistentry>
 				<term>Resource operations</term>
 				<listitem>
 					<simpara>...</simpara>
@@ -41,10 +35,10 @@
 		</variablelist>
 	</section>
 
-	<section xml:id="filtertypes_before_arguments">
+	<section xml:id="filtertypes.before.arguments">
 		<title>Arguments</title>
 
-		<informaltable border="1">
+		<informaltable frame="all" rules="all">
 			<tr>
 				<th>Name</th>
 				<th>Type</th>
@@ -53,29 +47,36 @@
 			</tr>
 			<tr>
 				<td>target</td>
-				<td>type</td>
-				<td rowspan="2">at least one must be set</td>
-				<td rowspan="2">
-					This defines the message that should be dispatched. Alternatively to setting the
-					<code>filter.target</code>
-					and/or
-					<code>filter.selector</code>
-					, the target and selector of the message can be set. The method identified by this new message must
+				<td>object</td>
+				<td rowspan="4">at least one must be set</td>
+				<td rowspan="3">
+					This defines the message that should be dispatched. The method identified by this new message must
 					have a signature that either takes a no arguments at all, or a single argument that is compatible
 					with the join point context that is passed to it.
 				</td>
 			</tr>
 			<tr>
+				<td rowspan="3">selector</td>
+				<td>literal</td>
+			</tr>
+			<tr>
 				<td>selector</td>
-				<td>method</td>
+			</tr>
+			<tr>
+				<td>method program element</td>
+				<td>
+					The method program element will be used to look up a method within the set target that is compatible
+					with the given method program element.
+				</td>
 			</tr>
 		</informaltable>
 	</section>
 
-	<section>
+	<!-- 
+		<section>
 		<title>Examples</title>
-
+		
 		<para>...</para>
-	</section>
-
+		</section>
+	-->
 </section>

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://docbook.org/ns/docbook ../../lib/docbook-5/xsd/docbook.xsd" xml:id="filtertypes.mintime">
+
+	<title>MinTime</title>
+
+	<para>
+		When the message is accepted it will adjust a message property with a new time value (which ever is the
+		earliest).
+	</para>
+
+	<note>
+		<simpara>
+			This is a hypothetical filter type to show off filter possibilities in combination with other filter types.
+		</simpara>
+	</note>
+
+	<section>
+		<title>Behavior</title>
+
+		<variablelist>
+			<varlistentry>
+				<term>Filter activity</term>
+				<listitem>
+					<simpara>Accept-call</simpara>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term>Message flow</term>
+				<listitem>
+					<simpara>Continue</simpara>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term>Resource operations</term>
+				<listitem>
+					<simpara>(message property).read; (message property).write</simpara>
+				</listitem>
+			</varlistentry>
+		</variablelist>
+	</section>
+
+	<section>
+		<title>Arguments</title>
+
+		<informaltable frame="all" rules="all">
+			<tr>
+				<th>Name</th>
+				<th>Type</th>
+				<th>Required</th>
+				<th>Description</th>
+			</tr>
+			<tr>
+				<td>property</td>
+				<td>literal</td>
+				<td>yes</td>
+				<td>The message property to update.</td>
+			</tr>
+			<tr>
+				<td>time</td>
+				<td>literal</td>
+				<td>yes</td>
+				<td>One of the time values to take the earliest time from.</td>
+			</tr>
+			<tr>
+				<td>time2</td>
+				<td>literal</td>
+				<td>no</td>
+				<td>
+					One of the time values to take the earliest time from. If it's not set the current value of the
+					property that will be set is used.
+				</td>
+			</tr>
+		</informaltable>
+	</section>
+
+	<section>
+		<title>Examples</title>
+
+		<example>
+			<title>MinTime and Deadline filter types</title>
+			<programlisting language="composestar"><![CDATA[
+batching: Before = ( target == externalVCS & selector == 'commit' ) {
+                       filter.selector = 'forceBatching';
+                       message.commitDeadline = '17:00';
+                   };
+setDl: MinTime(property = 'commitDeadline', time = '21:00') = ( True );
+forceDl: Deadline(property = 'commitDeadline') = ( selector == 'commit' );		
+]]></programlisting>
+		</example>
+
+		<para>
+			This example enforces that commits to a version control system are performed before 21:00. Commits performed
+			on an external version control system are batched, because the network is down after 17:00 the deadline for
+			commits must be earlier than 21:00. The MinTime filter makes sure the deadline is at least 21:00.
+		</para>
+
+	</section>
+
+</section>

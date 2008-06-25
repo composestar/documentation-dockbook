@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <chapter xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xi="http://www.w3.org/2001/XInclude"
-	xsi:schemaLocation="http://docbook.org/ns/docbook ../../docbook-5.0/xsd/docbook.xsd " xml:id="filtertypes">
+	xsi:schemaLocation="http://docbook.org/ns/docbook ../../lib/docbook-5/xsd/docbook.xsd " xml:id="filtertypes">
 
 	<title>Filter Types</title>
 
@@ -11,7 +11,7 @@
 	</para>
 
 	<para>
-		Each filter type contains a behavior description. Below is exaplained what each behavior element means.
+		Each filter type contains a behavior description. Below is explained what each behavior element means.
 
 		<variablelist>
 			<varlistentry>
@@ -28,6 +28,18 @@
 						. When the matching expression matches the accept-* flow is taken. Otherwise the reject-* flow
 						is used. The message is in the *-call flow when it has not be placed in the return flow. See the
 						message flow behavior.
+						<important>
+							<simpara>
+								Currently the reject actions are still listed, but these are scheduled to be deprecated.
+							</simpara>
+						</important>
+						<note>
+							<simpara>
+								The call and return flow is currently combined in the filter sets. But there are ideas
+								to create separate filter sets for the call and return flow to provide more fine grained
+								control.
+							</simpara>
+						</note>
 					</para>
 				</listitem>
 			</varlistentry>
@@ -36,19 +48,26 @@
 				<listitem>
 					<para>
 						This defines how this filter (when executed) changes the message flow. There are three possible
-						values. Continue means that the message will continue to the next filter element. Return means
-						that the message will enter the return flow. And exit means that the message will not be
-						processed by any filters.
+						values.
+						<emphasis>Continue</emphasis>
+						means that the message will continue to the next filter element.
+						<emphasis>Return</emphasis>
+						means that the message will enter the return flow. And
+						<emphasis>exit</emphasis>
+						means that the message will not be processed by any filters.
 					</para>
 				</listitem>
 			</varlistentry>
 			<varlistentry>
 				<term>Message substitution</term>
 				<listitem>
-					<para>
-						Defines if this filter will substitute the current message with the substituted message. The
-						substituted message is modified in the assignment part.
-					</para>
+					<important>
+						<simpara>
+							Message substitution used to be a part of the filter type behavior. This was mostly because
+							of lack of expression power in the filter element notation. Message substitution is not
+							directly performed by changing the target and selector variables in the assignment part.
+						</simpara>
+					</important>
 				</listitem>
 			</varlistentry>
 			<varlistentry>
@@ -65,5 +84,9 @@
 	<xi:include href="BeforeFilter.xml" />
 	<xi:include href="AfterFilter.xml" />
 	<xi:include href="MetaFilter.xml" />
+	<xi:include href="../Proposals/ExceptionFilter.xml" />
+	<xi:include href="../Proposals/WaitFilter.xml" />
+	<xi:include href="../Proposals/DeadlineFilter.xml" />
+	<xi:include href="../Proposals/MinTimeFilter.xml" />
 
 </chapter>

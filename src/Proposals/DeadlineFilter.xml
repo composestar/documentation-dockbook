@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://docbook.org/ns/docbook ../../lib/docbook-5/xsd/docbook.xsd" xml:id="filtertypes.deadline">
+
+	<title>Deadline</title>
+
+	<para>
+		The deadline filter lets a message pass until a certain deadline is reached. If the deadline has passed the
+		message will be discarded.
+	</para>
+
+	<note>
+		<simpara>
+			This is a hypothetical filter type to show off filter possibilities in combination with other filter types.
+		</simpara>
+	</note>
+
+	<section>
+		<title>Behavior</title>
+
+		<variablelist>
+			<varlistentry>
+				<term>Filter activity</term>
+				<listitem>
+					<simpara>Accept-call</simpara>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term>Message flow</term>
+				<listitem>
+					<simpara>Continue or exit</simpara>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term>Resource operations</term>
+				<listitem>
+					<simpara>deadline.read; when the deadline passed: message.discard</simpara>
+				</listitem>
+			</varlistentry>
+		</variablelist>
+	</section>
+
+	<section>
+		<title>Arguments</title>
+
+		<informaltable frame="all" rules="all">
+			<tr>
+				<th>Name</th>
+				<th>Type</th>
+				<th>Required</th>
+				<th>Description</th>
+			</tr>
+			<tr>
+				<td>deadline</td>
+				<td>literal</td>
+				<td>no</td>
+				<td>
+					The deadline to check for. When it's not present it will read the deadline property set in the
+					message. If the message does not have a deadline property nothing will be done.
+				</td>
+			</tr>
+			<tr>
+				<td rowspan="2">exception</td>
+				<td>fully qualified name</td>
+				<td rowspan="2">no</td>
+				<td rowspan="2">
+					The exception type to throw when the deadline has passed when this filter is evaluated. When this
+					argument is not set no exception will be thrown. When the argument could not be resolved to a valid
+					exception no exception is thrown and an error will be logged.
+				</td>
+			</tr>
+			<tr>
+				<td>literal</td>
+			</tr>
+			<tr>
+				<td>property</td>
+				<td>literal</td>
+				<td>no</td>
+				<td>The message property where the deadline is stored. Defaults to 'deadline'.</td>
+			</tr>
+		</informaltable>
+	</section>
+
+</section>

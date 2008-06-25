@@ -1,19 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://docbook.org/ns/docbook ../../lib/docbook-5/xsd/docbook.xsd " xml:id="filtertypes.error">
+	xsi:schemaLocation="http://docbook.org/ns/docbook ../../lib/docbook-5/xsd/docbook.xsd"
+	xml:id="filtertypes.exception">
 
-	<title>Error</title>
+	<title>Exception</title>
 
-	<important>
-		<simpara>
-			The error filter has been deprecated by the
-			<link xlink:href="filtertypes.exception">exception</link>
-			filter.
-		</simpara>
-	</important>
-
-	<para>The error filter throws an error when the message is not accepted.</para>
+	<para>
+		The exception filter throws an error when the message is accepted. The exception filter is a complement of the
+		error filter.
+	</para>
 
 	<section>
 		<title>Behavior</title>
@@ -22,7 +18,7 @@
 			<varlistentry>
 				<term>Filter activity</term>
 				<listitem>
-					<simpara>Reject-call</simpara>
+					<simpara>Accept-call</simpara>
 				</listitem>
 			</varlistentry>
 			<varlistentry>

@@ -541,8 +541,10 @@
 	<section xml:id="canonfilters.semantics.assignments">
 		<title>Assignments</title>
 		<para>
-			In the assignment certain variables can be given a new value. Not all variables can be assigned a new value.
-			Below is an overview of all variables, if they can be written and what types they accept for assignment.
+			In the assignment part certain variables can be given a new value. Not all variables can be assigned a new
+			value. Below is an overview of all variables, if they can be written and what types they accept for
+			assignment. The assignment part is only executed when the message was accepted according to the matching
+			expression.
 		</para>
 
 		<table frame="all" rules="all">
