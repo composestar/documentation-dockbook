@@ -231,7 +231,8 @@
 		<title>Matching Expressions</title>
 		<para>
 			A matching expression is an expression that evaluates to a boolean value. The matching expression defines if
-			a message is accepted by the current filter. Only when the message is accepted the filter will be executed.
+			a message is accepted by the current filter. Only when the message is accepted the filter type will be
+			executed.
 		</para>
 		<para>
 			The expression is a combination of condition references and compare statements combined with boolean
@@ -252,15 +253,15 @@
 			.
 		</para>
 		<para>
-			Condition references are the names to conditions as defined in the current filter modules. Besides condition
-			references there are also to the constants
+			Condition references are the identifiers of the conditions defined in the current filter modules. Besides
+			condition references there are also the constants
 			<constant>true</constant>
 			and
 			<constant>false</constant>
 			.
 		</para>
 		<para>
-			The compare statements check if of a message property to matches with a given value. Compare statements have
+			The compare statements check if of a message property to matches with a given value. Compare statements
 			consist of three parts: left hand side, matching operator, and the right hand side. The following matching
 			operators have been defined:
 			<variablelist>
@@ -313,7 +314,7 @@
 					</listitem>
 				</varlistentry>
 			</variablelist>
-			More information about the semantics of these operators in explained in
+			Information about the semantics of these operators in explained in
 			<xref xlink:href="#canonfilters.semantics.matchexpr.opers" />
 			. To negate a compare statement it needs to be wrappen in a subexpression:
 			<code language="composestar">!(target == inner)</code>
@@ -330,8 +331,8 @@
 	<section xml:id="canonfilters.syntax.assignments">
 		<title>Assignments</title>
 		<para>
-			The assignment part contains entries where message and filter properties are assigned new values. The syntax
-			is much like flat configuration files:
+			The assignment part contains entries where message and filter properties are assigned (new) values. The
+			syntax is much like basic configuration files:
 			<code language="composestar">someVariable = newValue;</code>
 			. The available variables and allowed values are discussed in
 			<xref xlink:href="#canonfilters.semantics.assignments" />

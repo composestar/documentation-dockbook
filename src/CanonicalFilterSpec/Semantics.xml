@@ -55,8 +55,9 @@
 						<code language="composestar">selector</code>
 						(and therefore
 						<code language="composestar">message.selector</code>
-						) has this type. A selector is much like a method signature, except that the selector can
-						contain wildcards for the return type and accepted arguments.
+						) has this type. A selector is much like a method signature (it has a name, return type and
+						argument types), except that the selector can contain wildcards for the return type and accepted
+						arguments.
 					</para>
 				</listitem>
 			</varlistentry>
@@ -64,13 +65,14 @@
 				<term>Literal</term>
 				<listitem>
 					<para>
-						A literal is a string enclosed by quotes (double quotes are allowed). For example:
+						A literal is a string characters enclosed by quotes (double quotes are allowed). For example:
 						<code language="composestar">'this is a literal'</code>
 						or
 						<code language="composestar">"this is also a string"</code>
 						. Literals are used
 						<emphasis>as is</emphasis>
-						, no preprocessing is performed on these values.
+						, no standard (pre-)processing is performed on these values. In certain cases literals are
+						converted to other types, for example in case of name matching with a selector.
 					</para>
 				</listitem>
 			</varlistentry>
@@ -84,16 +86,22 @@
 						or
 						<code language="composestar">this.is.also.a.fully.qualifiedName</code>
 						. A FQN looks much like a reference to an internal/external/condition, they also use an
-						identifier. Locally declared identifiers have precedence over fully qualified name. This means
+						identifier. Locally declared identifiers have precedence over fully qualified names. This means
 						that if a identifier is encountered in either the matching expression or assignment part, it
-						will be looked up in the existing name table for internals/externals/conditions and predefined
-						variables (like:
+						will first be looked up in the list of internals/externals/conditions of the current filter
+						module and predefined variables (like:
 						<code language="composestar">target</code>
 						,
 						<code language="composestar">selector</code>
 						,
 						<code language="composestar">message.*</code>
-						, etc.).
+						, etc.). If nothing was found the the identifier will be looked up in the language model This of
+						course means that locally declared identifiers can hide certain program elements in the language
+						model. No warning will be issued if hiding takes place. A warning or error will be issued when
+						the identifier could not be resolved. If a error will be issued depends on where the identifier
+						is used. For example in compare statements only a warning will be issued if an identifier on the
+						right hand side could not be resolved. But when it is on the left hand side, or used as a
+						condition an error will be created.
 					</para>
 				</listitem>
 			</varlistentry>
@@ -102,12 +110,13 @@
 				<listitem>
 					<para>
 						Program elements can not be entered directly in the source code. Program elements are entities
-						in the language model of the base program which is created during compilation. Program elements
-						are only indirectly available through a lookup, a lookup can be created through a FQN or through
-						filter module parameters. A filter module parameter can contain a (set of) program elements when
-						it was passed a superimposition selector. Filter module conditions can also be used as a program
-						element (in this case a method program elements), but only at places where program elements can
-						be used.
+						in the language model of the base program which is created during the compilation process.
+						Program elements are only indirectly available through a lookup, a lookup can be created through
+						a FQN or through filter module parameters. A filter module parameter can contain a (set of)
+						program elements when it was passed a superimposition selector. Filter module conditions can
+						also be used as a program element (in this case a method program elements), but only at places
+						where program elements can be used. The following program element types are used in the
+						canonical notations: Type (and therefore Class and Interface), Method, and Annotation.
 					</para>
 				</listitem>
 			</varlistentry>
@@ -145,7 +154,9 @@
 					<callout arearefs="canonfilters.semantics.types.example.internal">
 						<simpara>
 							<code language="composestar">filter.item1</code>
-							will contain a value of type object.
+							will contain a value of type
+							<emphasis>object</emphasis>
+							.
 							<code language="composestar">foo</code>
 							refers to an internal, which is an instance of the class
 							<code language="composestar">FQNExample.MyClass</code>
@@ -155,17 +166,18 @@
 					<callout arearefs="canonfilters.semantics.types.example.condition">
 						<simpara>
 							<code language="composestar">bar</code>
-							is a condition registered in this filter module, a condition is a reference to a method,
-							therefore
+							is a condition registered in this filter module, a condition is a reference to a method
+							program element, therefore
 							<code language="composestar">filter.item2</code>
-							will contain a value of the type program elements. More sepecifically a method program
-							elements.
+							will contain a value of the type
+							<emphasis>program elements</emphasis>
+							. More sepecifically a method program element.
 						</simpara>
 					</callout>
 					<callout arearefs="canonfilters.semantics.types.example.fqnTypo">
 						<simpara>
 							<code language="composestar">filters.something</code>
-							contains a typo, my mistake an
+							contains a typo, by mistake an
 							<emphasis>s</emphasis>
 							was added to the word
 							<code language="composestar">filter</code>

@@ -8,7 +8,7 @@
 	<important>
 		<simpara>
 			The error filter has been deprecated by the
-			<link xlink:href="filtertypes.exception">exception</link>
+			<link xlink:href="#filtertypes.exception">exception</link>
 			filter.
 		</simpara>
 	</important>

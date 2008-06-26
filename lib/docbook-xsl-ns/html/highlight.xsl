@@ -16,19 +16,19 @@ xmlns:xslthl="http://xslthl.sf.net"
      ******************************************************************** -->
 
 <xsl:template match='xslthl:keyword'>
-  <span class="hl-keyword" style="font-weight: bold"><xsl:apply-templates/></span>
+  <b class="hl-keyword"><xsl:apply-templates/></b>
 </xsl:template>
 
 <xsl:template match='xslthl:string'>
-  <span class="hl-string" style="color: blue"><xsl:apply-templates/></span>
+  <b class="hl-string"><i style="color:red"><xsl:apply-templates/></i></b>
 </xsl:template>
 
 <xsl:template match='xslthl:comment'>
-  <span class="hl-comment" style="color: green; font-style: italic"><xsl:apply-templates/></span>
+  <i class="hl-comment" style="color: silver"><xsl:apply-templates/></i>
 </xsl:template>
 
 <xsl:template match='xslthl:tag'>
-  <span class="hl-tag" style="color: red"><xsl:apply-templates/></span>
+  <b class="hl-tag" style="color: blue"><xsl:apply-templates/></b>
 </xsl:template>
 
 <xsl:template match='xslthl:attribute'>
