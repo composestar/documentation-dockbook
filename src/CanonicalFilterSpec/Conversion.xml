@@ -58,7 +58,8 @@
 
 	<informalexample>
 		<programlisting language="composestar"><![CDATA[Dispatch = { {[*.bar], [*.baz]} *.quux }]]></programlisting>
-		<programlisting language="composestar"><![CDATA[Dispatch = (selector == 'bar' | selector == 'baz') { selector = 'quux'; }
+		<programlisting language="composestar"><![CDATA[Dispatch = (selector == 'bar' | selector == 'baz') { 
+	selector = 'quux'; }
 // or
 Dispatch = (selector == ['bar', 'baz']) { selector = 'quux'; }]]></programlisting>
 	</informalexample>
@@ -69,7 +70,8 @@ Dispatch = (selector == ['bar', 'baz']) { selector = 'quux'; }]]></programlistin
 
 	<informalexample>
 		<programlisting language="composestar"><![CDATA[Before = { [*.bar] foo.quux }]]></programlisting>
-		<programlisting language="composestar"><![CDATA[Before = ( selector == "bar" ) { filter.target = foo; filter.selector = "quux"; }]]></programlisting>
+		<programlisting language="composestar"><![CDATA[Before = ( selector == "bar" ) { filter.target = foo; 
+	filter.selector = "quux"; }]]></programlisting>
 	</informalexample>
 	<para>
 		The
@@ -80,9 +82,12 @@ Dispatch = (selector == ['bar', 'baz']) { selector = 'quux'; }]]></programlistin
 
 	<informalexample>
 		<programlisting language="composestar"><![CDATA[Exception(exception="java.lang.UnsupportedMethod") = { [*.bar] }]]></programlisting>
-		<programlisting language="composestar"><![CDATA[Exception = (selector == "bar") { filter.exception = "java.lang.UnsupportedMethod"; }
+		<programlisting language="composestar"><![CDATA[Exception = (selector == "bar") { 
+		filter.exception = "java.lang.UnsupportedMethod"; 
+	}
 // or
-Exception(exception="java.lang.UnsupportedMethod") = ( selector == "bar" )]]></programlisting>
+Exception(exception="java.lang.UnsupportedMethod") = 
+	( selector == "bar" )]]></programlisting>
 	</informalexample>
 	<para>
 		With canonical filters the filter arguments can be set in the assignment part. But they can also be given as

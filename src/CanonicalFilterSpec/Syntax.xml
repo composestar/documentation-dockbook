@@ -79,43 +79,43 @@
 			<lhs>Filter</lhs>
 			<rhs>
 				Identifier ':' FilterType '='
-				<nonterminal def="#canonfilters.grammar.CanonFilterElms">CanonFilterElms</nonterminal>
+				<nonterminal def="#canonfilters.grammar.CanonFEs">CanonFEs</nonterminal>
 			</rhs>
 		</production>
 
-		<production xml:id="canonfilters.grammar.CanonFilterElms">
-			<lhs>CanonFilterElms</lhs>
+		<production xml:id="canonfilters.grammar.CanonFEs">
+			<lhs>CanonFEs</lhs>
 			<rhs>
-				<nonterminal def="#canonfilters.grammar.CanonFilterElm">CanonFilterElm</nonterminal>
+				<nonterminal def="#canonfilters.grammar.CanonFE">CanonFE</nonterminal>
 				{
-				<nonterminal def="#canonfilters.grammar.CanonFilterElmOp">CanonFilterElmOp</nonterminal>
-				<nonterminal def="#canonfilters.grammar.CanonFilterElm">CanonFilterElm</nonterminal>
+				<nonterminal def="#canonfilters.grammar.CanonFEOp">CanonFEOp</nonterminal>
+				<nonterminal def="#canonfilters.grammar.CanonFE">CanonFE</nonterminal>
 				}
 			</rhs>
 		</production>
 
-		<production xml:id="canonfilters.grammar.CanonFilterElmOp">
-			<lhs>CanonFilterElmOp</lhs>
+		<production xml:id="canonfilters.grammar.CanonFEOp">
+			<lhs>CanonFEOp</lhs>
 			<rhs>'cor'</rhs>
 		</production>
 
-		<production xml:id="canonfilters.grammar.CanonFilterElm">
-			<lhs>CanonFilterElm</lhs>
+		<production xml:id="canonfilters.grammar.CanonFE">
+			<lhs>CanonFE</lhs>
 			<rhs>
 				'('
-				<nonterminal def="#canonfilters.grammar.MatchingExpression">MatchingExpression</nonterminal>
+				<nonterminal def="#canonfilters.grammar.MatchExpr">MatchExpr</nonterminal>
 				')' [ '{' {
-				<nonterminal def="#canonfilters.grammar.CanonAssignment">CanonAssignment</nonterminal>
+				<nonterminal def="#canonfilters.grammar.Assignment">Assignment</nonterminal>
 				} '}' ]
 			</rhs>
 		</production>
 
-		<production xml:id="canonfilters.grammar.MatchingExpression">
-			<lhs>MatchingExpression</lhs>
+		<production xml:id="canonfilters.grammar.MatchExpr">
+			<lhs>MatchExpr</lhs>
 			<rhs>
 				<nonterminal def="#canonfilters.grammar.AndExpr">AndExpr</nonterminal>
 				[ '|'
-				<nonterminal def="#canonfilters.grammar.MatchingExpression">MatchingExpression</nonterminal>
+				<nonterminal def="#canonfilters.grammar.MatchExpr">MatchExpr</nonterminal>
 				]
 			</rhs>
 		</production>
@@ -138,7 +138,7 @@
 				| '('
 				<nonterminal def="#canonfilters.grammar.CompExpr">CompExpr</nonterminal>
 				')' ) |
-				<nonterminal def="#canonfilters.grammar.MatchingExpression">MatchingExpression</nonterminal>
+				<nonterminal def="#canonfilters.grammar.MatchExpr">MatchExpr</nonterminal>
 			</rhs>
 		</production>
 
@@ -151,13 +151,13 @@
 			<lhs>CompExpr</lhs>
 			<rhs>
 				<nonterminal def="#canonfilters.grammar.BaseMessage">BaseMessage</nonterminal>
-				<nonterminal def="#canonfilters.grammar.CompExprOp">CompExprOp</nonterminal>
-				<nonterminal def="#canonfilters.grammar.CompExprRhs">CompExprRhs</nonterminal>
+				<nonterminal def="#canonfilters.grammar.CompOp">CompOp</nonterminal>
+				<nonterminal def="#canonfilters.grammar.CompRhs">CompRhs</nonterminal>
 			</rhs>
 		</production>
 
-		<production xml:id="canonfilters.grammar.CompExprOp">
-			<lhs>CompExprOp</lhs>
+		<production xml:id="canonfilters.grammar.CompOp">
+			<lhs>CompOp</lhs>
 			<rhs>'==' | '$=' | '~=' | '@='</rhs>
 		</production>
 
@@ -166,28 +166,28 @@
 			<rhs>'target' | 'selector' | 'message.' ( 'target' | 'selector' | 'server' | 'sender' | 'self' )</rhs>
 		</production>
 
-		<production xml:id="canonfilters.grammar.CompExprRhs">
-			<lhs>CompExprRhs</lhs>
+		<production xml:id="canonfilters.grammar.CompRhs">
+			<lhs>CompRhs</lhs>
 			<rhs>
-				<nonterminal def="#canonfilters.grammar.ListOfCompExprRhs">ListOfCompExprRhs</nonterminal>
+				<nonterminal def="#canonfilters.grammar.CompRhsLst">CompRhsLst</nonterminal>
 				|
-				<nonterminal def="#canonfilters.grammar.SingleCompExprRhs">SingleCompExprRhs</nonterminal>
+				<nonterminal def="#canonfilters.grammar.CompRhsElm">CompRhsElm</nonterminal>
 			</rhs>
 		</production>
 
-		<production xml:id="canonfilters.grammar.ListOfCompExprRhs">
-			<lhs>ListOfCompExprRhs</lhs>
+		<production xml:id="canonfilters.grammar.CompRhsLst">
+			<lhs>CompRhsLst</lhs>
 			<rhs>
 				'['
-				<nonterminal def="#canonfilters.grammar.SingleCompExprRhs">SingleCompExprRhs</nonterminal>
+				<nonterminal def="#canonfilters.grammar.CompRhsElm">CompRhsElm</nonterminal>
 				{ ','
-				<nonterminal def="#canonfilters.grammar.SingleCompExprRhs">SingleCompExprRhs</nonterminal>
+				<nonterminal def="#canonfilters.grammar.CompRhsElm">CompRhsElm</nonterminal>
 				} ']'
 			</rhs>
 		</production>
 
-		<production xml:id="canonfilters.grammar.SingleCompExprRhs">
-			<lhs>SingleCompExprRhs</lhs>
+		<production xml:id="canonfilters.grammar.CompRhsElm">
+			<lhs>CompRhsElm</lhs>
 			<rhs>
 				FullyQualifiedName |
 				<nonterminal def="#canonfilters.grammar.Literal">Literal</nonterminal>
@@ -201,23 +201,23 @@
 			<rhs>''' ? string data ? ''' | '"' ? string data ? '"'</rhs>
 		</production>
 
-		<production xml:id="canonfilters.grammar.CanonAssignment">
-			<lhs>CanonAssignment</lhs>
+		<production xml:id="canonfilters.grammar.Assignment">
+			<lhs>Assignment</lhs>
 			<rhs>
-				<nonterminal def="#canonfilters.grammar.AssignmentLhs">AssignmentLhs</nonterminal>
+				<nonterminal def="#canonfilters.grammar.AssignLhs">AssignLhs</nonterminal>
 				'='
-				<nonterminal def="#canonfilters.grammar.AssignmentRhs">AssignmentRhs</nonterminal>
+				<nonterminal def="#canonfilters.grammar.AssignRhs">AssignRhs</nonterminal>
 				';'
 			</rhs>
 		</production>
 
-		<production xml:id="canonfilters.grammar.AssignmentLhs">
-			<lhs>AssignmentLhs</lhs>
+		<production xml:id="canonfilters.grammar.AssignLhs">
+			<lhs>AssignLhs</lhs>
 			<rhs>'target' | 'selector' | ( 'message.' Identifier ) | ('filter.' Identifier)</rhs>
 		</production>
 
-		<production xml:id="canonfilters.grammar.AssignmentRhs">
-			<lhs>AssignmentRhs</lhs>
+		<production xml:id="canonfilters.grammar.AssignRhs">
+			<lhs>AssignRhs</lhs>
 			<rhs>
 				'target' | 'selector' | ( 'message.' Identifier ) | ('filter.' Identifier) | FullyQualifiedName |
 				<nonterminal def="#canonfilters.grammar.Literal">Literal</nonterminal>

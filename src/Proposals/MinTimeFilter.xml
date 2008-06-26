@@ -44,56 +44,81 @@
 	<section>
 		<title>Arguments</title>
 
-		<informaltable frame="all" rules="all">
-			<tr>
-				<th>Name</th>
-				<th>Type</th>
-				<th>Required</th>
-				<th>Description</th>
-			</tr>
-			<tr>
-				<td>property</td>
-				<td>literal</td>
-				<td>yes</td>
-				<td>The message property to update.</td>
-			</tr>
-			<tr>
-				<td>time</td>
-				<td>literal</td>
-				<td>yes</td>
-				<td>One of the time values to take the earliest time from.</td>
-			</tr>
-			<tr>
-				<td>time2</td>
-				<td>literal</td>
-				<td>no</td>
-				<td>
-					One of the time values to take the earliest time from. If it's not set the current value of the
-					property that will be set is used.
-				</td>
-			</tr>
+		<informaltable rules="all">
+			<tgroup cols="4">
+				<colspec align="center" colwidth="3*" />
+				<colspec align="center" colwidth="3*" />
+				<colspec align="center" colwidth="2*" />
+				<colspec align="justify" colwidth="9*" />
+				<thead>
+					<row>
+						<entry>Name</entry>
+						<entry>Type</entry>
+						<entry>Required</entry>
+						<entry>Description</entry>
+					</row>
+				</thead>
+				<tbody>
+					<row>
+						<entry>property</entry>
+						<entry>literal</entry>
+						<entry>yes</entry>
+						<entry>The message property to update.</entry>
+					</row>
+					<row>
+						<entry>time</entry>
+						<entry>literal</entry>
+						<entry>yes</entry>
+						<entry>One of the time values to take the earliest time from.</entry>
+					</row>
+					<row>
+						<entry>time2</entry>
+						<entry>literal</entry>
+						<entry>no</entry>
+						<entry>
+							One of the time values to take the earliest time from. If it's not set the current value of
+							the property that will be set is used.
+						</entry>
+					</row>
+				</tbody>
+			</tgroup>
 		</informaltable>
 	</section>
 
 	<section>
 		<title>Examples</title>
 
-		<example>
+		<example xml:id="filtertypes.mintime.example1">
 			<title>MinTime and Deadline filter types</title>
-			<programlisting language="composestar"><![CDATA[
-batching: Before = ( target == externalVCS & selector == 'commit' ) {
-                       filter.selector = 'forceBatching';
-                       message.commitDeadline = '17:00';
-                   };
-setDl: MinTime(property = 'commitDeadline', time = '21:00') = ( True );
-forceDl: Deadline(property = 'commitDeadline') = ( selector == 'commit' );		
+			<programlisting language="composestar"><![CDATA[batching: Before = 
+	( target == externalVCS & selector == 'commit' ) {
+		filter.selector = 'forceBatching';
+		message.commitDeadline = '17:00';
+	};
+setDl: MinTime(property = 'commitDeadline'; time = '21:00') = 
+	( True );
+forceDl: Deadline(property = 'commitDeadline') = 
+	( selector == 'commit' );		
 ]]></programlisting>
 		</example>
 
 		<para>
 			This example enforces that commits to a version control system are performed before 21:00. Commits performed
-			on an external version control system are batched, because the network is down after 17:00 the deadline for
-			commits must be earlier than 21:00. The MinTime filter makes sure the deadline is at least 21:00.
+			on an external version control system are batched, because the network is down after 17:00 the deadline is
+			reduced to 17:00.
+		</para>
+		<para>
+			The
+			<emphasis>Before</emphasis>
+			filter sends a new message with the selector
+			<code>forceBatching</code>
+			to the current target. It will also set the
+			<varname>commitDeadline</varname>
+			to 17:00. The
+			<emphasis>MinTime</emphasis>
+			filter makes sure that the deadline is at least 21:00. The
+			<emphasis>Deadline</emphasis>
+			filter in turn will enforce the set deadline on the commit action.
 		</para>
 
 	</section>

@@ -44,41 +44,51 @@
 	<section>
 		<title>Arguments</title>
 
-		<informaltable frame="all" rules="all">
-			<tr>
-				<th>Name</th>
-				<th>Type</th>
-				<th>Required</th>
-				<th>Description</th>
-			</tr>
-			<tr>
-				<td>deadline</td>
-				<td>literal</td>
-				<td>no</td>
-				<td>
-					The deadline to check for. When it's not present it will read the deadline property set in the
-					message. If the message does not have a deadline property nothing will be done.
-				</td>
-			</tr>
-			<tr>
-				<td rowspan="2">exception</td>
-				<td>fully qualified name</td>
-				<td rowspan="2">no</td>
-				<td rowspan="2">
-					The exception type to throw when the deadline has passed when this filter is evaluated. When this
-					argument is not set no exception will be thrown. When the argument could not be resolved to a valid
-					exception no exception is thrown and an error will be logged.
-				</td>
-			</tr>
-			<tr>
-				<td>literal</td>
-			</tr>
-			<tr>
-				<td>property</td>
-				<td>literal</td>
-				<td>no</td>
-				<td>The message property where the deadline is stored. Defaults to 'deadline'.</td>
-			</tr>
+		<informaltable rules="all">
+			<tgroup cols="4">
+				<colspec align="center" colwidth="3*" />
+				<colspec align="center" colwidth="3*" />
+				<colspec align="center" colwidth="2*" />
+				<colspec align="justify" colwidth="9*" />
+				<thead>
+					<row>
+						<entry>Name</entry>
+						<entry>Type</entry>
+						<entry>Required</entry>
+						<entry>Description</entry>
+					</row>
+				</thead>
+				<tbody>
+					<row>
+						<entry>deadline</entry>
+						<entry>literal</entry>
+						<entry>no</entry>
+						<entry>
+							The deadline to check for. When it's not present it will read the deadline property set in
+							the message. If the message does not have a deadline property nothing will be done.
+						</entry>
+					</row>
+					<row>
+						<entry morerows="1">exception</entry>
+						<entry>fully qualified name</entry>
+						<entry morerows="1">no</entry>
+						<entry morerows="1">
+							The exception type to throw when the deadline has passed when this filter is evaluated. When
+							this argument is not set no exception will be thrown. When the argument could not be
+							resolved to a valid exception no exception is thrown and an error will be logged.
+						</entry>
+					</row>
+					<row>
+						<entry>literal</entry>
+					</row>
+					<row>
+						<entry>property</entry>
+						<entry>literal</entry>
+						<entry>no</entry>
+						<entry>The message property where the deadline is stored. Defaults to 'deadline'.</entry>
+					</row>
+				</tbody>
+			</tgroup>
 		</informaltable>
 	</section>
 

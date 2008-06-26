@@ -14,6 +14,34 @@
 		<pubdate><?dbtimestamp format="Y-m-d H:M:S" padding="1"?></pubdate>
 	</info>
 
+	<dedication>
+		<title>Reading Guide</title>
+		<para>
+			This document discusses the canonical filter notation. It is constructed as a chapter in the Annotated
+			Reference Manual (ARM). Everything from the past Compose* meetings concerning the canonical filters has been
+			processed and is included in this document. The first section (
+			<xref xlink:href="#canonfilters" />
+			) should be complete and sound, anything that is missing or ambiguous should be considered a bug (please
+			report this). The other sections (
+			<xref xlink:href="#filtertypes" />
+			) should not be considered waterproof, they are for support and proposals for future changes.
+		</para>
+		<para>
+			Note
+			<xref xlink:href="#filtertypes.mintime.example1" />
+			. It gives an idea how to use arbitrary data (like time) in message and filter properties. The idea is not
+			to introduce any more data types than there already are. By leaving this up to the filter types the language
+			remains simple (yet the filter types become more complex), and complete freedom on how to use the data
+			remains. Filter types should probably follow the UNIX philosophy according to Doug McIlroy.
+		</para>
+		<blockquote>
+			<attribution>Doug McIlroy</attribution>
+			<literallayout xml:space="preserve">Write programs that do one thing and do it well.
+Write programs to work together.
+Write programs to handle text streams, because that is a universal interface.</literallayout>
+		</blockquote>
+	</dedication>
+
 	<xi:include href="CanonicalFilterSpec/CanonicalFilters.xml" />
 	<xi:include href="FilterTypes/FilterTypes.xml" />
 </book>

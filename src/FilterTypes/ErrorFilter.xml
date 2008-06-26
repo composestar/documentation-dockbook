@@ -43,27 +43,37 @@
 	<section>
 		<title>Arguments</title>
 
-		<informaltable frame="all" rules="all">
-			<tr>
-				<th>Name</th>
-				<th>Type</th>
-				<th>Required</th>
-				<th>Description</th>
-			</tr>
-			<tr>
-				<td rowspan="2">exception</td>
-				<td>fully qualified name</td>
-				<td rowspan="2">no</td>
-				<td rowspan="2">
-					The exception type to throw. When it is not set, or could not be resolved to a valid exception type
-					the default
-					<code>ErrorFilterException</code>
-					will be thrown.
-				</td>
-			</tr>
-			<tr>
-				<td>literal</td>
-			</tr>
+		<informaltable rules="all">
+			<tgroup cols="4">
+				<colspec align="center" colwidth="3*" />
+				<colspec align="center" colwidth="3*" />
+				<colspec align="center" colwidth="2*" />
+				<colspec align="justify" colwidth="9*" />
+				<thead>
+					<row>
+						<entry>Name</entry>
+						<entry>Type</entry>
+						<entry>Required</entry>
+						<entry>Description</entry>
+					</row>
+				</thead>
+				<tbody>
+					<row>
+						<entry morerows="1">exception</entry>
+						<entry>fully qualified name</entry>
+						<entry morerows="1">no</entry>
+						<entry morerows="1">
+							The exception type to throw. When it is not set, or could not be resolved to a valid
+							exception type the default
+							<code>ErrorFilterException</code>
+							will be thrown.
+						</entry>
+					</row>
+					<row>
+						<entry>literal</entry>
+					</row>
+				</tbody>
+			</tgroup>
 		</informaltable>
 	</section>
 

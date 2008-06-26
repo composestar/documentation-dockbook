@@ -19,10 +19,10 @@
 		</script>
 
 		<xslt style="lib/docbook-xsl-ns/html/docbook.xsl" extension=".html" basedir="src" destdir="build" force="true">
-			
+
 			<include name="*.xml" />
 			<exclude name="ARM.xml" />
-			
+
 			<classpath>
 				<fileset dir="lib">
 					<include name="*.jar" />
@@ -54,7 +54,66 @@
 			<param name="section.autolabel" expression="1" />
 			<param name="section.label.includes.component.label" expression="1" />
 			<param name="highlight.source" expression="1" />
+			<param name="highlight.default.language" expression="composestar" />
 			<param name="linenumbering.extension" expression="1" />
+			<param name="tablecolumns.extension" expression="1" />
+		</xslt>
+	</target>
+
+	<target name="fo">
+		<script language="javascript">
+			<![CDATA[
+				importClass(java.lang.System);
+				System.setProperty("org.apache.xerces.xni.parser.XMLParserConfiguration", "org.apache.xerces.parsers.XIncludeParserConfiguration");
+				System.setProperty("xslthl.config", "file:///"+basedir+"/lib/docbook-xsl-ns/highlighting/xslthl-config.xml");
+				]]>
+		</script>
+
+		<xslt style="lib/docbook-xsl-ns/fo/docbook.xsl" extension=".fo" basedir="src" destdir="build" force="true">
+
+			<include name="*.xml" />
+			<exclude name="ARM.xml" />
+
+			<classpath>
+				<fileset dir="lib">
+					<include name="*.jar" />
+				</fileset>
+			</classpath>
+			<param name="use.extensions" expression="1" />
+			<param name="callouts.extension" expression="1" />
+			<param name="ebnf.assignment" expression="=" />
+			<param name="ebnf.statement.terminator" expression=";" />
+			<param name="generate.toc" expression="
+					appendix  toc,title
+					article/appendix  nop
+					article   toc,title
+					book      toc,title,figure,table,example,equation
+					chapter   title
+					part      toc,title
+					preface   toc,title
+					qandadiv  nop
+					qandaset  nop
+					reference toc,title
+					sect1     nop
+					sect2     nop
+					sect3     nop
+					sect4     nop
+					sect5     nop
+					section   nop
+					set       toc,title				
+				" />
+			<param name="section.autolabel" expression="1" />
+			<param name="section.label.includes.component.label" expression="1" />
+			<param name="highlight.source" expression="1" />
+			<param name="highlight.default.language" expression="composestar" />
+			<param name="linenumbering.extension" expression="1" />
+
+			<param name="paper.type" expression="A4" />
+			<param name="fop1.extensions" expression="1" />
+			<param name="variablelist.as.blocks" expression="1" />
+			<param name="shade.verbatim" expression="1" />
+			<param name="tablecolumns.extension" expression="1" />
+			<param name="hyphenate" expression="false" />
 		</xslt>
 	</target>
 

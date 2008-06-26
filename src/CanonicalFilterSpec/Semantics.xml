@@ -341,198 +341,205 @@
 				. Constants like literals and fully qualified names are also allowed.
 			</para>
 
-			<table frame="all" rules="all">
-				<caption>Compare Operators</caption>
-				<thead>
-					<tr>
-						<th>Operator</th>
-						<th>Left hand side</th>
-						<th>Right hand side</th>
-						<th>Comments</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td rowspan="4">
-							<code language="composestar">==</code>
-						</td>
-						<td>Object</td>
-						<td>Object</td>
-						<td>
-							<emphasis>Instance matching.</emphasis>
-							Returns true when the left hand side and the right hand side are the same instance.
-						</td>
-					</tr>
-					<tr>
-						<td rowspan="3">Selector</td>
-						<td>Literal</td>
-						<td>
-							<emphasis>Name matching.</emphasis>
-							The name part of the selector is matched with the literal. Possible values of the return and
-							argument types in the selector are ignored.
-						</td>
-					</tr>
-					<tr>
-						<td>Program Element (Method)</td>
-						<td>
-							<emphasis>Method instance matching.</emphasis>
-							The selector will be resolved to methods in the current target that match the selector
-							(respecting wildcards in the return and arguments). This operator will return true if the
-							method on the right hand side is in the list of resolved methods. This form is usually used
-							in conjunction with filter module parameters that contain method program elements. These
-							program elements are usually very specifically selected, and therefore this comparison is
-							performed to the letter. To compare on only the signature of a method use the method
-							signature matching listed below.
-						</td>
-					</tr>
-					<tr>
-						<td>Selector</td>
-						<td>
-							<emphasis>Instance matching.</emphasis>
-							Will be true when both selectors have identical properties for name, return type and
-							selector. This form is rarely used, it can only be used when a selector is stored in a
-							message property by an earlier filter.
-						</td>
-					</tr>
-					<tr>
-						<td rowspan="4">
-							<code language="composestar">$=</code>
-						</td>
-						<td rowspan="4">Selector</td>
-						<td>Type Program Element</td>
-						<td>
-							<emphasis>Signature matching.</emphasis>
-							This operator returns true if the type program element on the right hand side contains a
-							method that has a signature that matches the selector. The signature is matches against the
-							name, return type and arguments set in the selector. In the return or argument fields of the
-							selector contain wildcards they will be ignored. This form is usually used with filter
-							module parameters.
-						</td>
-					</tr>
-					<tr>
-						<td>Object</td>
-						<td>
-							<emphasis>Signature matching.</emphasis>
-							Just like the signature matching above, the type of the object is used as the type program
-							element. This is the most commonly used for of signature matching.
-						</td>
-					</tr>
-					<tr>
-						<td>Fully Qualified Name</td>
-						<td>
-							<emphasis>Signature matching.</emphasis>
-							The fully qualified name is resolved to a type program element. After that the signature
-							matching rules apply.
-						</td>
-					</tr>
-					<tr>
-						<td>Program Element (Method)</td>
-						<td>
-							<emphasis>Method signature matching.</emphasis>
-							This will return true if the selector matches the signature of the given method. Wildcards
-							in the selector are respected. This is a less strict method comparison than the method
-							instance matching.
-						</td>
-					</tr>
-					<tr>
-						<td rowspan="6">
-							<code language="composestar">~=</code>
-						</td>
-						<td rowspan="3">Object</td>
-						<td>Type Program Element</td>
-						<td>
-							<emphasis>Compatibility matching.</emphasis>
-							Returns true if the object on the left hand size could be assigned to a variable of the type
-							in the right hand side. This basically means that the type on the right hand side is in the
-							parent type list of the type of the object on the left hand side. Or, in case the type in
-							the right hand side is an interface, the object's type implements the interface on the right
-							hand side.
-						</td>
-					</tr>
-					<tr>
-						<td>Object</td>
-						<td>
-							<emphasis>Compatibility matching.</emphasis>
-							Just like the compatibility matching above, the type of the object on the right hand side is
-							used as the type program element.
-						</td>
-					</tr>
-					<tr>
-						<td>Fully Qualified Name</td>
-						<td>
-							<emphasis>Compatibility matching.</emphasis>
-							The fully qualified name is resolved to a type program element. After that the compatibility
-							matching between an object and type applies.
-						</td>
-					</tr>
-					<tr>
-						<td rowspan="3">Selector</td>
-						<td>Literal</td>
-						<td>
-							<emphasis>Compatibility matching.</emphasis>
-							The literal is used to look up all methods in the current target that have a name matching
-							the literal. The selector is matched against the signatures of these methods according to
-							the signature matching rules (the name was already given). If any method signature matches
-							with the selector this compare statement will be true. If the current target does not have a
-							method with the given name, or no signature matches, it will result in false.
-						</td>
-					</tr>
-					<tr>
-						<td>Method Program Element</td>
-						<td>
-							<emphasis>Compatibility matching.</emphasis>
-							Matches if the return type and arguments given in the selector match those of the method
-							given in the right hand side. Wildcards in the selector are respected, in this case the
-							selector would match any method.
-						</td>
-					</tr>
-					<tr>
-						<td>Selector</td>
-						<td>
-							<emphasis>Compatibility matching.</emphasis>
-							Matches if the return and type arguments are the same (wildcards are respected). So
-							bascially, only the name is ignored.
-						</td>
-					</tr>
-					<tr>
-						<td rowspan="4">
-							<code language="composestar">@=</code>
-						</td>
-						<td rowspan="2">Object</td>
-						<td>Annotation Program Element</td>
-						<td>
-							<emphasis>Annotation matching.</emphasis>
-							This operator will match when the type of the object on the left hand side contains the
-							annotation given on the right hand side.
-						</td>
-					</tr>
-					<tr>
-						<td>Fully Qualified Name</td>
-						<td>
-							<emphasis>Annotation matching.</emphasis>
-							The fully qualified name is resolved to an annotation program element after which it is
-							compared along the same rules as listen above.
-						</td>
-					</tr>
-					<tr>
-						<td rowspan="2">Selector</td>
-						<td>Annotation Program Element</td>
-						<td>
-							<emphasis>Annotation matching.</emphasis>
-							Using the selector a selection is made of methods in the current target. If any of these
-							methods contains the annotation given in the right hand side this operator will return true.
-							In any other case it will return false.
-						</td>
-					</tr>
-					<tr>
-						<td>Fully Qualified Name</td>
-						<td>
-							<emphasis>Annotation matching.</emphasis>
-							The fully qualified name is resolved to an annotation program element after which it is
-							compared along the same rules as listen above.
-						</td>
-					</tr>
-				</tbody>
+			<table pgwide="1">
+				<title>Compare Operators</title>
+				<tgroup cols="4">
+					<colspec align="center" colwidth="1*" />
+					<colspec align="center" colwidth="1*" />
+					<colspec align="center" colwidth="1*" />
+					<colspec align="justify" colwidth="6*" />
+					<thead>
+						<row>
+							<entry>Operator</entry>
+							<entry>Left hand side</entry>
+							<entry>Right hand side</entry>
+							<entry>Comments</entry>
+						</row>
+					</thead>
+					<tbody>
+						<row>
+							<entry morerows="3">
+								<code language="composestar">==</code>
+							</entry>
+							<entry>Object</entry>
+							<entry>Object</entry>
+							<entry>
+								<emphasis>Instance matching.</emphasis>
+								Returns true when the left hand side and the right hand side are the same instance.
+							</entry>
+						</row>
+						<row>
+							<entry morerows="2">Selector</entry>
+							<entry>Literal</entry>
+							<entry>
+								<emphasis>Name matching.</emphasis>
+								The name part of the selector is matched with the literal. Possible values of the return
+								and argument types in the selector are ignored.
+							</entry>
+						</row>
+						<row>
+							<entry>Program Element (Method)</entry>
+							<entry>
+								<emphasis>Method instance matching.</emphasis>
+								The selector will be resolved to methods in the current target that match the selector
+								(respecting wildcards in the return and arguments). This operator will return true if
+								the method on the right hand side is in the list of resolved methods. This form is
+								usually used in conjunction with filter module parameters that contain method program
+								elements. These program elements are usually very specifically selected, and therefore
+								this comparison is performed to the letter. To compare on only the signature of a method
+								use the method signature matching listed below.
+							</entry>
+						</row>
+						<row>
+							<entry>Selector</entry>
+							<entry>
+								<emphasis>Instance matching.</emphasis>
+								Will be true when both selectors have identical properties for name, return type and
+								selector. This form is rarely used, it can only be used when a selector is stored in a
+								message property by an earlier filter.
+							</entry>
+						</row>
+						<row>
+							<entry morerows="3">
+								<code language="composestar">$=</code>
+							</entry>
+							<entry morerows="3">Selector</entry>
+							<entry>Type Program Element</entry>
+							<entry>
+								<emphasis>Signature matching.</emphasis>
+								This operator returns true if the type program element on the right hand side contains a
+								method that has a signature that matches the selector. The signature is matches against
+								the name, return type and arguments set in the selector. In the return or argument
+								fields of the selector contain wildcards they will be ignored. This form is usually used
+								with filter module parameters.
+							</entry>
+						</row>
+						<row>
+							<entry>Object</entry>
+							<entry>
+								<emphasis>Signature matching.</emphasis>
+								Just like the signature matching above, the type of the object is used as the type
+								program element. This is the most commonly used for of signature matching.
+							</entry>
+						</row>
+						<row>
+							<entry>Fully Qualified Name</entry>
+							<entry>
+								<emphasis>Signature matching.</emphasis>
+								The fully qualified name is resolved to a type program element. After that the signature
+								matching rules apply.
+							</entry>
+						</row>
+						<row>
+							<entry>Program Element (Method)</entry>
+							<entry>
+								<emphasis>Method signature matching.</emphasis>
+								This will return true if the selector matches the signature of the given method.
+								Wildcards in the selector are respected. This is a less strict method comparison than
+								the method instance matching.
+							</entry>
+						</row>
+						<row>
+							<entry morerows="5">
+								<code language="composestar">~=</code>
+							</entry>
+							<entry morerows="2">Object</entry>
+							<entry>Type Program Element</entry>
+							<entry>
+								<emphasis>Compatibility matching.</emphasis>
+								Returns true if the object on the left hand size could be assigned to a variable of the
+								type in the right hand side. This basically means that the type on the right hand side
+								is in the parent type list of the type of the object on the left hand side. Or, in case
+								the type in the right hand side is an interface, the object's type implements the
+								interface on the right hand side.
+							</entry>
+						</row>
+						<row>
+							<entry>Object</entry>
+							<entry>
+								<emphasis>Compatibility matching.</emphasis>
+								Just like the compatibility matching above, the type of the object on the right hand
+								side is used as the type program element.
+							</entry>
+						</row>
+						<row>
+							<entry>Fully Qualified Name</entry>
+							<entry>
+								<emphasis>Compatibility matching.</emphasis>
+								The fully qualified name is resolved to a type program element. After that the
+								compatibility matching between an object and type applies.
+							</entry>
+						</row>
+						<row>
+							<entry morerows="2">Selector</entry>
+							<entry>Literal</entry>
+							<entry>
+								<emphasis>Compatibility matching.</emphasis>
+								The literal is used to look up all methods in the current target that have a name
+								matching the literal. The selector is matched against the signatures of these methods
+								according to the signature matching rules (the name was already given). If any method
+								signature matches with the selector this compare statement will be true. If the current
+								target does not have a method with the given name, or no signature matches, it will
+								result in false.
+							</entry>
+						</row>
+						<row>
+							<entry>Method Program Element</entry>
+							<entry>
+								<emphasis>Compatibility matching.</emphasis>
+								Matches if the return type and arguments given in the selector match those of the method
+								given in the right hand side. Wildcards in the selector are respected, in this case the
+								selector would match any method.
+							</entry>
+						</row>
+						<row>
+							<entry>Selector</entry>
+							<entry>
+								<emphasis>Compatibility matching.</emphasis>
+								Matches if the return and type arguments are the same (wildcards are respected). So
+								bascially, only the name is ignored.
+							</entry>
+						</row>
+						<row>
+							<entry morerows="3">
+								<code language="composestar">@=</code>
+							</entry>
+							<entry morerows="1">Object</entry>
+							<entry>Annotation Program Element</entry>
+							<entry>
+								<emphasis>Annotation matching.</emphasis>
+								This operator will match when the type of the object on the left hand side contains the
+								annotation given on the right hand side.
+							</entry>
+						</row>
+						<row>
+							<entry>Fully Qualified Name</entry>
+							<entry>
+								<emphasis>Annotation matching.</emphasis>
+								The fully qualified name is resolved to an annotation program element after which it is
+								compared along the same rules as listen above.
+							</entry>
+						</row>
+						<row>
+							<entry morerows="1">Selector</entry>
+							<entry>Annotation Program Element</entry>
+							<entry>
+								<emphasis>Annotation matching.</emphasis>
+								Using the selector a selection is made of methods in the current target. If any of these
+								methods contains the annotation given in the right hand side this operator will return
+								true. In any other case it will return false.
+							</entry>
+						</row>
+						<row>
+							<entry>Fully Qualified Name</entry>
+							<entry>
+								<emphasis>Annotation matching.</emphasis>
+								The fully qualified name is resolved to an annotation program element after which it is
+								compared along the same rules as listen above.
+							</entry>
+						</row>
+					</tbody>
+				</tgroup>
 			</table>
 
 		</section>
@@ -547,136 +554,142 @@
 			expression.
 		</para>
 
-		<table frame="all" rules="all">
-			<caption>Variable assignments</caption>
-			<thead>
-				<tr>
-					<th>Variable</th>
-					<th>Writable</th>
-					<th>Accepted Type</th>
-					<th>Comment</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td>
-						<code language="composestar">target</code>
-						/
-						<code language="composestar">message.target</code>
-					</td>
-					<td>Yes</td>
-					<td>Object</td>
-					<td>
-						A target always points to an object instance, therefore it can only accept objects as new value.
-						So on the right hand side of the assignment operator can for example be a reference to an
-						internal, external,
-						<code>inner</code>
-						.
-					</td>
-				</tr>
-				<tr>
-					<td rowspan="3">
-						<code language="composestar">selector</code>
-						/
-						<code language="composestar">message.selector</code>
-					</td>
-					<td rowspan="3">Yes</td>
-					<td>Literal</td>
-					<td>
-						The literal is converted to a selector with the return value and arguments set to a wildcard.
-						This is the most common assignment for selectors, and the only way to directly set a new value
-						for a selector in the source code.
-					</td>
-				</tr>
-				<tr>
-					<td>Program Element (Method)</td>
-					<td>
-						The program element is converted to a selector. This selector is more specific than the selector
-						created from the literal. This selector has complete information regarding the return type and
-						accepted arguments.
-					</td>
-				</tr>
-				<tr>
-					<td>Selector</td>
-					<td>
-						The selector variable has the type selector, so it can always be assigned a different selector
-						value. Because selectors can not be directly created assigning a new selector can only be done
-						by first saving a selector in a message property.
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<code language="composestar">inner</code>
-					</td>
-					<td>No</td>
-					<td></td>
-					<td></td>
-				</tr>
-				<tr>
-					<td>
-						<code language="composestar">message.sender</code>
-					</td>
-					<td>No</td>
-					<td></td>
-					<td></td>
-				</tr>
-				<tr>
-					<td>
-						<code language="composestar">message.server</code>
-					</td>
-					<td>No</td>
-					<td></td>
-					<td></td>
-				</tr>
-				<tr>
-					<td>
-						<code language="composestar">message.self</code>
-					</td>
-					<td>No</td>
-					<td></td>
-					<td></td>
-				</tr>
-				<tr>
-					<td>
-						<code language="composestar">message.sender</code>
-					</td>
-					<td>No</td>
-					<td></td>
-					<td></td>
-				</tr>
-				<tr>
-					<td>External/Internal/Condition</td>
-					<td>No</td>
-					<td></td>
-					<td></td>
-				</tr>
-				<tr>
-					<td>
-						<code language="composestar">message.</code>
-						<emphasis>property</emphasis>
-					</td>
-					<td>Yes</td>
-					<td>Any type</td>
-					<td>
-						Where
-						<emphasis>property</emphasis>
-						is any identifier other than target, selector, sender, server, or self. Message properties will
-						be carried over to the next filter. They can contain any type, how these properties are
-						interpreted is up to the filter type using them.
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<code language="composestar">filter.</code>
-						<emphasis>property</emphasis>
-					</td>
-					<td>Yes</td>
-					<td>Any type</td>
-					<td>
-						The filter arguments can contain any value, it is up to the filter type to interpreter them.
-					</td>
-				</tr>
-			</tbody>
+		<table pgwide="1">
+			<title>Variable assignments</title>
+			<tgroup cols="4">
+				<colspec align="center" colwidth="10*" />
+				<colspec align="center" colwidth="4*" />
+				<colspec align="center" colwidth="5*" />
+				<colspec align="justify" colwidth="24*" />
+				<thead>
+					<row>
+						<entry>Variable</entry>
+						<entry>Writable</entry>
+						<entry>Accepted Type</entry>
+						<entry>Comment</entry>
+					</row>
+				</thead>
+				<tbody>
+					<row>
+						<entry>
+							<code language="composestar">target</code>
+							/
+							<code language="composestar">message.target</code>
+						</entry>
+						<entry>Yes</entry>
+						<entry>Object</entry>
+						<entry>
+							A target always points to an object instance, therefore it can only accept objects as new
+							value. So on the right hand side of the assignment operator can for example be a reference
+							to an internal, external,
+							<code>inner</code>
+							.
+						</entry>
+					</row>
+					<row>
+						<entry morerows="2">
+							<code language="composestar">selector</code>
+							/
+							<code language="composestar">message.selector</code>
+						</entry>
+						<entry morerows="2">Yes</entry>
+						<entry>Literal</entry>
+						<entry>
+							The literal is converted to a selector with the return value and arguments set to a
+							wildcard. This is the most common assignment for selectors, and the only way to directly set
+							a new value for a selector in the source code.
+						</entry>
+					</row>
+					<row>
+						<entry>Program Element (Method)</entry>
+						<entry>
+							The program element is converted to a selector. This selector is more specific than the
+							selector created from the literal. This selector has complete information regarding the
+							return type and accepted arguments.
+						</entry>
+					</row>
+					<row>
+						<entry>Selector</entry>
+						<entry>
+							The selector variable has the type selector, so it can always be assigned a different
+							selector value. Because selectors can not be directly created assigning a new selector can
+							only be done by first saving a selector in a message property.
+						</entry>
+					</row>
+					<row>
+						<entry>
+							<code language="composestar">inner</code>
+						</entry>
+						<entry>No</entry>
+						<entry></entry>
+						<entry></entry>
+					</row>
+					<row>
+						<entry>
+							<code language="composestar">message.sender</code>
+						</entry>
+						<entry>No</entry>
+						<entry></entry>
+						<entry></entry>
+					</row>
+					<row>
+						<entry>
+							<code language="composestar">message.server</code>
+						</entry>
+						<entry>No</entry>
+						<entry></entry>
+						<entry></entry>
+					</row>
+					<row>
+						<entry>
+							<code language="composestar">message.self</code>
+						</entry>
+						<entry>No</entry>
+						<entry></entry>
+						<entry></entry>
+					</row>
+					<row>
+						<entry>
+							<code language="composestar">message.sender</code>
+						</entry>
+						<entry>No</entry>
+						<entry></entry>
+						<entry></entry>
+					</row>
+					<row>
+						<entry>External/Internal/Condition</entry>
+						<entry>No</entry>
+						<entry></entry>
+						<entry></entry>
+					</row>
+					<row>
+						<entry>
+							<code language="composestar">message.</code>
+							<emphasis>property</emphasis>
+						</entry>
+						<entry>Yes</entry>
+						<entry>Any type</entry>
+						<entry>
+							Where
+							<emphasis>property</emphasis>
+							is any identifier other than target, selector, sender, server, or self. Message properties
+							will be carried over to the next filter. They can contain any type, how these properties are
+							interpreted is up to the filter type using them.
+						</entry>
+					</row>
+					<row>
+						<entry>
+							<code language="composestar">filter.</code>
+							<emphasis>property</emphasis>
+						</entry>
+						<entry>Yes</entry>
+						<entry>Any type</entry>
+						<entry>
+							The filter arguments can contain any value, it is up to the filter type to interpreter them.
+						</entry>
+					</row>
+				</tbody>
+			</tgroup>
 		</table>
 
 		<section>

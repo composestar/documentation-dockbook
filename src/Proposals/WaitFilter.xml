@@ -5,9 +5,7 @@
 
 	<title>Wait</title>
 
-	<para>
-		The wait filter blocks a message until a set deadline has been reached.
-	</para>
+	<para>The wait filter blocks a message until a set deadline has been reached.</para>
 
 	<note>
 		<simpara>
@@ -43,28 +41,38 @@
 	<section>
 		<title>Arguments</title>
 
-		<informaltable frame="all" rules="all">
-			<tr>
-				<th>Name</th>
-				<th>Type</th>
-				<th>Required</th>
-				<th>Description</th>
-			</tr>
-			<tr>
-				<td>deadline</td>
-				<td>literal</td>
-				<td>no</td>
-				<td>
-					The deadline to check for. When it's not present it will read the deadline property set in the
-					message. If the message does not have a deadline property nothing will be done.
-				</td>
-			</tr>
-			<tr>
-				<td>property</td>
-				<td>literal</td>
-				<td>no</td>
-				<td>The message property where the deadline is stored. Defaults to 'deadline'.</td>
-			</tr>
+		<informaltable rules="all">
+			<tgroup cols="4">
+				<colspec align="center" colwidth="3*" />
+				<colspec align="center" colwidth="3*" />
+				<colspec align="center" colwidth="2*" />
+				<colspec align="justify" colwidth="9*" />
+				<thead>
+					<row>
+						<entry>Name</entry>
+						<entry>Type</entry>
+						<entry>Required</entry>
+						<entry>Description</entry>
+					</row>
+				</thead>
+				<tbody>
+					<row>
+						<entry>deadline</entry>
+						<entry>literal</entry>
+						<entry>no</entry>
+						<entry>
+							The deadline to check for. When it's not present it will read the deadline property set in
+							the message. If the message does not have a deadline property nothing will be done.
+						</entry>
+					</row>
+					<row>
+						<entry>property</entry>
+						<entry>literal</entry>
+						<entry>no</entry>
+						<entry>The message property where the deadline is stored. Defaults to 'deadline'.</entry>
+					</row>
+				</tbody>
+			</tgroup>
 		</informaltable>
 	</section>
 
