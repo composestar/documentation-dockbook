@@ -63,10 +63,11 @@ to be incomplete. Don't forget to read the source, too :-)</para>
         </xsl:call-template>
 
         <fo:table table-layout="fixed" width="100%">
-          <fo:table-column column-number="1" column-width="5%"/>
-          <fo:table-column column-number="2" column-width="20%"/>
+          <fo:table-column column-number="1" column-width="3%"/>
+          <fo:table-column column-number="2" column-width="15%"/>
           <fo:table-column column-number="3" column-width="5%"/>
-          <fo:table-column column-number="4" column-width="70%"/>
+          <fo:table-column column-number="4" column-width="52%"/>
+          <fo:table-column column-number="5" column-width="25%"/>
           <fo:table-body start-indent="0pt" end-indent="0pt">
             <xsl:apply-templates select="d:production|d:productionrecap"/>
           </fo:table-body>
@@ -75,10 +76,11 @@ to be incomplete. Don't forget to read the source, too :-)</para>
     </xsl:when>
     <xsl:otherwise>
       <fo:table id="{$id}" table-layout="fixed" width="100%">
-        <fo:table-column column-number="1" column-width="5%"/>
-        <fo:table-column column-number="2" column-width="20%"/>
+        <fo:table-column column-number="1" column-width="3%"/>
+        <fo:table-column column-number="2" column-width="15%"/>
         <fo:table-column column-number="3" column-width="5%"/>
-        <fo:table-column column-number="4" column-width="70%"/>
+        <fo:table-column column-number="4" column-width="52%"/>
+        <fo:table-column column-number="5" column-width="25%"/>
         <fo:table-body start-indent="0pt" end-indent="0pt">
           <xsl:apply-templates select="d:production|d:productionrecap"/>
         </fo:table-body>
@@ -130,7 +132,6 @@ to be incomplete. Don't forget to read the source, too :-)</para>
         <xsl:copy-of select="$ebnf.statement.terminator"/>
       </fo:block>
     </fo:table-cell>
-    <!-- 
     <fo:table-cell border-start-width="3pt">
       <fo:block text-align="start">
         <xsl:choose>
@@ -144,7 +145,6 @@ to be incomplete. Don't forget to read the source, too :-)</para>
         </xsl:choose>
       </fo:block>
     </fo:table-cell>
-    -->
   </fo:table-row>
 </xsl:template>
 

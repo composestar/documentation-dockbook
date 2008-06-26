@@ -21,15 +21,15 @@ xmlns:fo="http://www.w3.org/1999/XSL/Format"
 </xsl:template>
 
 <xsl:template match='xslthl:string'>
-  <fo:inline color="blue"><xsl:apply-templates/></fo:inline>
+  <fo:inline font-weight="bold" font-style="italic"><xsl:apply-templates/></fo:inline>
 </xsl:template>
 
 <xsl:template match='xslthl:comment'>
-  <fo:inline font-style="italic" color="green"><xsl:apply-templates/></fo:inline>
+  <fo:inline font-style="italic"><xsl:apply-templates/></fo:inline>
 </xsl:template>
 
 <xsl:template match='xslthl:tag'>
-  <fo:inline color="red"><xsl:apply-templates/></fo:inline>
+  <fo:inline font-weight="bold"><xsl:apply-templates/></fo:inline>
 </xsl:template>
 
 <xsl:template match='xslthl:attribute'>

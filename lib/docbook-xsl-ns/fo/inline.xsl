@@ -542,12 +542,7 @@ xmlns:fo="http://www.w3.org/1999/XSL/Format"
 </xsl:template>
 
 <xsl:template match="d:code">
-	<xsl:variable name="content">
-		<xsl:call-template name="apply-highlighting"/>
-	</xsl:variable>
-  <xsl:call-template name="inline.monoseq">
-  	<xsl:with-param name="content" select="$content" />
-  </xsl:call-template>
+  <xsl:call-template name="inline.monoseq"/>
 </xsl:template>
 
 <xsl:template match="d:medialabel">
