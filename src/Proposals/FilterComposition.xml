@@ -8,9 +8,11 @@
 	</para>
 	<para>
 		D&#xFC;rr proposes a new language construction for the Compose* language where new filter types are defined
-		through a composition of atomic filter types. An example of such a composition is listed in ...
+		through a composition of atomic filter types. An example of such a composition is listed in
+		<xref xlink:href="#filtercomp.ex1" />
+		.
 	</para>
-	<example>
+	<example xml:id="filtercomp.ex1">
 		<title>Filter Composition of TracingIn</title>
 		<programlisting language="composestar"><![CDATA[compositions {
 	compose TracingIn of filters:
@@ -23,8 +25,8 @@
 }]]></programlisting>
 	</example>
 	<para>
-		This notation assumes that there is no canonical filter notation. For sake of clarity the example is rewritten
-		to conform the notation style as used by the canonical filter notations.
+		This notation does not conform to the proposed syntax for assignments (which is shared between filter arguments
+		and the assignment part). Below is an updated example which does conform to the proposed syntax.
 	</para>
 	<example>
 		<title>Filter Composition of TracingIn (update)</title>
@@ -39,8 +41,9 @@
 }]]></programlisting>
 	</example>
 	<para>
-		Of course this could be even more reduce to a single statement because direct access to the target and selector
-		is possible. But we do not optimize this composition even further for sake of a proper example.
+		Of course this could be even more reduced to a single statement because direct access to the target and selector
+		is possible in the assignment parts. But we do not optimize this composition even further for sake of a proper
+		example.
 	</para>
 	<para>
 		The notation proposed by D&#xFC;rr introduces new logic and language constructions which I think are not needed.
@@ -89,7 +92,15 @@ concern TracingFilters
 		When this filter module is used these arguments must be provided.
 		<xref xlink:href="#filtercomp.ex4" />
 		shows how this filter type can be used. Because filter modules are a bit different than ordinary filter types
-		they are prefixed with an @ followed by the fully qualified name of the filter module.
+		they are prefixed with an @ followed by the fully qualified name of the filter module. Also note that the
+		arguments given to the filter module filter type are not named as they are in case of normal filters. This is
+		because the filter module parameters are not strictly named, and they are not used like that when using the
+		superimposition block either. However, this does pose a problem when these arguments should be set in the filter
+		elements. But in that case primitive identifiers could be used:
+		<code>filter._1</code>
+		,
+		<code>filter._2</code>
+		.
 	</para>
 
 	<example xml:id="filtercomp.ex4">

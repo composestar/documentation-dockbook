@@ -43,6 +43,15 @@
 Write programs to work together.
 Write programs to handle text streams, because that is a universal interface.</literallayout>
 		</blockquote>
+		<para>
+			This philosophy also applies to the atomic filters as proposed by Pascal D&#xFC;rr in his PhD thesis. The
+			atomic filters concept doesn't change anything with respect to the canonical notation. In fact the atomic
+			filter concept benefits a lot when canonical filters are possible. An other important language improvement
+			in D&#xFC;rr's thesis is the concept of filter composition where the atomic filters are used to create new
+			filter types.
+			<xref xlink:href="#filtercomp" />
+			proposes some changes to the way these compositions are made.
+		</para>
 	</dedication>
 
 	<xi:include href="CanonicalFilterSpec/CanonicalFilters.xml" />
