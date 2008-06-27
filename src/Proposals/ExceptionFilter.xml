@@ -73,4 +73,26 @@
 		</informaltable>
 	</section>
 
+	<section>
+		<title>Examples</title>
+
+		<example>
+			<title>Prevent removing of list elements</title>
+			<programlisting language="composestar"><![CDATA[filtermodule AddOnlyLists {
+	inputfilters
+		noremove : Exception =
+			(selector == ['clear', 'remove', 'removeAll'])
+			{
+				filter.exception =
+					'java.lang.UnsupportedOperationException';
+			}
+}]]></programlisting>
+		</example>
+
+		<para>
+			This example, when superimposed on a list type, removes the functionality to remove items from the list.
+			Items can only be read and added.
+		</para>
+	</section>
+
 </section>

@@ -24,15 +24,18 @@
 			) should be complete and sound, anything that is missing or ambiguous should be considered a bug (please
 			report this). The other sections (
 			<xref xlink:href="#filtertypes" />
-			) should not be considered waterproof, they are for support and proposals for future changes.
+			,
+			<xref xlink:href="#filtercomp" />
+			) should not be considered waterproof, they are included in this document for support or as future
+			improvement proposals.
 		</para>
 		<para>
 			Note
 			<xref xlink:href="#filtertypes.mintime.example1" />
 			. It gives an idea how to use arbitrary data (like time) in message and filter properties. The idea is not
 			to introduce any more data types than there already are. By leaving this up to the filter types the language
-			remains simple (yet the filter types become more complex), and complete freedom on how to use the data
-			remains. Filter types should probably follow the UNIX philosophy according to Doug McIlroy.
+			remains simple (yet the filter types become more complex), and complete freedom on how to use the arbitrary
+			data remains. remains. Filter types should probably follow the UNIX philosophy according to Doug McIlroy.
 		</para>
 		<blockquote>
 			<attribution>Doug McIlroy</attribution>
@@ -44,4 +47,5 @@ Write programs to handle text streams, because that is a universal interface.</l
 
 	<xi:include href="CanonicalFilterSpec/CanonicalFilters.xml" />
 	<xi:include href="FilterTypes/FilterTypes.xml" />
+	<xi:include href="Proposals/FilterComposition.xml" />
 </book>

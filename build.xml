@@ -6,6 +6,7 @@
 	</target>
 
 	<target name="init">
+		<mkdir dir="dist" />
 		<mkdir dir="build" />
 		<mkdir dir="build/images" />
 
@@ -60,7 +61,7 @@
 					<param name="highlight.default.language" expression="composestar" />
 					<param name="linenumbering.extension" expression="1" />
 					<param name="tablecolumns.extension" expression="1" />
-
+					<param name="admon.graphics" expression="1" />
 					<xslt-params />
 				</xslt>
 			</sequential>
@@ -91,13 +92,27 @@
 				<param name="variablelist.as.blocks" expression="1" />
 				<param name="shade.verbatim" expression="1" />
 				<param name="hyphenate" expression="false" />
-				<param name="admon.graphics" expression="1" />
 				<param name="admon.graphics.extension" expression=".svg" />
-				<param name="callout.graphics.path" expression="${basedir}/lib/docbook-xsl-ns/images/callouts/" />
-				<param name="admon.graphics.path" expression="${basedir}/lib/docbook-xsl-ns/images/" />
-				<param name="draft.watermark.image" expression="${basedir}/lib/docbook-xsl-ns/images/draft.png" />
+				<param name="callout.graphics.path" expression="lib/docbook-xsl-ns/images/callouts/" />
+				<param name="admon.graphics.path" expression="lib/docbook-xsl-ns/images/" />
+				<param name="draft.watermark.image" expression="lib/docbook-xsl-ns/images/draft.png" />
 			</xslt-params>
 		</docbook>
+
+		<taskdef name="fop" classname="org.apache.fop.tools.anttasks.Fop">
+			<classpath>
+				<fileset dir="lib">
+					<include name="*.jar" />
+				</fileset>
+			</classpath>
+		</taskdef>
+
+		<fop outdir="dist" basedir="${basedir}">
+			<fileset dir="build">
+				<include name="*.fo" />
+			</fileset>
+		</fop>
+
 	</target>
 
 </project>

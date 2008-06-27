@@ -82,11 +82,26 @@
 		</informaltable>
 	</section>
 
-	<!-- 
-		<section>
+	<section>
 		<title>Examples</title>
-		
-		<para>...</para>
-		</section>
-	-->
+
+		<example>
+			<title>Log vault access</title>
+			<programlisting language="composestar"><![CDATA[filtermodule BeforeExample {
+	internals
+		logger : security.AccessLogger;
+	inputfilters
+		vaultAccess : Before = ( selector == ['open', 'close', 
+			'enter', 'leave'] ) 
+		{
+			filter.target = logger;
+			filter.selector = 'log';
+		}
+}]]></programlisting>
+		</example>
+
+		<para>
+			This example will send a message to the access logger whenever a certain action on the vault is performed.
+		</para>
+	</section>
 </section>
