@@ -43,8 +43,8 @@
 		</fo:inline>
 	</xsl:template>
 
-	<xsl:template match='xslthl:tag'>
-		<fo:inline color="red">
+	<xsl:template match='xslthl:param'>
+		<fo:inline color="maroon">
 			<xsl:apply-templates />
 		</fo:inline>
 	</xsl:template>

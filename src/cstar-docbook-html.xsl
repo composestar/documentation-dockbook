@@ -34,8 +34,8 @@
 		</span>
 	</xsl:template>
 
-	<xsl:template match='xslthl:tag'>
-		<span class="hl-tag" style="color: red">
+	<xsl:template match='xslthl:param'>
+		<span class="hl-tag" style="color: maroon">
 			<xsl:apply-templates />
 		</span>
 	</xsl:template>

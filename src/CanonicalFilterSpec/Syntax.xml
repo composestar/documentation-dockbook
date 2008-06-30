@@ -14,23 +14,25 @@
 
 	<example xml:id="canonfilters.syntax.template">
 		<title>Canonical Filter Definition Template</title>
-		<programlistingco>
+		<!-- <programlistingco>
 			<areaspec>
-				<area coords="1 47" xml:id="canonfilters.syntax.template.filter" />
-				<area coords="2 22" xml:id="canonfilters.syntax.template.expr" />
-				<area coords="4 14" xml:id="canonfilters.syntax.template.assignments" />
-				<area coords="7 5" xml:id="canonfilters.syntax.template.oper" />
-				<area coords="7 28" xml:id="canonfilters.syntax.template.noexpr" />
-			</areaspec>
-			<programlisting language="composestar" xml:space="preserve">FilterName : FilterType ( FilterArguments ) = 
-	( MatchingExpression )
+			<area coords="1 47" xml:id="canonfilters.syntax.template.filter" />
+			<area coords="2 22" xml:id="canonfilters.syntax.template.expr" />
+			<area coords="4 14" xml:id="canonfilters.syntax.template.assignments" />
+			<area coords="7 5" xml:id="canonfilters.syntax.template.oper" />
+			<area coords="7 28" xml:id="canonfilters.syntax.template.noexpr" />
+			</areaspec>-->
+		<programlisting language="composestar" xml:space="preserve">FilterName : FilterType ( FilterArguments ) = <co
+				xml:id="canonfilters.syntax.template.filter" /> 
+	( MatchingExpression ) <co xml:id="canonfilters.syntax.template.expr" />
 	{
-		Assignment;
+		Assignment; <co xml:id="canonfilters.syntax.template.assignments" />
 		Assignment;
 	}
-	cor ( MatchingExpression )
+	cor<co xml:id="canonfilters.syntax.template.oper" /> ( MatchingExpression )<co
+				xml:id="canonfilters.syntax.template.noexpr" />
 </programlisting>
-		</programlistingco>
+		<!-- </programlistingco> -->
 		<calloutlist>
 			<callout arearefs="canonfilters.syntax.template.filter">
 				<para>

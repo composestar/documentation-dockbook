@@ -21,8 +21,8 @@
 </highlighter>
 
 <wholehighlighter type='regex'>
-  <pattern>\?(\?)?</pattern>
-  <style>tag</style>
+  <pattern>\?(\?)?[a-zA-Z0-9_]+</pattern>
+  <style>param</style>
 </wholehighlighter>
 
 <highlighter type='keywords'>

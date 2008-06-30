@@ -124,107 +124,107 @@
 
 		<example xml:id="canonfilters.semantics.types.example">
 			<title>Usage of different types</title>
-			<programlistingco>
+			<!-- <programlistingco>
 				<areaspec>
-					<area coords="8 23" xml:id="canonfilters.semantics.types.example.internal" />
-					<area coords="9 23" xml:id="canonfilters.semantics.types.example.condition" />
-					<area coords="10 33" xml:id="canonfilters.semantics.types.example.fqnTypo" />
-					<area coords="11 34" xml:id="canonfilters.semantics.types.example.target" />
-					<area coords="12 38" xml:id="canonfilters.semantics.types.example.fqn" />
-					<area coords="13 34" xml:id="canonfilters.semantics.types.example.literal" />
-					<area coords="14 28" xml:id="canonfilters.semantics.types.example.fmparam" />
-				</areaspec>
-				<programlisting language="composestar"><![CDATA[filtermodule ExampleFM(?myParam) {
+				<area coords="8 23" xml:id="canonfilters.semantics.types.example.internal" />
+				<area coords="9 23" xml:id="canonfilters.semantics.types.example.condition" />
+				<area coords="10 33" xml:id="canonfilters.semantics.types.example.fqnTypo" />
+				<area coords="11 34" xml:id="canonfilters.semantics.types.example.target" />
+				<area coords="12 38" xml:id="canonfilters.semantics.types.example.fqn" />
+				<area coords="13 34" xml:id="canonfilters.semantics.types.example.literal" />
+				<area coords="14 28" xml:id="canonfilters.semantics.types.example.fmparam" />
+				</areaspec> -->
+			<programlisting language="composestar" xml:space="preserve">filtermodule ExampleFM(?myParam) {
 	internals
 		foo : FQNExample.MyClass;
 	conditions
 		bar : foo.test();
 	inputfilters
 		f1 : Dispatch = ( true ) {
-			filter.item1 = foo;
-			filter.item2 = bar;
-			filter.item3 = filters.item1;
-			filter.item4 = message.target;
-			filter.item5 = FQNExample.MyClass;
-			filter.item6 = 'hello world!';
-			filter.item7 = ?myParam;
+			filter.item1 = foo; <co xml:id="canonfilters.semantics.types.example.internal" />
+			filter.item2 = bar; <co xml:id="canonfilters.semantics.types.example.condition" />
+			filter.item3 = filters.item1; <co xml:id="canonfilters.semantics.types.example.fqnTypo" />
+			filter.item4 = message.target; <co xml:id="canonfilters.semantics.types.example.target" />
+			filter.item5 = FQNExample.MyClass; <co xml:id="canonfilters.semantics.types.example.fqn" />
+			filter.item6 = 'hello world!'; <co xml:id="canonfilters.semantics.types.example.literal" />
+			filter.item7 = ?myParam; <co xml:id="canonfilters.semantics.types.example.fmparam" />
 		}
-}]]></programlisting>
-				<calloutlist>
-					<callout arearefs="canonfilters.semantics.types.example.internal">
-						<simpara>
-							<code language="composestar">filter.item1</code>
-							will contain a value of type
-							<emphasis>object</emphasis>
-							.
-							<code language="composestar">foo</code>
-							refers to an internal, which is an instance of the class
-							<code language="composestar">FQNExample.MyClass</code>
-							.
-						</simpara>
-					</callout>
-					<callout arearefs="canonfilters.semantics.types.example.condition">
-						<simpara>
-							<code language="composestar">bar</code>
-							is a condition registered in this filter module, a condition is a reference to a method
-							program element, therefore
-							<code language="composestar">filter.item2</code>
-							will contain a value of the type
-							<emphasis>program elements</emphasis>
-							. More sepecifically a method program element.
-						</simpara>
-					</callout>
-					<callout arearefs="canonfilters.semantics.types.example.fqnTypo">
-						<simpara>
-							<code language="composestar">filters.something</code>
-							contains a typo, by mistake an
-							<emphasis>s</emphasis>
-							was added to the word
-							<code language="composestar">filter</code>
-							. As a result
-							<code language="composestar">filters.item1</code>
-							is regarded as a FQN and will be resolved in the language model of the base program. When no
-							such element can be found a warning will be issued, and the resulting value is
-							<emphasis>void</emphasis>
-							.
-						</simpara>
-					</callout>
-					<callout arearefs="canonfilters.semantics.types.example.target">
-						<simpara>
-							<code language="composestar">message.target</code>
-							is an object, therefore the value of
-							<code language="composestar">filter.item4</code>
-							will be of type object.
-						</simpara>
-					</callout>
-					<callout arearefs="canonfilters.semantics.types.example.fqn">
-						<simpara>
-							The current filter module does not contain a declaration with the name
-							<code language="composestar">FQNExample.MyClasst</code>
-							, so this entry is considered to be a fully qualified name and is resolved to a program
-							element. This program element resolved to a type, not to an object. An object is an instance
-							of a type, and instances are not present in the language model.
-						</simpara>
-					</callout>
-					<callout arearefs="canonfilters.semantics.types.example.literal">
-						<simpara>
-							<code language="composestar">'hello world!'</code>
-							is a literal,
-							<code language="composestar">filter.item6</code>
-							will contain exactly that value (without the quotes).
-						</simpara>
-					</callout>
-					<callout arearefs="canonfilters.semantics.types.example.fmparam">
-						<simpara>
-							<code language="composestar">?myParam</code>
-							is a filter module parameter. Its contents is unknown. Therefore the value of
-							<code language="composestar">filter.item7</code>
-							will not be known until this filter module has been instantiated. The value will most likely
-							be a program element or a literal.
-						</simpara>
-					</callout>
-				</calloutlist>
-			</programlistingco>
+}</programlisting>
+			<calloutlist>
+				<callout arearefs="canonfilters.semantics.types.example.internal">
+					<simpara>
+						<code language="composestar">filter.item1</code>
+						will contain a value of type
+						<emphasis>object</emphasis>
+						.
+						<code language="composestar">foo</code>
+						refers to an internal, which is an instance of the class
+						<code language="composestar">FQNExample.MyClass</code>
+						.
+					</simpara>
+				</callout>
+				<callout arearefs="canonfilters.semantics.types.example.condition">
+					<simpara>
+						<code language="composestar">bar</code>
+						is a condition registered in this filter module, a condition is a reference to a method program
+						element, therefore
+						<code language="composestar">filter.item2</code>
+						will contain a value of the type
+						<emphasis>program elements</emphasis>
+						. More sepecifically a method program element.
+					</simpara>
+				</callout>
+				<callout arearefs="canonfilters.semantics.types.example.fqnTypo">
+					<simpara>
+						<code language="composestar">filters.something</code>
+						contains a typo, by mistake an
+						<emphasis>s</emphasis>
+						was added to the word
+						<code language="composestar">filter</code>
+						. As a result
+						<code language="composestar">filters.item1</code>
+						is regarded as a FQN and will be resolved in the language model of the base program. When no
+						such element can be found a warning will be issued, and the resulting value is
+						<emphasis>void</emphasis>
+						.
+					</simpara>
+				</callout>
+				<callout arearefs="canonfilters.semantics.types.example.target">
+					<simpara>
+						<code language="composestar">message.target</code>
+						is an object, therefore the value of
+						<code language="composestar">filter.item4</code>
+						will be of type object.
+					</simpara>
+				</callout>
+				<callout arearefs="canonfilters.semantics.types.example.fqn">
+					<simpara>
+						The current filter module does not contain a declaration with the name
+						<code language="composestar">FQNExample.MyClasst</code>
+						, so this entry is considered to be a fully qualified name and is resolved to a program element.
+						This program element resolved to a type, not to an object. An object is an instance of a type,
+						and instances are not present in the language model.
+					</simpara>
+				</callout>
+				<callout arearefs="canonfilters.semantics.types.example.literal">
+					<simpara>
+						<code language="composestar">'hello world!'</code>
+						is a literal,
+						<code language="composestar">filter.item6</code>
+						will contain exactly that value (without the quotes).
+					</simpara>
+				</callout>
+				<callout arearefs="canonfilters.semantics.types.example.fmparam">
+					<simpara>
+						<code language="composestar">?myParam</code>
+						is a filter module parameter. Its contents is unknown. Therefore the value of
+						<code language="composestar">filter.item7</code>
+						will not be known until this filter module has been instantiated. The value will most likely be
+						a program element or a literal.
+					</simpara>
+				</callout>
+			</calloutlist>
+			<!-- </programlistingco> -->
 		</example>
 
 	</section>
