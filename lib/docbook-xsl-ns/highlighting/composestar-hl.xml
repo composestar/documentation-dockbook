@@ -1,50 +1,49 @@
 <?xml version='1.0'?>
 <highlighters>
 
-<highlighter type='multiline-comment'>
-  <start>/*</start>
-  <end>*/</end>
-</highlighter>
+	<highlighter type='multiline-comment'>
+		<start>/*</start>
+		<end>*/</end>
+	</highlighter>
 
-<highlighter type='oneline-comment'>
-  //
-</highlighter>
+	<highlighter type='oneline-comment'>//</highlighter>
 
-<highlighter type='string'>
-  <string>"</string>
-  <escape>\</escape>
-</highlighter>
+	<highlighter type='string'>
+		<string>"</string>
+		<escape>\</escape>
+	</highlighter>
 
-<highlighter type='string'>
-  <string>'</string>
-  <escape>\</escape>
-</highlighter>
+	<highlighter type='string'>
+		<string>'</string>
+		<escape>\</escape>
+	</highlighter>
 
-<wholehighlighter type='regex'>
-  <pattern>\?(\?)?[a-zA-Z0-9_]+</pattern>
-  <style>param</style>
-</wholehighlighter>
+	<wholehighlighter type='regex'>
+		<pattern>\?(\?)?[a-zA-Z0-9_]+</pattern>
+		<style>param</style>
+	</wholehighlighter>
 
-<highlighter type='keywords'>
-  <keyword>concern</keyword>
-  <keyword>filtermodule</keyword>
-  <keyword>internals</keyword>
-  <keyword>externals</keyword>
-  <keyword>conditions</keyword>
-  <keyword>inputfilters</keyword>
-  <keyword>outputfilters</keyword>
-  <keyword>cor</keyword>
-  <keyword>target</keyword>
-  <keyword>selector</keyword>
-  <keyword>inner</keyword>
-  <keyword>filter</keyword>
-  <keyword>message</keyword>
-  <keyword>superimposition</keyword>
-  <keyword>selectors</keyword>
-  <keyword>filtermodules</keyword>
-  <keyword>annotations</keyword>
-  <keyword>constraints</keyword>
-  <keyword>implementation</keyword>
-</highlighter>
+	<highlighter type='keywords'>
+		<keyword>concern</keyword>
+		<keyword>filtermodule</keyword>
+		<keyword>internals</keyword>
+		<keyword>externals</keyword>
+		<keyword>conditions</keyword>
+		<keyword>inputfilters</keyword>
+		<keyword>outputfilters</keyword>
+		<keyword>cor</keyword>
+		<keyword>target</keyword>
+		<keyword>selector</keyword>
+		<keyword>inner</keyword>
+		<keyword>filter</keyword>
+		<keyword>message</keyword>
+		<keyword>superimposition</keyword>
+		<keyword>selectors</keyword>
+		<keyword>filtermodules</keyword>
+		<keyword>annotations</keyword>
+		<keyword>constraints</keyword>
+		<keyword>implementation</keyword>
+		<keyword>in</keyword>
+	</highlighter>
 
 </highlighters>

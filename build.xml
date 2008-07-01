@@ -10,6 +10,8 @@
 		<mkdir dir="build" />
 		<mkdir dir="build/images" />
 
+		<property name="masterfile" value="*.xml" />
+
 		<macrodef name="docbook">
 			<attribute name="format" default="html" />
 			<element name="xslt-params" optional="yes" />
@@ -24,8 +26,7 @@
 
 				<xslt style="src/cstar-docbook-@{format}.xsl" extension=".@{format}" basedir="src" destdir="build" force="true">
 
-					<include name="*.xml" />
-					<exclude name="ARM.xml" />
+					<include name="${masterfile}" />
 
 					<classpath>
 						<fileset dir="lib">
@@ -113,6 +114,27 @@
 			</fileset>
 		</fop>
 
+	</target>
+
+
+	<target name="bib" depends="init">
+		<script language="javascript">
+			<![CDATA[
+			importClass(java.lang.System);
+			System.setProperty("org.apache.xerces.xni.parser.XMLParserConfiguration", "org.apache.xerces.parsers.XIncludeParserConfiguration");
+			System.setProperty("xslthl.config", "file:///"+basedir+"/lib/docbook-xsl-ns/highlighting/xslthl-config.xml");
+			]]>
+		</script>
+
+		<xslt style="lib/docbook-bib/genbib.xsl" extension=".bib.xml" basedir="src" destdir="build" force="true">
+			<include name="ARM.xml" />
+			<classpath>
+				<fileset dir="lib">
+					<include name="*.jar" />
+				</fileset>
+			</classpath>
+			<param name="collection" expression="References/aosd-bibliography-docbook5.xml" />
+		</xslt>
 	</target>
 
 </project>

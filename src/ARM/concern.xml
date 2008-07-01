@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <chapter xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://docbook.org/ns/docbook ../../docbook-5.0/xsd/docbook.xsd" xml:id="concern">
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xi="http://www.w3.org/2001/XInclude"
+	xsi:schemaLocation="http://docbook.org/ns/docbook ../../lib/docbook-5/xsd/docbook.xsd" xml:id="concern">
 	<title>Concern</title>
 	<para>
 		Concerns are the distinctive building blocks of a Compose* application, in addition to the building blocks of
@@ -18,13 +18,14 @@
 		<title>Syntax</title>
 		<figure xml:id="concern.grammar">
 			<title>Concern syntax</title>
-			<programlisting language="EBNF" linenumbering="numbered"><![CDATA[Concern = 'concern' Identifier [ConcernParameters] ['in' Namespace] ConcernBlock;
+			<programlisting language="EBNF"><![CDATA[Concern = 'concern' Identifier [ConcernParameters] ['in' Namespace] ConcernBlock;
 ConcernParameters = '(' Identifier ':' Type {',' Identifier ':' Type } ')';
 Type = Fqn;
 Fqn = Identifier {'.' Identifier};
 Namespace = Fqn;
 ConcernBlock = '{' {FilterModule} [SuperImposition] [Implementation] '}';
 ]]></programlisting>
+			<remark role="todo">This needs to be converted to a productionset</remark>
 		</figure>
 		<para>
 			The syntax for a concern definition is shown in
@@ -51,7 +52,7 @@ ConcernBlock = '{' {FilterModule} [SuperImposition] [Implementation] '}';
 		<title>Examples</title>
 		<example xml:id="concern.concerntemplate">
 			<title>Abstract example of a concern</title>
-			<programlisting language="Composestar" linenumbering="numbered"><![CDATA[concern aConcern in aNamespace {
+			<programlisting language="composestar"><![CDATA[concern aConcern in aNamespace {
   filtermodule A {
     ...
   }
@@ -81,4 +82,33 @@ ConcernBlock = '{' {FilterModule} [SuperImposition] [Implementation] '}';
 			.
 		</para>
 	</section>
+	<section>
+		<title>Legality Rules</title>
+		<itemizedlist>
+			<listitem>
+				<simpara>The identifier of a concern must be unique for the namespace where it is declared in</simpara>
+			</listitem>
+			<listitem>
+				<simpara>The ordering of filter modules, superimposition, and implementation is fixed</simpara>
+			</listitem>
+			<listitem>
+				<simpara>There can be maximal one superimposition and implementation part</simpara>
+			</listitem>
+		</itemizedlist>
+	</section>
+
+	<xi:include href="concern-comments.xml" />
+
+	<section>
+		<title>Further Reading</title>
+		<para>
+			In the comments section of this chapter
+			<citation>bergmans:aosdbook05</citation>
+			is already mentioned, this is a good source for the theory behind concerns.
+			<citation>steinecmda-abmbsocss05</citation>
+			<xref linkend="schippersecmda-abmbsocss05" />
+			<biblioref linkend="amayaecmda-abmbsocss05" />
+		</para>
+	</section>
+
 </chapter>
