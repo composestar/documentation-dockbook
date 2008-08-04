@@ -6,5 +6,5 @@
 
 	<xi:include href="ARM/concern.xml" />
 
-	<xi:include href="../build/ARM.bib.xml" />
+	<!-- <xi:include href="../build/ARM.bib.xml" />  -->
 </book>

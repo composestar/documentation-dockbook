@@ -1,8 +1,7 @@
 <?xml version="1.0"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0"
-	xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:d="http://docbook.org/ns/docbook"
-	xmlns:xslthl="http://xslthl.sf.net" exclude-result-prefixes="xslthl d">
-
+	xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:d="http://docbook.org/ns/docbook" xmlns:xslthl="http://xslthl.sf.net"
+	exclude-result-prefixes="xslthl d">
 	<xsl:import href="../lib/docbook-xsl-ns/fo/docbook.xsl" />
 
 	<!-- underline links -->
@@ -22,59 +21,69 @@
 		</xsl:call-template>
 	</xsl:template>
 
-
 	<!-- new syntax highlighting colors -->
-
-	<xsl:template match='xslthl:keyword'>
+	<xsl:template match="xslthl:keyword" mode="xslthl">
 		<fo:inline font-weight="bold">
-			<xsl:apply-templates />
+			<xsl:apply-templates mode="xslthl"/>
 		</fo:inline>
 	</xsl:template>
-
-	<xsl:template match='xslthl:string'>
+	<xsl:template match="xslthl:string" mode="xslthl">
 		<fo:inline color="blue">
-			<xsl:apply-templates />
+			<xsl:apply-templates mode="xslthl"/>
 		</fo:inline>
 	</xsl:template>
-
-	<xsl:template match='xslthl:comment'>
+	<xsl:template match="xslthl:number" mode="xslthl">
+		<fo:inline color="blue">
+			<xsl:apply-templates mode="xslthl"/>
+		</fo:inline>
+	</xsl:template>
+	<xsl:template match="xslthl:comment" mode="xslthl">
 		<fo:inline font-style="italic" color="green">
-			<xsl:apply-templates />
+			<xsl:apply-templates mode="xslthl"/>
 		</fo:inline>
 	</xsl:template>
-
-	<xsl:template match='xslthl:param'>
+	<xsl:template match="xslthl:doccomment|xslthl:doctype" mode="xslthl">
+		<fo:inline font-style="italic" color="teal">
+			<xsl:apply-templates mode="xslthl"/>
+		</fo:inline>
+	</xsl:template>
+	<xsl:template match="xslthl:directive" mode="xslthl">
 		<fo:inline color="maroon">
-			<xsl:apply-templates />
+			<xsl:apply-templates mode="xslthl"/>
 		</fo:inline>
 	</xsl:template>
-
-	<xsl:template match='xslthl:attribute'>
-		<fo:inline font-weight="bold">
-			<xsl:apply-templates />
+	<xsl:template match="xslthl:annotation" mode="xslthl">
+		<fo:inline font-style="italic" color="gray">
+			<xsl:apply-templates mode="xslthl"/>
 		</fo:inline>
 	</xsl:template>
-
-	<xsl:template match='xslthl:value'>
-		<fo:inline font-weight="bold">
-			<xsl:apply-templates />
+	<xsl:template match="xslthl:tag" mode="xslthl">
+		<fo:inline color="teal">
+			<xsl:apply-templates mode="xslthl"/>
+		</fo:inline>
+	</xsl:template>
+	<xsl:template match="xslthl:attribute" mode="xslthl">
+		<fo:inline color="purple">
+			<xsl:apply-templates mode="xslthl"/>
+		</fo:inline>
+	</xsl:template>
+	<xsl:template match="xslthl:value" mode="xslthl">
+		<fo:inline color="blue">
+			<xsl:apply-templates mode="xslthl"/>
 		</fo:inline>
 	</xsl:template>
 
 	<!-- optimize ebnf table for size -->
-
 	<xsl:template match="d:productionset">
 		<xsl:variable name="id">
 			<xsl:call-template name="object.id" />
 		</xsl:variable>
-
 		<xsl:choose>
 			<xsl:when test="d:title">
 				<fo:block id="{$id}" xsl:use-attribute-sets="formal.object.properties">
 					<xsl:call-template name="formal.object.heading">
 						<xsl:with-param name="placement" select="'before'" />
 					</xsl:call-template>
-
 					<fo:table table-layout="fixed" width="100%">
 						<fo:table-column column-number="1" column-width="5%" />
 						<fo:table-column column-number="2" column-width="20%" />
@@ -99,7 +108,6 @@
 			</xsl:otherwise>
 		</xsl:choose>
 	</xsl:template>
-
 	<xsl:template match="d:production">
 		<xsl:param name="recap" select="false()" />
 		<xsl:variable name="id">
@@ -142,5 +150,4 @@
 			</fo:table-cell>
 		</fo:table-row>
 	</xsl:template>
-
 </xsl:stylesheet>

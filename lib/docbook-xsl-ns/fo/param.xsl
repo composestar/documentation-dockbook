@@ -304,6 +304,7 @@ set       toc,title
 <xsl:param name="headers.on.blank.pages" select="1"/>
 <xsl:param name="highlight.default.language"/>
 <xsl:param name="highlight.source" select="0"/>
+<xsl:param name="highlight.xslthl.config"/>
 <xsl:param name="hyphenate">true</xsl:param>
 <xsl:param name="hyphenate.verbatim" select="0"/>
 <xsl:param name="hyphenate.verbatim.characters"/>

@@ -18,10 +18,9 @@
 			<sequential>
 				<script language="javascript">
 					<![CDATA[
-							importClass(java.lang.System);
-							System.setProperty("org.apache.xerces.xni.parser.XMLParserConfiguration", "org.apache.xerces.parsers.XIncludeParserConfiguration");
-							System.setProperty("xslthl.config", "file:///"+basedir+"/lib/docbook-xsl-ns/highlighting/xslthl-config.xml");
-							]]>
+						importClass(java.lang.System);
+						System.setProperty("org.apache.xerces.xni.parser.XMLParserConfiguration", "org.apache.xerces.parsers.XIncludeParserConfiguration");
+					]]>
 				</script>
 
 				<xslt style="src/cstar-docbook-@{format}.xsl" extension=".@{format}" basedir="src" destdir="build" force="true">
@@ -63,6 +62,7 @@
 					<param name="linenumbering.extension" expression="1" />
 					<param name="tablecolumns.extension" expression="1" />
 					<param name="admon.graphics" expression="1" />
+					<param name="highlight.xslthl.config" expression="file:///${basedir}/lib/docbook-xsl-ns/highlighting/xslthl-config.xml" />
 					<xslt-params />
 				</xslt>
 			</sequential>
@@ -70,7 +70,7 @@
 
 	</target>
 
-	<target name="html" depends="init">
+	<target name="html" depends="init" description="Produce HTML output">
 		<docbook format="html">
 			<xslt-params>
 				<param name="draft.watermark.image" expression="images/draft.png" />
@@ -85,7 +85,7 @@
 		</copy>
 	</target>
 
-	<target name="fo" depends="init">
+	<target name="fo" depends="init" description="Produce XSL-FO and PDF output">
 		<docbook format="fo">
 			<xslt-params>
 				<param name="paper.type" expression="A4" />
@@ -117,15 +117,30 @@
 	</target>
 
 
-	<target name="bib" depends="init">
+	<target name="bib" depends="init" description="Create the bibliographies for the documents.">
+
+		<!-- create the main bibliography file -->
+		<!-- bibliography.xml -->
+
+		<!-- make sure the bib files exist -->
+		<touch>
+			<chainedmapper>
+				<globmapper from="*.xml" to="*.bib.xml" />
+				<globmapper from="src/*" to="src/bib/*" />
+			</chainedmapper>
+			<fileset>
+				<include name="${masterfile}" />
+			</fileset>
+		</touch>
+
 		<script language="javascript">
 			<![CDATA[
 			importClass(java.lang.System);
 			System.setProperty("org.apache.xerces.xni.parser.XMLParserConfiguration", "org.apache.xerces.parsers.XIncludeParserConfiguration");
-			System.setProperty("xslthl.config", "file:///"+basedir+"/lib/docbook-xsl-ns/highlighting/xslthl-config.xml");
 			]]>
 		</script>
 
+		<!-- construct the strippd down bib files -->
 		<xslt style="lib/docbook-bib/genbib.xsl" extension=".bib.xml" basedir="src" destdir="build" force="true">
 			<include name="ARM.xml" />
 			<classpath>
@@ -133,8 +148,15 @@
 					<include name="*.jar" />
 				</fileset>
 			</classpath>
-			<param name="collection" expression="References/aosd-bibliography-docbook5.xml" />
+			<param name="collection" expression="build/bibliography.xml" />
 		</xslt>
+
+		<!-- move the created files to the source directory -->
+		<move todir="src/bib">
+			<fileset dir="build">
+				<include name="*.bib.xml" />
+			</fileset>
+		</move>
 	</target>
 
 </project>
