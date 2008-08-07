@@ -105,9 +105,9 @@ ConcernBlock = '{' {FilterModule} [SuperImposition] [Implementation] '}';
 			In the comments section of this chapter
 			<citation>bergmans:aosdbook05</citation>
 			is already mentioned, this is a good source for the theory behind concerns.
-			<citation>steinecmda-abmbsocss05</citation>
-			<xref linkend="schippersecmda-abmbsocss05" />
-			<biblioref linkend="amayaecmda-abmbsocss05" />
+			<citation>stein.ecmda-abmbsocss05</citation>
+			<xref linkend="schippers.ecmda-abmbsocss05" />
+			<biblioref linkend="amaya.ecmda-abmbsocss05" />
 		</para>
 	</section>
 

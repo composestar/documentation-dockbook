@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="ComposeStar/Documentation" default="html">
 
-	<target name="clean">
+	<target name="clean" description="Clean the project">
 		<delete dir="build" />
+		<delete dir="src/bib" />
 	</target>
 
 	<target name="init">
 		<mkdir dir="dist" />
 		<mkdir dir="build" />
 		<mkdir dir="build/images" />
+		<mkdir dir="src/bib" />
 
 		<property name="masterfile" value="*.xml" />
 
@@ -119,20 +121,41 @@
 
 	<target name="bib" depends="init" description="Create the bibliographies for the documents.">
 
+		<property name="masterbib" value="__master__.bib.xml" />
+
 		<!-- create the main bibliography file -->
 		<!-- bibliography.xml -->
+
+		<taskdef name="bib2db5" classname="net.sf.bib2db5.ant.Bib2DB5Task">
+			<classpath>
+				<fileset dir="lib">
+					<include name="bib2db5-compact.jar" />
+				</fileset>
+			</classpath>
+		</taskdef>
+		<bib2db5 dest="build/${masterbib}" merge="true">
+			<fileset dir="bib">
+				<include name="*.bib" />
+			</fileset>
+		</bib2db5>
 
 		<!-- make sure the bib files exist -->
 		<touch>
 			<chainedmapper>
 				<globmapper from="*.xml" to="*.bib.xml" />
-				<globmapper from="src/*" to="src/bib/*" />
+				<globmapper from="*" to="src/bib/*" />
 			</chainedmapper>
-			<fileset>
+			<fileset dir="src">
 				<include name="${masterfile}" />
 			</fileset>
 		</touch>
+		<replaceregexp match="^$" replace="&lt;bibliography xmlns='http://docbook.org/ns/docbook' version='5.0'/&gt;">
+			<fileset dir="src/bib">
+				<include name="*.bib.xml" />
+			</fileset>
+		</replaceregexp>
 
+		<!-- construct the strippd down bib files -->
 		<script language="javascript">
 			<![CDATA[
 			importClass(java.lang.System);
@@ -140,7 +163,6 @@
 			]]>
 		</script>
 
-		<!-- construct the strippd down bib files -->
 		<xslt style="lib/docbook-bib/genbib.xsl" extension=".bib.xml" basedir="src" destdir="build" force="true">
 			<include name="ARM.xml" />
 			<classpath>
@@ -148,13 +170,14 @@
 					<include name="*.jar" />
 				</fileset>
 			</classpath>
-			<param name="collection" expression="build/bibliography.xml" />
+			<param name="collection" expression="../build/${masterbib}" />
 		</xslt>
 
 		<!-- move the created files to the source directory -->
 		<move todir="src/bib">
 			<fileset dir="build">
 				<include name="*.bib.xml" />
+				<exclude name="${masterbib}" />
 			</fileset>
 		</move>
 	</target>
