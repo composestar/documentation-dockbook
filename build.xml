@@ -64,6 +64,8 @@
 					<param name="linenumbering.extension" expression="1" />
 					<param name="tablecolumns.extension" expression="1" />
 					<param name="admon.graphics" expression="1" />
+					<param name="bibliography.numbered" expression="1" />
+					<param name="bibliography.style" expression="iso690" />
 					<param name="highlight.xslthl.config" expression="file:///${basedir}/lib/docbook-xsl-ns/highlighting/xslthl-config.xml" />
 					<xslt-params />
 				</xslt>
@@ -133,7 +135,7 @@
 				</fileset>
 			</classpath>
 		</taskdef>
-		<bib2db5 dest="build/${masterbib}" merge="true">
+		<bib2db5 dest="src/bib/${masterbib}" merge="true" logging="warn" nodtd="true">
 			<fileset dir="bib">
 				<include name="*.bib" />
 			</fileset>
@@ -170,14 +172,13 @@
 					<include name="*.jar" />
 				</fileset>
 			</classpath>
-			<param name="collection" expression="../build/${masterbib}" />
+			<param name="collection" expression="bib/${masterbib}" />
 		</xslt>
 
 		<!-- move the created files to the source directory -->
 		<move todir="src/bib">
 			<fileset dir="build">
 				<include name="*.bib.xml" />
-				<exclude name="${masterbib}" />
 			</fileset>
 		</move>
 	</target>
