@@ -36,7 +36,7 @@
 
 	<informalexample>
 		<programlisting language="composestar"><![CDATA[Dispatch = { <foo.*> foo.* }]]></programlisting>
-		<programlisting language="composestar"><![CDATA[Dispatch = (selector %= foo) { target = foo; }]]></programlisting>
+		<programlisting language="composestar"><![CDATA[Dispatch = (selector $= foo) { target = foo; }]]></programlisting>
 	</informalexample>
 	<para>Signature matching is performed between a selector and an object.</para>
 

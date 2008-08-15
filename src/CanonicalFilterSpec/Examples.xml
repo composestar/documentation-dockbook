@@ -15,7 +15,7 @@
 	inputfilters
 		toFoo : Dispatch = (
 				(!isActive & selector == "activate")
-				| (isActive & selector == ??methods & selector %= foo)
+				| (isActive & selector == ??methods & selector $= foo)
 			)
 			{
 				target = foo;
@@ -25,5 +25,10 @@
 				filter.exception = "Example.Exception.InactiveException"; 
 			}
 }]]></programlisting>
+		<para>
+			...
+
+			<remark role="todo">explain</remark>
+		</para>
 	</example>
 </section>

@@ -35,7 +35,7 @@
 			. It gives an idea how to use arbitrary data (like time) in message and filter properties. The idea is not
 			to introduce any more data types than there already are. By leaving this up to the filter types the language
 			remains simple (yet the filter types become more complex), and complete freedom on how to use the arbitrary
-			data remains. remains. Filter types should probably follow the UNIX philosophy according to Doug McIlroy.
+			data remains. Filter types should probably follow the UNIX philosophy according to Doug McIlroy.
 		</para>
 		<blockquote>
 			<attribution>Doug McIlroy</attribution>

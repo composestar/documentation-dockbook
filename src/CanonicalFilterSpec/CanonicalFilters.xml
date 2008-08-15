@@ -6,7 +6,11 @@
 
 	<para>
 		The canonical filter specification allows a more fine grained definition for message matching and substitution
-		actions.
+		actions than the classic notation.
+		<remark role="todo">
+			This needs to be rewritten when it is made part of the ARM. Because at that point there is no "classic"
+			notation, except for a section in the notes.
+		</remark>
 	</para>
 
 	<xi:include href="Syntax.xml" />

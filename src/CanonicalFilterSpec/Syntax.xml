@@ -5,7 +5,7 @@
 	<title>Syntax</title>
 
 	<para>
-		The basic syntax for the canonical filter elements in shown in
+		The basic syntax for the canonical filter elements is shown in
 		<xref xlink:href="#canonfilters.syntax.template" />
 		. The complete syntax is described by the grammar defined in
 		<xref xlink:href="#canonfilters.grammar" />
@@ -67,8 +67,10 @@
 			</callout>
 			<callout arearefs="canonfilters.syntax.template.noexpr">
 				<para>
-					The assignment part is optional. When not assignments are needed this block can simply be omitted.
-					An empty assignment block is also allowed.
+					The assignment part is optional. When no assignments are needed this part can simply be omitted. An
+					empty assignment part is also allowed:
+					<code language="composestar">( MatchingExpression ) {}</code>
+					.
 				</para>
 			</callout>
 		</calloutlist>
@@ -232,8 +234,8 @@
 	<section xml:id="canonfilters.syntax.matchexpr">
 		<title>Matching Expressions</title>
 		<para>
-			A matching expression is an expression that evaluates to a boolean value. The matching expression defines if
-			a message is accepted by the current filter. Only when the message is accepted the filter type will be
+			A matching expression is an expression that evaluates to a boolean value. A matching expression defines if a
+			message is accepted for the current filter. Only when the message is accepted the filter type will be
 			executed.
 		</para>
 		<para>
@@ -241,17 +243,17 @@
 			operators like
 			<emphasis>or</emphasis>
 			(
-			<code>true | false</code>
+			<code>A | B</code>
 			) ,
 			<emphasis>and</emphasis>
 			(
-			<code>true &amp; false</code>
+			<code>A &amp; B</code>
 			) and
 			<emphasis>not</emphasis>
 			(
-			<code>!true</code>
+			<code>!A</code>
 			) . Sub-expressions can be created using parenthesis:
-			<code>(true | !(true &amp; false))</code>
+			<code>(A | !(B &amp; C))</code>
 			.
 		</para>
 		<para>
@@ -263,9 +265,9 @@
 			.
 		</para>
 		<para>
-			The compare statements check if of a message property to matches with a given value. Compare statements
-			consist of three parts: left hand side, matching operator, and the right hand side. The following matching
-			operators have been defined:
+			The compare statements check if a message property matches with a given value. Compare statements consist of
+			three parts: left hand side, matching operator, and the right hand side. The following matching operators
+			have been defined:
 			<variablelist>
 				<varlistentry>
 					<term>
@@ -288,7 +290,7 @@
 					</term>
 					<listitem>
 						<simpara>
-							Returns true when the right hand side contains the signature implied by the left had side.
+							Returns true when the right hand side contains the signature given by the left hand side.
 						</simpara>
 					</listitem>
 				</varlistentry>
@@ -310,15 +312,15 @@
 					</term>
 					<listitem>
 						<simpara>
-							Returns true of the left hand side contains the annotation as identifier by the right hand
-							side.
+							Returns true if the program element on left hand side has the annotation given in the right
+							hand side.
 						</simpara>
 					</listitem>
 				</varlistentry>
 			</variablelist>
 			Information about the semantics of these operators in explained in
 			<xref xlink:href="#canonfilters.semantics.matchexpr.opers" />
-			. To negate a compare statement it needs to be wrappen in a subexpression:
+			. To negate a compare statement it needs to be enclosed within parenthesis:
 			<code language="composestar">!(target == inner)</code>
 			. The right hand side of the matching operator can contain a list of elements. The list is created by
 			enclosing a comma separated list of elements with square brackets. With a list the compare statement will be
@@ -344,7 +346,8 @@
 			The assignment part of a filter element can contain zero or more assignments. The whole block can be omitted
 			when no assignments are needed. Each assignment is terminated with a semicolon (
 			<code>;</code>
-			). The value only contains a simple new value, there are no expressions possible.
+			). The value only contains a new value, which is either a constant or an other value. Expressions are not
+			possible as value.
 		</para>
 	</section>
 

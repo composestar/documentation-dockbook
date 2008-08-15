@@ -12,6 +12,7 @@
 			There are a couple of different types used in both the matching expressions and assignment part. These types
 			determine how certain elements work.
 		</para>
+		<remark role="todo">Make a distinction between user input types (literal, FQN) and background types.</remark>
 		<variablelist>
 			<varlistentry>
 				<term>Object</term>
@@ -43,7 +44,7 @@
 							</member>
 						</simplelist>
 						New objects can be created through internals and externals in the current filter module,
-						otherwise only the existing objects (see the previously mentioned list) can be used.
+						otherwise only the existing objects (target, inner, etc.) can be used.
 					</para>
 				</listitem>
 			</varlistentry>
@@ -58,6 +59,7 @@
 						) has this type. A selector is much like a method signature (it has a name, return type and
 						argument types), except that the selector can contain wildcards for the return type and accepted
 						arguments.
+						<remark role="todo">Is type information really useful here?</remark>
 					</para>
 				</listitem>
 			</varlistentry>
@@ -65,7 +67,7 @@
 				<term>Literal</term>
 				<listitem>
 					<para>
-						A literal is a string characters enclosed by quotes (double quotes are allowed). For example:
+						A literal is a string of characters enclosed by quotes (double quotes are allowed). For example:
 						<code language="composestar">'this is a literal'</code>
 						or
 						<code language="composestar">"this is also a string"</code>
@@ -109,14 +111,14 @@
 				<term>Program Elements</term>
 				<listitem>
 					<para>
-						Program elements can not be entered directly in the source code. Program elements are entities
-						in the language model of the base program which is created during the compilation process.
-						Program elements are only indirectly available through a lookup, a lookup can be created through
-						a FQN or through filter module parameters. A filter module parameter can contain a (set of)
-						program elements when it was passed a superimposition selector. Filter module conditions can
-						also be used as a program element (in this case a method program elements), but only at places
-						where program elements can be used. The following program element types are used in the
-						canonical notations: Type (and therefore Class and Interface), Method, and Annotation.
+						Program elements cannot be entered directly in the source code. Program elements are entities in
+						the language model of the base program which is created during the compilation process. Program
+						elements are only indirectly available through a lookup, a lookup can be created through a FQN
+						or through filter module parameters. A filter module parameter can contain a (set of) program
+						elements when a selector is used in the filter module binding. Filter module conditions can also
+						be used as a program element (in this case a method program elements), but only at places where
+						program elements can be used. The following program element types are used in the canonical
+						notations: Type (and therefore Class and Interface), Method, and Annotation.
 					</para>
 				</listitem>
 			</varlistentry>
@@ -171,12 +173,12 @@
 						<code language="composestar">filter.item2</code>
 						will contain a value of the type
 						<emphasis>program elements</emphasis>
-						. More sepecifically a method program element.
+						. More specifically a method program element.
 					</simpara>
 				</callout>
 				<callout arearefs="canonfilters.semantics.types.example.fqnTypo">
 					<simpara>
-						<code language="composestar">filters.something</code>
+						<code language="composestar">filters.item1</code>
 						contains a typo, by mistake an
 						<emphasis>s</emphasis>
 						was added to the word
@@ -187,6 +189,9 @@
 						such element can be found a warning will be issued, and the resulting value is
 						<emphasis>void</emphasis>
 						.
+						<remark role="todo">
+							Not regarded as FQN, just not resolved to a filter property. Why even include this example?
+						</remark>
 					</simpara>
 				</callout>
 				<callout arearefs="canonfilters.semantics.types.example.target">
@@ -200,7 +205,7 @@
 				<callout arearefs="canonfilters.semantics.types.example.fqn">
 					<simpara>
 						The current filter module does not contain a declaration with the name
-						<code language="composestar">FQNExample.MyClasst</code>
+						<code language="composestar">FQNExample.MyClass</code>
 						, so this entry is considered to be a fully qualified name and is resolved to a program element.
 						This program element resolved to a type, not to an object. An object is an instance of a type,
 						and instances are not present in the language model.
@@ -217,7 +222,8 @@
 				<callout arearefs="canonfilters.semantics.types.example.fmparam">
 					<simpara>
 						<code language="composestar">?myParam</code>
-						is a filter module parameter. Its contents is unknown. Therefore the value of
+						is a filter module parameter. Filter module parameters do not include a type definition.
+						Therefore the value of
 						<code language="composestar">filter.item7</code>
 						will not be known until this filter module has been instantiated. The value will most likely be
 						a program element or a literal.
@@ -233,7 +239,7 @@
 		<title>Matching Expression</title>
 		<para>
 			The matching expression is constructed from a combination of boolean statements and boolean operators. There
-			are three boolean operators> The
+			are three boolean operators. The
 			<code>&amp;</code>
 			(
 			<emphasis>and</emphasis>
@@ -255,8 +261,7 @@
 							<code>True</code>
 							or
 							<code>False</code>
-							. Although the false constant might not be very useful, the true constant can be used to
-							always match a message.
+							.
 						</simpara>
 					</listitem>
 				</varlistentry>
@@ -265,8 +270,8 @@
 					<listitem>
 						<simpara>
 							These are the conditions defined in the filter module. These conditions can only be
-							evaluated at runtime because they require the execution of the referred to method to get the
-							boolean value.
+							evaluated at runtime because they require the execution of the method to get its boolean
+							value.
 						</simpara>
 					</listitem>
 				</varlistentry>
@@ -277,8 +282,8 @@
 							A statement that compares two entities according to a given rule set. The result would be
 							either true or false. More about the compare statements can be found in
 							<xref xlink:href="#canonfilters.semantics.matchexpr.opers" />
-							. In order to avoid confusion compare statements must be placed in a compound statement in
-							order to negate them.
+							. In order to avoid confusion compare statements must be placed in a compound statement to
+							negate them.
 						</simpara>
 					</listitem>
 				</varlistentry>
@@ -286,7 +291,7 @@
 					<term>Compound statement</term>
 					<listitem>
 						<simpara>
-							A compound statement is nothing more than a matching expression enclosed within braces.
+							A compound statement is nothing more than a matching expression enclosed within parenthesis.
 						</simpara>
 					</listitem>
 				</varlistentry>
@@ -305,7 +310,7 @@
 			</para>
 
 			<para>
-				The allowed variables on the left hand side is restricted to the following set:
+				The allowed variables on the left hand side are restricted to the following set:
 				<simplelist type="inline">
 					<member>
 						<code language="composestar">target</code>
@@ -400,7 +405,7 @@
 								true if the method on the right hand side is in the list of resolved methods. This form
 								is usually used in conjunction with filter module parameters that contain method program
 								elements. These program elements are usually very specifically selected, and therefore
-								this comparison is performed to the letter. To compare on only the signature of a method
+								this comparison is performed to the latter. To compare on only the signature of a method
 								use the method signature matching listed below.
 							</entry>
 						</row>
@@ -564,9 +569,8 @@
 		<title>Assignments</title>
 		<para>
 			In the assignment part certain variables can be given a new value. Not all variables can be assigned a new
-			value. Below is an overview of all variables, if they can be written and what types they accept for
-			assignment. The assignment part is only executed when the message was accepted according to the matching
-			expression.
+			value. Below is an overview of all variables. The assignment part is only executed when the message was
+			accepted according to the matching expression.
 		</para>
 
 		<table pgwide="1">
@@ -580,7 +584,7 @@
 					<row>
 						<entry>Variable</entry>
 						<entry>Writable</entry>
-						<entry>Accepted Type</entry>
+						<entry>Accepted Value Type</entry>
 						<entry>Comment</entry>
 					</row>
 				</thead>
@@ -657,9 +661,11 @@
 						<entry>
 							<code language="composestar">message.server</code>
 						</entry>
-						<entry>No</entry>
+						<entry>Yes</entry>
 						<entry></entry>
-						<entry></entry>
+						<entry>
+							<remark role="todo">Write this</remark>
+						</entry>
 					</row>
 					<row>
 						<entry>
@@ -702,11 +708,12 @@
 						<entry>Yes</entry>
 						<entry>Any type</entry>
 						<entry>
-							The filter arguments can contain any value, it is up to the filter type to interpreter them.
+							The filter arguments can contain any value, it is up to the filter type to interpret them.
 							<xref xlink:href="#filtertypes" />
-							provies information about the filter arguments that can be set for certain filter types.
+							provides information about the filter arguments that can be set for certain filter types.
 							Assigning values to filter arguments results in a warning that these argument are not used.
 							Failing to set a required argument, or assigning an incompatible type, results in an error.
+							<remark role="todo">Last 2 lines are not correct/wrong</remark>
 						</entry>
 					</row>
 				</tbody>
@@ -739,7 +746,7 @@
 				.
 			</para>
 			<example xml:id="canonfilters.semantics.assignments.beforesubst">
-				<title>Before and substitude</title>
+				<title>Before and substitute</title>
 				<programlisting language="composestar"><![CDATA[flt : Before = ( selector == 'foo' ) {
 	selector = 'bar';
 	filter.target = someInternal;
@@ -765,9 +772,10 @@
 				must ofcourse be aware of these properties and how to interpret these values.
 			</para>
 			<para>
-				The filter structure is nothing more than local access to the filter arguments. It can be used to
-				override the filter arguments set in the filter definition for a specific filter element. Other than
-				that it is identical to the filter arguments.
+				The filter structure provides local access to the filter arguments. It can be used to override the
+				filter arguments set in the filter definition for a specific filter element. Other than that it is
+				identical to the filter arguments. The preferred form is to set the filter arguments after the filter
+				type in the filter definition and not in the assignment part.
 			</para>
 			<example>
 				<title>Setting Filter Arguments</title>
@@ -796,7 +804,9 @@ f1 : Exception = (true) { filter.exception = 'MyException' }]]></programlisting>
 			<code language="composestar">?singleFMP</code>
 			, and a filter module parameter list is prefixed with two question marks
 			<code language="composestar">??fmpList</code>
-			. The filter module parameter list can contain different value types.
+			. Theoretically the filter module parameter list can contain different value types, but this should be
+			avoided.
+			<remark role="todo">Allow this? Best to only allow a single type</remark>
 		</para>
 
 		<section>
@@ -844,9 +854,9 @@ f1 : Exception = (true) { filter.exception = 'MyException' }]]></programlisting>
 			</para>
 			<warning>
 				<simpara>
-					The order in which elements are listen in parameter lists is undeterministic. A second compile of
+					The order in which elements are listed in parameter lists is nondeterministic. A second compile of
 					the exact same code can result in a different value to be used in the assignment. A warning is
-					issued when a paramater list constains more than one compatible value.
+					issued when a parameter list contains more than one compatible value.
 				</simpara>
 			</warning>
 		</section>
