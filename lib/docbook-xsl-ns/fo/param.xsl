@@ -1,12 +1,10 @@
-<?xml version="1.0" encoding="ASCII"?>
-<xsl:stylesheet exclude-result-prefixes="d"
-                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:d="http://docbook.org/ns/docbook"
-version="1.0">
+<?xml version="1.0"?>
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
 
 <!-- This file is generated from param.xweb -->
 
 <!-- ********************************************************************
-     $Id: param.xweb 7583 2007-12-03 17:02:33Z mzjn $
+     $Id: param.xweb 8092 2008-07-18 21:26:36Z kosek $
      ********************************************************************
 
      This file is part of the XSL DocBook Stylesheet distribution.
@@ -140,7 +138,7 @@ version="1.0">
   <xsl:attribute name="hyphenate">false</xsl:attribute>
   <xsl:attribute name="text-align">
     <xsl:choose>
-      <xsl:when test="((parent::d:article | parent::d:articleinfo | parent::d:info/parent::d:article) and not(ancestor::d:book) and not(self::d:bibliography))         or (parent::d:slides | parent::d:slidesinfo)">center</xsl:when>
+      <xsl:when test="((parent::article | parent::articleinfo | parent::info/parent::article) and not(ancestor::book) and not(self::bibliography))         or (parent::slides | parent::slidesinfo)">center</xsl:when>
       <xsl:otherwise>left</xsl:otherwise>
     </xsl:choose>
   </xsl:attribute>
@@ -400,7 +398,7 @@ set       toc,title
 <xsl:param name="margin.note.float.type">none</xsl:param>
 <xsl:param name="margin.note.width">1in</xsl:param>
 <xsl:param name="marker.section.level">2</xsl:param>
-<xsl:param name="menuchoice.menu.separator"> &#8594; </xsl:param>
+<xsl:param name="menuchoice.menu.separator"> → </xsl:param>
 <xsl:param name="menuchoice.separator">+</xsl:param>
 <xsl:param name="monospace.font.family">monospace</xsl:param>
 <xsl:attribute-set name="monospace.properties">
@@ -897,3 +895,4 @@ set       toc,title
 <xsl:param name="xref.with.number.and.title" select="1"/>
 
 </xsl:stylesheet>
+

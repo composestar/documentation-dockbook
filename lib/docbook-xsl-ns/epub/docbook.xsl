@@ -1,7 +1,6 @@
 <?xml version="1.0"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-  xmlns:d="http://docbook.org/ns/docbook"
-xmlns:ng="http://docbook.org/docbook-ng"
+  xmlns:ng="http://docbook.org/docbook-ng"
   xmlns:dc="http://purl.org/dc/elements/1.1/"  
   xmlns:db="http://docbook.org/ns/docbook"
   xmlns:exsl="http://exslt.org/common" 
@@ -9,7 +8,7 @@ xmlns:ng="http://docbook.org/docbook-ng"
   xmlns:xtext="xalan://com.nwalsh.xalan.Text"
   version="1.0"
   extension-element-prefixes="stext xtext"
-  exclude-result-prefixes="exsl db ng dc stext xtext d">
+  exclude-result-prefixes="exsl db ng dc stext xtext">
 
   <xsl:import href="../xhtml-1_1/docbook.xsl" />
   <xsl:import href="../xhtml-1_1/chunk-common.xsl" />
@@ -20,7 +19,6 @@ xmlns:ng="http://docbook.org/docbook-ng"
   <xsl:param name="chunk.tocs.and.lots">1</xsl:param>
   <xsl:param name="toc.section.depth">2</xsl:param>
   <xsl:param name="generate.toc">
-  article   toc,title
   book   toc,title
   </xsl:param>
 
@@ -43,6 +41,8 @@ xmlns:ng="http://docbook.org/docbook-ng"
   <xsl:param name="epub.html.toc.id">htmltoc</xsl:param>
   <xsl:param name="epub.metainf.dir" select="'META-INF/'"/> 
 
+  <xsl:param name="epub.embedded.font"></xsl:param>
+
   <!-- Per Bob Stayton:
        """Process your documents with the css.decoration parameter set to zero. 
           That will avoid the use of style attributes in XHTML elements where they are not permitted."""
@@ -57,15 +57,21 @@ xmlns:ng="http://docbook.org/docbook-ng"
   <!-- no navigation in .epub -->
   <xsl:param name="suppress.navigation" select="'1'"/> 
 
+  <xsl:variable name="toc.params">
+    <xsl:call-template name="find.path.params">
+      <xsl:with-param name="node" select="/*"/>
+      <xsl:with-param name="table" select="normalize-space($generate.toc)"/>
+    </xsl:call-template>
+  </xsl:variable>
   <xsl:variable name="root.is.a.chunk">
     <xsl:choose>
-      <xsl:when test="/*[not(self::d:book)][not(d:sect1) or not(d:section)]">
+      <xsl:when test="/*[not(self::book)][not(sect1) or not(section)]">
         <xsl:text>1</xsl:text>
       </xsl:when>
-      <xsl:when test="/d:book[*[last()][self::d:bookinfo]]">
+      <xsl:when test="/book[*[last()][self::bookinfo]]|book[bookinfo]">
         <xsl:text>1</xsl:text>
       </xsl:when>
-      <xsl:when test="/d:bibliography">
+      <xsl:when test="/bibliography">
         <xsl:text>1</xsl:text>
       </xsl:when>
       <xsl:otherwise>
@@ -74,7 +80,7 @@ xmlns:ng="http://docbook.org/docbook-ng"
     </xsl:choose>
   </xsl:variable>
 
-  <xsl:key name="image-filerefs" match="d:graphic|d:inlinegraphic|d:imagedata" use="@fileref"/>
+  <xsl:key name="image-filerefs" match="graphic|inlinegraphic|imagedata" use="@fileref"/>
 
   <xsl:template match="/">
     <!-- * Get a title for current doc so that we let the user -->
@@ -83,24 +89,40 @@ xmlns:ng="http://docbook.org/docbook-ng"
       <xsl:call-template name="get.doc.title" />
     </xsl:variable>
     <xsl:choose>
-      
+      <!-- Hack! If someone hands us a DocBook V5.x or DocBook NG document,
+        toss the namespace and continue.  Use the docbook5 namespaced
+        stylesheets for DocBook5 if you don't want to use this feature.-->
       <!-- include extra test for Xalan quirk -->
-      <xsl:when test="namespace-uri(*[1]) != 'http://docbook.org/ns/docbook'">
- <xsl:call-template name="log.message">
- <xsl:with-param name="level">Note</xsl:with-param>
- <xsl:with-param name="source" select="$doc.title"/>
- <xsl:with-param name="context-desc">
- <xsl:text>namesp. add</xsl:text>
- </xsl:with-param>
- <xsl:with-param name="message">
- <xsl:text>added namespace before processing</xsl:text>
- </xsl:with-param>
- </xsl:call-template>
- <xsl:variable name="addns">
-    <xsl:apply-templates mode="addNS"/>
-  </xsl:variable>
-  <xsl:apply-templates select="exsl:node-set($addns)"/>
-</xsl:when>
+      <xsl:when
+        test="(function-available('exsl:node-set') or
+                     contains(system-property('xsl:vendor'),
+                       'Apache Software Foundation'))
+                    and (*/self::ng:* or */self::db:*)">
+        <xsl:call-template name="log.message">
+          <xsl:with-param name="level">Note</xsl:with-param>
+          <xsl:with-param name="source" select="$doc.title" />
+          <xsl:with-param name="context-desc">
+            <xsl:text>namesp. cut</xsl:text>
+          </xsl:with-param>
+          <xsl:with-param name="message">
+            <xsl:text>stripped namespace before processing</xsl:text>
+          </xsl:with-param>
+        </xsl:call-template>
+        <xsl:variable name="nons">
+          <xsl:apply-templates mode="stripNS" />
+        </xsl:variable>
+        <xsl:call-template name="log.message">
+          <xsl:with-param name="level">Note</xsl:with-param>
+          <xsl:with-param name="source" select="$doc.title" />
+          <xsl:with-param name="context-desc">
+            <xsl:text>namesp. cut</xsl:text>
+          </xsl:with-param>
+          <xsl:with-param name="message">
+            <xsl:text>processing stripped document</xsl:text>
+          </xsl:with-param>
+        </xsl:call-template>
+        <xsl:apply-templates select="exsl:node-set($nons)" />
+      </xsl:when>
       <xsl:otherwise>
         <xsl:choose>
           <xsl:when test="$rootid != ''">
@@ -159,15 +181,15 @@ xmlns:ng="http://docbook.org/docbook-ng"
     <xsl:variable name="package-id"><xsl:value-of select="concat(name(/*), 'id')"/></xsl:variable>
     <xsl:variable name="unique-id">
       <xsl:choose>
-        <xsl:when test="/*/*[contains(name(.), 'info')]/d:biblioid"> <xsl:value-of select="/*/*[contains(name(.), 'info')]/d:biblioid"/> </xsl:when>
-        <xsl:when test="/*/*[contains(name(.), 'info')]/d:invpartnumber"> <xsl:value-of select="/*/*[contains(name(.), 'info')]/d:invpartnumber"/> </xsl:when>
-        <xsl:when test="/*/*[contains(name(.), 'info')]/d:issn"> <xsl:value-of select="/*/*[contains(name(.), 'info')]/d:issn"/> </xsl:when>
-        <xsl:when test="/*/*[contains(name(.), 'info')]/d:issuenum"> <xsl:value-of select="/*/*[contains(name(.), 'info')]/d:issuenum"/> </xsl:when>
-        <xsl:when test="/*/*[contains(name(.), 'info')]/d:productnumber"> <xsl:value-of select="/*/*[contains(name(.), 'info')]/d:productnumber"/> </xsl:when>
-        <xsl:when test="/*/*[contains(name(.), 'info')]/d:pubsnumber"> <xsl:value-of select="/*/*[contains(name(.), 'info')]/d:pubsnumber"/> </xsl:when>
-        <xsl:when test="/*/*[contains(name(.), 'info')]/d:seriesvolnums"> <xsl:value-of select="/*/*[contains(name(.), 'info')]/d:seriesvolnums"/> </xsl:when>
-        <xsl:when test="/*/*[contains(name(.), 'info')]/d:volumenum"> <xsl:value-of select="/*/*[contains(name(.), 'info')]/d:volumenum"/> </xsl:when>
-        <xsl:when test="/*/*[contains(name(.), 'info')]/d:isbn"> <xsl:value-of select="/*/*[contains(name(.), 'info')]/d:isbn"/> </xsl:when>
+        <xsl:when test="/*/*[contains(name(.), 'info')]/biblioid"> <xsl:value-of select="/*/*[contains(name(.), 'info')]/biblioid"/> </xsl:when>
+        <xsl:when test="/*/*[contains(name(.), 'info')]/invpartnumber"> <xsl:value-of select="/*/*[contains(name(.), 'info')]/invpartnumber"/> </xsl:when>
+        <xsl:when test="/*/*[contains(name(.), 'info')]/issn"> <xsl:value-of select="/*/*[contains(name(.), 'info')]/issn"/> </xsl:when>
+        <xsl:when test="/*/*[contains(name(.), 'info')]/issuenum"> <xsl:value-of select="/*/*[contains(name(.), 'info')]/issuenum"/> </xsl:when>
+        <xsl:when test="/*/*[contains(name(.), 'info')]/productnumber"> <xsl:value-of select="/*/*[contains(name(.), 'info')]/productnumber"/> </xsl:when>
+        <xsl:when test="/*/*[contains(name(.), 'info')]/pubsnumber"> <xsl:value-of select="/*/*[contains(name(.), 'info')]/pubsnumber"/> </xsl:when>
+        <xsl:when test="/*/*[contains(name(.), 'info')]/seriesvolnums"> <xsl:value-of select="/*/*[contains(name(.), 'info')]/seriesvolnums"/> </xsl:when>
+        <xsl:when test="/*/*[contains(name(.), 'info')]/volumenum"> <xsl:value-of select="/*/*[contains(name(.), 'info')]/volumenum"/> </xsl:when>
+        <xsl:when test="/*/*[contains(name(.), 'info')]/isbn"> <xsl:value-of select="/*/*[contains(name(.), 'info')]/isbn"/> </xsl:when>
       </xsl:choose>  
       <xsl:text>_</xsl:text>
       <xsl:value-of select="/*/@id"/>
@@ -191,28 +213,57 @@ xmlns:ng="http://docbook.org/docbook-ng"
 
           <xsl:element name="metadata">
             <xsl:element name="dc:identifier">
-              <xsl:attribute name="id"> <xsl:value-of select="$package-id"/> </xsl:attribute>
-              <xsl:value-of select="$unique-id"/>
+              <xsl:attribute name="id"><xsl:value-of select="$package-id"/></xsl:attribute>
+              <xsl:choose>
+                <xsl:when test="/appendix/appendixinfo/isbn|
+                                /article/articleinfo/isbn|
+                                /book/bookinfo/isbn|
+                                /chapter/chapterinfo/isbn|
+                                /glossary/glossaryinfo/isbn|
+                                /part/partinfo/isbn|
+                                /preface/prefaceinfo/isbn|
+                                /refentry/refentryinfo/isbn|
+                                /reference/referenceinfo/isbn|
+                                /refsect1/refsect1info/isbn|
+                                /refsect2/refsect2info/isbn|
+                                /refsect3/refsect3info/isbn|
+                                /refsection/refsectioninfo/isbn|
+                                /refsynopsisdiv/refsynopsisdivinfo/isbn|
+                                /sect1/sect1info/isbn|
+                                /sect2/sect2info/isbn|
+                                /sect3/sect3info/isbn|
+                                /sect4/sect4info/isbn|
+                                /sect5/sect5info/isbn|
+                                /section/sectioninfo/isbn|
+                                /setindex/setindexinfo/isbn|
+                                /set/setinfo/isbn">
+                  <xsl:text>urn:isbn:</xsl:text>
+                  <xsl:value-of select="/*/*/isbn"/>
+                </xsl:when>
+                <xsl:otherwise>
+                  <xsl:value-of select="$unique-id"/>
+                </xsl:otherwise>
+              </xsl:choose>
             </xsl:element>
 
             <xsl:element name="dc:title">
               <xsl:value-of select="normalize-space($doc.title)"/>
             </xsl:element>
 
-            <xsl:apply-templates select="/*/*[contains(name(.), 'info')]/d:author|
-                                         /*/*[contains(name(.), 'info')]/d:corpauthor|
-                                         /*/*[contains(name(.), 'info')]/d:authorgroup/d:author" 
+            <xsl:apply-templates select="/*/*[contains(name(.), 'info')]/author|
+                                         /*/*[contains(name(.), 'info')]/corpauthor|
+                                         /*/*[contains(name(.), 'info')]/authorgroup/author" 
                                  mode="opf.metadata"/>        
-            <xsl:apply-templates select="/*/*[contains(name(.), 'info')]/d:publisher/d:publishername" mode="opf.metadata"/>
+            <xsl:apply-templates select="/*/*[contains(name(.), 'info')]/publisher/publishername" mode="opf.metadata"/>
             <xsl:element name="dc:language">
               <xsl:call-template name="l10n.language"/>
             </xsl:element>
 
-            <xsl:if test="/*/*[contains(name(.), 'info')]/d:mediaobject[@role='cover']"> 
+            <xsl:if test="/*/*[contains(name(.), 'info')]/mediaobject[@role='cover']"> 
               <xsl:element name="meta">
                 <xsl:attribute name="name">cover</xsl:attribute>
                 <xsl:attribute name="content">
-                  <xsl:value-of select="$epub.cover.id"/>
+                  <xsl:value-of select="$epub.cover.image.id"/>
                 </xsl:attribute>
               </xsl:element>
             </xsl:if>
@@ -286,7 +337,7 @@ xmlns:ng="http://docbook.org/docbook-ng"
             type="cover" pointing to it AND there is a logical cover specified in a
             <meta name="cover"> tag, THEN, the HTML cover is discarded. -->
           <xsl:element name="head">
-            <xsl:if test="/*/*[contains(name(.), 'info')]/d:mediaobject[@role='cover']"> 
+            <xsl:if test="/*/*[contains(name(.), 'info')]/mediaobject[@role='cover']"> 
               <xsl:element name="meta">
                 <xsl:attribute name="name">cover</xsl:attribute>
                 <xsl:attribute name="content">
@@ -294,12 +345,12 @@ xmlns:ng="http://docbook.org/docbook-ng"
                 </xsl:attribute>
               </xsl:element>
             </xsl:if>
-            <xsl:if test="/*/*[contains(name(.), 'info')]/d:isbn"> 
+            <xsl:if test="/*/*[contains(name(.), 'info')]/isbn"> 
               <xsl:element name="meta">
                 <xsl:attribute name="name">dtb:uid</xsl:attribute>
                 <xsl:attribute name="content">
                   <xsl:text>isbn:</xsl:text>
-                  <xsl:value-of select="/*/*[contains(name(.), 'info')]/d:isbn"/> 
+                  <xsl:value-of select="/*/*[contains(name(.), 'info')]/isbn"/> 
                 </xsl:attribute>
               </xsl:element>
             </xsl:if>
@@ -384,27 +435,26 @@ xmlns:ng="http://docbook.org/docbook-ng"
     </xsl:call-template>
   </xsl:template>
 
-  <!-- TODO: Are we certain of this match list? -->
-  <xsl:template match="d:book|
-                       d:article|
-                       d:part|
-                       d:reference|
-                       d:preface|
-                       d:chapter|
-                       d:bibliography|
-                       d:appendix|
-                       d:glossary|
-                       d:section|
-                       d:sect1|
-                       d:sect2|
-                       d:sect3|
-                       d:sect4|
-                       d:sect5|
-                       d:refentry|
-                       d:colophon|
-                       d:bibliodiv|
-                       d:setindex|
-                       d:index"
+  <xsl:template match="book|
+                       article|
+                       part|
+                       reference|
+                       preface|
+                       chapter|
+                       bibliography|
+                       appendix|
+                       glossary|
+                       section|
+                       sect1|
+                       sect2|
+                       sect3|
+                       sect4|
+                       sect5|
+                       refentry|
+                       colophon|
+                       bibliodiv|
+                       setindex|
+                       index"
                 mode="ncx">
     <xsl:variable name="depth" select="count(ancestor::*)"/>
     <xsl:variable name="title">
@@ -432,25 +482,25 @@ xmlns:ng="http://docbook.org/docbook-ng"
     </xsl:variable>
     <xsl:variable name="order">
       <xsl:value-of select="$depth +
-                                  count(preceding::d:part|
-                                  preceding::d:reference|
-                                  preceding::d:book[parent::d:set]|
-                                  preceding::d:preface|
-                                  preceding::d:chapter|
-                                  preceding::d:bibliography|
-                                  preceding::d:appendix|
-                                  preceding::d:article|
-                                  preceding::d:glossary|
-                                  preceding::d:section[not(parent::d:partintro)]|
-                                  preceding::d:sect1[not(parent::d:partintro)]|
-                                  preceding::d:sect2|
-                                  preceding::d:sect3|
-                                  preceding::d:sect4|
-                                  preceding::d:sect5|
-                                  preceding::d:refentry|
-                                  preceding::d:colophon|
-                                  preceding::d:bibliodiv|
-                                  preceding::d:index)"/>
+                                  count(preceding::part|
+                                  preceding::reference|
+                                  preceding::book[parent::set]|
+                                  preceding::preface|
+                                  preceding::chapter|
+                                  preceding::bibliography|
+                                  preceding::appendix|
+                                  preceding::article|
+                                  preceding::glossary|
+                                  preceding::section[not(parent::partintro)]|
+                                  preceding::sect1[not(parent::partintro)]|
+                                  preceding::sect2|
+                                  preceding::sect3|
+                                  preceding::sect4|
+                                  preceding::sect5|
+                                  preceding::refentry|
+                                  preceding::colophon|
+                                  preceding::bibliodiv|
+                                  preceding::index)"/>
     </xsl:variable>
 
     <xsl:element name="navPoint">
@@ -461,7 +511,7 @@ xmlns:ng="http://docbook.org/docbook-ng"
 
       <xsl:attribute name="playOrder">
         <xsl:choose>
-          <xsl:when test="/*[self::d:set]">
+          <xsl:when test="/*[self::set]">
             <xsl:value-of select="$order"/>
           </xsl:when>
           <xsl:when test="$root.is.a.chunk != '0'">
@@ -483,12 +533,12 @@ xmlns:ng="http://docbook.org/docbook-ng"
           <xsl:value-of select="$href"/>
         </xsl:attribute>
       </xsl:element>
-      <xsl:apply-templates select="d:book[parent::d:set]|d:part|d:reference|d:preface|d:chapter|d:bibliography|d:appendix|d:article|d:glossary|d:section|d:sect1|d:sect2|d:sect3|d:sect4|d:sect5|d:refentry|d:colophon|d:bibliodiv|d:setindex|d:index" mode="ncx"/>
+      <xsl:apply-templates select="book[parent::set]|part|reference|preface|chapter|bibliography|appendix|article|glossary|section|sect1|sect2|sect3|sect4|sect5|refentry|colophon|bibliodiv|setindex|index" mode="ncx"/>
     </xsl:element>
 
   </xsl:template>
 
-  <xsl:template match="d:author|d:corpauthor" mode="opf.metadata">
+  <xsl:template match="author|corpauthor" mode="opf.metadata">
     <xsl:variable name="n">
       <xsl:call-template name="person.name">
         <xsl:with-param name="node" select="."/>
@@ -499,16 +549,16 @@ xmlns:ng="http://docbook.org/docbook-ng"
     </xsl:element>
   </xsl:template>
 
-  <xsl:template match="d:publishername" mode="opf.metadata">
+  <xsl:template match="publishername" mode="opf.metadata">
     <xsl:element name="dc:publisher">
       <xsl:value-of select="normalize-space(string(.))"/>
     </xsl:element>
   </xsl:template>
 
-  <xsl:template match="d:copyright" mode="opf.metadata">
+  <xsl:template match="copyright" mode="opf.metadata">
     <xsl:variable name="copyright.date">
       <xsl:call-template name="copyright.years">
-        <xsl:with-param name="years" select="d:year"/>
+        <xsl:with-param name="years" select="year"/>
       </xsl:call-template>
     </xsl:variable>
     <xsl:element name="dc:date">
@@ -516,17 +566,18 @@ xmlns:ng="http://docbook.org/docbook-ng"
     </xsl:element>
     <xsl:element name="dc:rights">
       <xsl:text>Copyright </xsl:text>
-      <xsl:value-of select="d:year[1]"/>
+      <xsl:value-of select="year[1]"/>
       <xsl:text>, </xsl:text>
-      <xsl:value-of select="d:holder[1]"/>
+      <xsl:value-of select="holder[1]"/>
     </xsl:element>
   </xsl:template>
 
   <xsl:template name="opf.guide">
-    <xsl:if test="$root.is.a.chunk = '0' or /*/*[contains(name(.), 'info')]/d:mediaobject[@role='cover']"> 
+    <xsl:if test="contains($toc.params, 'toc') or 
+                  /*/*[contains(name(.), 'info')]/mediaobject[@role='cover']"> 
       <xsl:element name="guide">
         <xsl:attribute name="xmlns">http://www.idpf.org/2007/opf</xsl:attribute>
-        <xsl:if test="/*/*[contains(name(.), 'info')]/d:mediaobject[@role='cover']"> 
+        <xsl:if test="/*/*[contains(name(.), 'info')]/mediaobject[@role='cover']"> 
           <xsl:element name="reference">
             <xsl:attribute name="href">
               <!-- TODO: Figure out how to get this to work right with generation but also not be hardcoded -->
@@ -537,8 +588,7 @@ xmlns:ng="http://docbook.org/docbook-ng"
           </xsl:element>
         </xsl:if>  
 
-        <!-- TODO test against generate.toc -->
-        <xsl:if test="$root.is.a.chunk = '0'">
+        <xsl:if test="contains($toc.params, 'toc')">
           <xsl:element name="reference">
             <xsl:attribute name="href">
               <!-- TODO: Figure out how to get this to work right with generation but also not be hardcoded -->
@@ -562,7 +612,7 @@ xmlns:ng="http://docbook.org/docbook-ng"
         <xsl:value-of select="$epub.ncx.toc.id"/>
       </xsl:attribute>
 
-      <xsl:if test="/*/*[contains(name(.), 'info')]/d:mediaobject[@role='cover']"> 
+      <xsl:if test="/*/*[contains(name(.), 'info')]/mediaobject[@role='cover']"> 
         <xsl:element name="itemref">
           <xsl:attribute name="idref">
             <xsl:value-of select="$epub.cover.id"/>
@@ -572,8 +622,7 @@ xmlns:ng="http://docbook.org/docbook-ng"
       </xsl:if>
 
 
-      <xsl:if test="$root.is.a.chunk = '0'">
-        <!-- TODO test against generate.toc -->
+      <xsl:if test="contains($toc.params, 'toc')">
         <xsl:element name="itemref">
           <xsl:attribute name="idref"> <xsl:value-of select="$epub.html.toc.id"/> </xsl:attribute>
           <xsl:attribute name="linear">yes</xsl:attribute>
@@ -621,8 +670,7 @@ xmlns:ng="http://docbook.org/docbook-ng"
         <xsl:attribute name="href"><xsl:value-of select="$epub.ncx.filename"/> </xsl:attribute>
       </xsl:element>
 
-      <!-- TODO test against generate.toc -->
-      <xsl:if test="$root.is.a.chunk = '0'">
+      <xsl:if test="contains($toc.params, 'toc')">
         <xsl:element name="item">
           <xsl:attribute name="id"> <xsl:value-of select="$epub.html.toc.id"/> </xsl:attribute>
           <xsl:attribute name="media-type">application/xhtml+xml</xsl:attribute>
@@ -634,7 +682,16 @@ xmlns:ng="http://docbook.org/docbook-ng"
         </xsl:element>
       </xsl:if>  
 
-      <xsl:if test="/*/*[contains(name(.), 'info')]/d:mediaobject[@role='cover']"> 
+      <xsl:if test="$html.stylesheet != ''">
+        <xsl:element name="item">
+          <xsl:attribute name="xmlns">http://www.idpf.org/2007/opf</xsl:attribute>
+          <xsl:attribute name="media-type">text/css</xsl:attribute>
+          <xsl:attribute name="id">css</xsl:attribute>
+          <xsl:attribute name="href"><xsl:value-of select="$html.stylesheet"/></xsl:attribute>
+        </xsl:element>
+      </xsl:if>
+
+      <xsl:if test="/*/*[contains(name(.), 'info')]/mediaobject[@role='cover']"> 
         <xsl:element name="item">
           <xsl:attribute name="xmlns">http://www.idpf.org/2007/opf</xsl:attribute>
           <xsl:attribute name="id"> <xsl:value-of select="$epub.cover.id"/> </xsl:attribute>
@@ -646,34 +703,55 @@ xmlns:ng="http://docbook.org/docbook-ng"
         </xsl:element>
       </xsl:if>  
 
+     <xsl:if test="$epub.embedded.font != ''">
+        <xsl:element name="item">
+          <xsl:attribute name="xmlns">http://www.idpf.org/2007/opf</xsl:attribute>
+          <xsl:attribute name="id">epub.embedded.font</xsl:attribute>
+          <xsl:attribute name="href"><xsl:value-of select="$epub.embedded.font"/></xsl:attribute>
+          <xsl:choose>
+            <xsl:when test="contains($epub.embedded.font, 'otf')">
+              <xsl:attribute name="media-type">font/opentype</xsl:attribute>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:message terminate="yes">
+                <xsl:text>ERROR: Only OpenType fonts are supported in .epub! (</xsl:text>
+                <xsl:value-of select="$epub.embedded.font"/>
+                <xsl:text>)</xsl:text>
+              </xsl:message>
+            </xsl:otherwise>
+            </xsl:choose>
+        </xsl:element>
+     </xsl:if>
+
       <!-- TODO: be nice to have a id="titlepage" here -->
-      <xsl:apply-templates select="//d:part|
-                                   //d:book[*[last()][self::d:bookinfo]]|
-                                   /d:set|
-                                   /d:set/d:book|
-                                   //d:reference|
-                                   //d:preface|
-                                   //d:chapter|
-                                   //d:bibliography|
-                                   //d:appendix|
-                                   //d:article|
-                                   //d:glossary|
-                                   //d:section|
-                                   //d:sect1|
-                                   //d:sect2|
-                                   //d:sect3|
-                                   //d:sect4|
-                                   //d:sect5|
-                                   //d:refentry|
-                                   //d:colophon|
-                                   //d:bibliodiv|
-                                   //d:index|
-                                   //d:setindex|
-                                   //d:graphic|
-                                   //d:inlinegraphic|
-                                   //d:mediaobject|
-                                   //d:mediaobjectco|
-                                   //d:inlinemediaobject" 
+      <xsl:apply-templates select="//part|
+                                   //book[*[last()][self::bookinfo]]|
+                                   //book[bookinfo]|
+                                   /set|
+                                   /set/book|
+                                   //reference|
+                                   //preface|
+                                   //chapter|
+                                   //bibliography|
+                                   //appendix|
+                                   //article|
+                                   //glossary|
+                                   //section|
+                                   //sect1|
+                                   //sect2|
+                                   //sect3|
+                                   //sect4|
+                                   //sect5|
+                                   //refentry|
+                                   //colophon|
+                                   //bibliodiv|
+                                   //index|
+                                   //setindex|
+                                   //graphic|
+                                   //inlinegraphic|
+                                   //mediaobject|
+                                   //mediaobjectco|
+                                   //inlinemediaobject" 
                            mode="opf.manifest"/>
       <xsl:call-template name="opf.calloutlist"/>
     </xsl:element>
@@ -685,7 +763,7 @@ xmlns:ng="http://docbook.org/docbook-ng"
         <xsl:with-param name="ext" select="$callout.graphics.extension"/>
       </xsl:call-template>
     </xsl:variable>  
-    <xsl:if test="(//d:calloutlist|//d:co)">
+    <xsl:if test="(//calloutlist|//co)">
       <xsl:call-template name="opf.reference.callout">
         <xsl:with-param name="conum" select="1"/>
         <xsl:with-param name="format" select="$format"/>
@@ -755,18 +833,18 @@ xmlns:ng="http://docbook.org/docbook-ng"
     </xsl:choose>
   </xsl:template>
 
-  <xsl:template match="d:mediaobject|
-                       d:mediaobjectco|
-                       d:inlinemediaobject" 
+  <xsl:template match="mediaobject|
+                       mediaobjectco|
+                       inlinemediaobject" 
                 mode="opf.manifest">
-    <xsl:apply-templates select="d:imageobject/d:imagedata"
+    <xsl:apply-templates select="imageobject/imagedata"
                          mode="opf.manifest"/>              
   </xsl:template>
 
-  <xsl:template match="d:mediaobjectco"
+  <xsl:template match="mediaobjectco"
                 mode="opf.manifest">
     <xsl:message>Warning: mediaobjectco almost certainly will not render as expected in .epub!</xsl:message>
-    <xsl:apply-templates select="d:imageobjectco/d:imageobject/d:imagedata" 
+    <xsl:apply-templates select="imageobjectco/imageobject/imagedata" 
                          mode="opf.manifest"/>              
   </xsl:template>
 
@@ -775,9 +853,9 @@ xmlns:ng="http://docbook.org/docbook-ng"
   <!-- TODO: Remove hardcoding -->
   <!-- wish I had XSLT2 ...-->
   <!-- TODO: priority a hack -->
-  <xsl:template match="d:graphic[not(@format)]|
-                       d:inlinegraphic[not(@format)]|
-                       d:imagedata[not(@format)]"
+  <xsl:template match="graphic[not(@format)]|
+                       inlinegraphic[not(@format)]|
+                       imagedata[not(@format)]"
                 mode="opf.manifest">        
     <xsl:variable name="filename">
       <xsl:choose>
@@ -813,7 +891,7 @@ xmlns:ng="http://docbook.org/docbook-ng"
           <xsl:attribute name="id"> 
             <xsl:choose>
               <!-- TODO: Remove hardcoded 'front' -->
-              <xsl:when test="ancestor::d:mediaobject[@role='cover'] and @role='front'">
+              <xsl:when test="ancestor::mediaobject[@role='cover'] and ../@role='front-large'">
                 <xsl:value-of select="$epub.cover.image.id"/>
               </xsl:when>
               <xsl:otherwise>
@@ -831,9 +909,9 @@ xmlns:ng="http://docbook.org/docbook-ng"
   </xsl:template>
 
   <!-- TODO: Remove hardcoding -->
-  <xsl:template match="d:graphic[@format][@format = 'GIF' or @format = 'GIF87a' or @format = 'GIF89a' or @format = 'JPEG' or @format = 'JPG' or @format = 'PNG' or @format = 'SVG']|
-                       d:inlinegraphic[@format][@format = 'GIF' or @format = 'GIF87a' or @format = 'GIF89a' or @format = 'JPEG' or @format = 'JPG' or @format = 'PNG' or @format = 'SVG']|
-                       d:imagedata[@format][@format = 'GIF' or @format = 'GIF87a' or @format = 'GIF89a' or @format = 'JPEG' or @format = 'JPG' or @format = 'PNG' or @format = 'SVG']"
+  <xsl:template match="graphic[@format][@format = 'GIF' or @format = 'GIF87a' or @format = 'GIF89a' or @format = 'JPEG' or @format = 'JPG' or @format = 'PNG' or @format = 'SVG']|
+                       inlinegraphic[@format][@format = 'GIF' or @format = 'GIF87a' or @format = 'GIF89a' or @format = 'JPEG' or @format = 'JPG' or @format = 'PNG' or @format = 'SVG']|
+                       imagedata[@format][@format = 'GIF' or @format = 'GIF87a' or @format = 'GIF89a' or @format = 'JPEG' or @format = 'JPG' or @format = 'PNG' or @format = 'SVG']"
                 mode="opf.manifest">
     <xsl:variable name="filename">
       <xsl:choose>
@@ -863,7 +941,7 @@ xmlns:ng="http://docbook.org/docbook-ng"
         <xsl:attribute name="id"> 
           <xsl:choose>
             <!-- TODO: Remove hardcoded 'front' -->
-            <xsl:when test="ancestor::d:mediaobject[@role='cover'] and @role='front'">
+            <xsl:when test="ancestor::mediaobject[@role='cover'] and ../@role='front-large'">
               <xsl:value-of select="$epub.cover.image.id"/>
             </xsl:when>
             <xsl:otherwise>
@@ -881,30 +959,33 @@ xmlns:ng="http://docbook.org/docbook-ng"
     </xsl:if>
   </xsl:template>
 
-  <!-- TODO: Are we certain of this match list? -->
+  <!-- Warning: While the test indicate this match list is accurate, it may 
+       need further tweaking to ensure _never_ dropping generated content (XHTML)
+       from the manifest (OPF file) -->
   <xsl:template
-      match="d:set|
-            d:book[parent::d:set]|
-            d:book[*[last()][self::d:bookinfo]]|
-            d:article|
-            d:part|
-            d:reference|
-            d:preface|
-            d:chapter|
-            d:bibliography|
-            d:appendix|
-            d:glossary|
-            d:section|
-            d:sect1|
-            d:sect2|
-            d:sect3|
-            d:sect4|
-            d:sect5|
-            d:refentry|
-            d:colophon|
-            d:bibliodiv|
-            d:setindex|
-            d:index"
+      match="set|
+            book[parent::set]|
+            book[*[last()][self::bookinfo]]|
+            book[bookinfo]|
+            article|
+            part|
+            reference|
+            preface|
+            chapter|
+            bibliography|
+            appendix|
+            glossary|
+            section|
+            sect1|
+            sect2|
+            sect3|
+            sect4|
+            sect5|
+            refentry|
+            colophon|
+            bibliodiv|
+            setindex|
+            index"
       mode="opf.manifest">
     <xsl:variable name="href">
       <xsl:call-template name="href.target.with.base.dir">
@@ -936,8 +1017,8 @@ xmlns:ng="http://docbook.org/docbook-ng"
   <xsl:template match="text()" mode="ncx" />
 
   <xsl:template name="html.head">
-    <xsl:param name="prev" select="/d:foo"/>
-    <xsl:param name="next" select="/d:foo"/>
+    <xsl:param name="prev" select="/foo"/>
+    <xsl:param name="next" select="/foo"/>
     <xsl:variable name="this" select="."/>
     <xsl:variable name="home" select="/*[1]"/>
     <xsl:variable name="up" select="parent::*"/>
@@ -1047,8 +1128,8 @@ xmlns:ng="http://docbook.org/docbook-ng"
           <xsl:when test="$alt != ''">
             <xsl:value-of select="normalize-space($alt)"/>
           </xsl:when>
-          <xsl:when test="preceding::d:title[1]">
-            <xsl:value-of select="normalize-space(preceding::d:title[1])"/>
+          <xsl:when test="preceding::title[1]">
+            <xsl:value-of select="normalize-space(preceding::title[1])"/>
           </xsl:when>
           <xsl:otherwise>
             <xsl:text>(missing alt)</xsl:text>
@@ -1119,39 +1200,39 @@ xmlns:ng="http://docbook.org/docbook-ng"
       <xsl:text> cfs: </xsl:text>
       <xsl:value-of select="$chunk.first.sections"/>
       <xsl:text> ps: </xsl:text>
-      <xsl:value-of select="count($node/parent::d:section)"/>
+      <xsl:value-of select="count($node/parent::section)"/>
       <xsl:text> prs: </xsl:text>
-      <xsl:value-of select="count($node/preceding-sibling::d:section)"/>
+      <xsl:value-of select="count($node/preceding-sibling::section)"/>
     </xsl:message>
   -->
 
     <xsl:choose>
       <xsl:when test="not($node/parent::*)">1</xsl:when>
 
-      <xsl:when test="local-name($node) = 'sect1'                     and $chunk.section.depth &gt;= 1                     and ($chunk.first.sections != 0                          or count($node/preceding-sibling::d:sect1) &gt; 0)">
+      <xsl:when test="local-name($node) = 'sect1'                     and $chunk.section.depth &gt;= 1                     and ($chunk.first.sections != 0                          or count($node/preceding-sibling::sect1) &gt; 0)">
         <xsl:text>1</xsl:text>
       </xsl:when>
-      <xsl:when test="local-name($node) = 'sect2'                     and $chunk.section.depth &gt;= 2                     and ($chunk.first.sections != 0                          or count($node/preceding-sibling::d:sect2) &gt; 0)">
+      <xsl:when test="local-name($node) = 'sect2'                     and $chunk.section.depth &gt;= 2                     and ($chunk.first.sections != 0                          or count($node/preceding-sibling::sect2) &gt; 0)">
         <xsl:call-template name="chunk">
           <xsl:with-param name="node" select="$node/parent::*"/>
         </xsl:call-template>
       </xsl:when>
-      <xsl:when test="local-name($node) = 'sect3'                     and $chunk.section.depth &gt;= 3                     and ($chunk.first.sections != 0                          or count($node/preceding-sibling::d:sect3) &gt; 0)">
+      <xsl:when test="local-name($node) = 'sect3'                     and $chunk.section.depth &gt;= 3                     and ($chunk.first.sections != 0                          or count($node/preceding-sibling::sect3) &gt; 0)">
         <xsl:call-template name="chunk">
           <xsl:with-param name="node" select="$node/parent::*"/>
         </xsl:call-template>
       </xsl:when>
-      <xsl:when test="local-name($node) = 'sect4'                     and $chunk.section.depth &gt;= 4                     and ($chunk.first.sections != 0                          or count($node/preceding-sibling::d:sect4) &gt; 0)">
+      <xsl:when test="local-name($node) = 'sect4'                     and $chunk.section.depth &gt;= 4                     and ($chunk.first.sections != 0                          or count($node/preceding-sibling::sect4) &gt; 0)">
         <xsl:call-template name="chunk">
           <xsl:with-param name="node" select="$node/parent::*"/>
         </xsl:call-template>
       </xsl:when>
-      <xsl:when test="local-name($node) = 'sect5'                     and $chunk.section.depth &gt;= 5                     and ($chunk.first.sections != 0                          or count($node/preceding-sibling::d:sect5) &gt; 0)">
+      <xsl:when test="local-name($node) = 'sect5'                     and $chunk.section.depth &gt;= 5                     and ($chunk.first.sections != 0                          or count($node/preceding-sibling::sect5) &gt; 0)">
         <xsl:call-template name="chunk">
           <xsl:with-param name="node" select="$node/parent::*"/>
         </xsl:call-template>
       </xsl:when>
-      <xsl:when test="local-name($node) = 'section'                     and $chunk.section.depth &gt;= count($node/ancestor::d:section)+1                     and ($chunk.first.sections != 0                          or count($node/preceding-sibling::d:section) &gt; 0)">
+      <xsl:when test="local-name($node) = 'section'                     and $chunk.section.depth &gt;= count($node/ancestor::section)+1                     and ($chunk.first.sections != 0                          or count($node/preceding-sibling::section) &gt; 0)">
         <xsl:call-template name="chunk">
           <xsl:with-param name="node" select="$node/parent::*"/>
         </xsl:call-template>
@@ -1181,20 +1262,20 @@ xmlns:ng="http://docbook.org/docbook-ng"
   <!-- OVERRIDES xhtml-1_1/chunk-code.xsl   -->
   <!-- Add chunking for bibliography as root element -->
   <!-- AN OVERRIDE --> 
-  <xsl:template match="d:set|
-                       d:book|
-                       d:part|
-                       d:preface|
-                       d:chapter|
-                       d:appendix|
-                       d:article|
-                       d:reference|
-                       d:refentry|
-                       d:book/d:glossary|
-                       d:article/d:glossary|
-                       d:part/d:glossary|
-                       d:bibliography|
-                       d:colophon"
+  <xsl:template match="set|
+                       book|
+                       part|
+                       preface|
+                       chapter|
+                       appendix|
+                       article|
+                       reference|
+                       refentry|
+                       book/glossary|
+                       article/glossary|
+                       part/glossary|
+                       bibliography|
+                       colophon"
                 priority="1">       
   <!-- END OF OVERRIDE --> 
     <xsl:choose>
@@ -1210,7 +1291,7 @@ xmlns:ng="http://docbook.org/docbook-ng"
   <!-- OVERRIDES xhtml-1_1/graphics.xsl   -->
   <!-- Do _NOT_ output any xlink garbage, so if you don't have 
        processor with extensions, you're screwed and we're terminating -->
-  <xsl:template match="d:inlinegraphic">
+  <xsl:template match="inlinegraphic">
     <xsl:variable name="filename">
       <xsl:choose>
         <xsl:when test="@entityref">
@@ -1258,10 +1339,10 @@ xmlns:ng="http://docbook.org/docbook-ng"
   </xsl:template>  
 
   <xsl:template name="cover">
-    <xsl:apply-templates select="/*/*[contains(name(.), 'info')]/d:mediaobject[@role='cover']"/>
+    <xsl:apply-templates select="/*/*[contains(name(.), 'info')]/mediaobject[@role='cover']"/>
   </xsl:template>  
 
-  <xsl:template match="/*/*[contains(name(.), 'info')]/d:mediaobject[@role='cover']">
+  <xsl:template match="/*/*[contains(name(.), 'info')]/mediaobject[@role='cover']">
     <xsl:call-template name="write.chunk">
       <xsl:with-param name="filename">
         <xsl:value-of select="$epub.cover.filename" />
@@ -1287,7 +1368,7 @@ xmlns:ng="http://docbook.org/docbook-ng"
                 <xsl:value-of select="$epub.cover.image.id"/>
               </xsl:attribute>
               <!-- TODO: Remove hardcoded 'front' -->
-              <xsl:apply-templates select="d:imageobject[@role='front']"/>
+              <xsl:apply-templates select="imageobject[@role='front-large']"/>
             </xsl:element>
           </xsl:element>
         </xsl:element>
@@ -1308,7 +1389,7 @@ xmlns:ng="http://docbook.org/docbook-ng"
     <xsl:value-of select="$html.ext"/>
   </xsl:template>
 
-  <xsl:template match="d:bibliodiv" mode="label.markup">
+  <xsl:template match="bibliodiv" mode="label.markup">
   </xsl:template>
 
 

@@ -1,8 +1,6 @@
 <?xml version="1.0"?>
-<xsl:stylesheet exclude-result-prefixes="d"
-                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                xmlns:d="http://docbook.org/ns/docbook"
-xmlns:fo="http://www.w3.org/1999/XSL/Format"
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                xmlns:fo="http://www.w3.org/1999/XSL/Format"
                 version="1.0">
 
 <!-- ********************************************************************
@@ -22,17 +20,17 @@ xmlns:fo="http://www.w3.org/1999/XSL/Format"
 </xsl:attribute-set>
 
 <!-- Outputs an fo:table only, not the caption -->
-<xsl:template match="d:table|d:informaltable" mode="htmlTable">
+<xsl:template match="table|informaltable" mode="htmlTable">
 
   <xsl:variable name="numcols">
     <xsl:call-template name="widest-html-row">
-      <xsl:with-param name="rows" select=".//d:tr"/>
+      <xsl:with-param name="rows" select=".//tr"/>
     </xsl:call-template>
   </xsl:variable>
 
   <xsl:variable name="prop-columns"
-                select=".//d:col[contains(@width, '%')] |
-                        .//d:colgroup[contains(@width, '%')]"/>
+                select=".//col[contains(@width, '%')] |
+                        .//colgroup[contains(@width, '%')]"/>
 
   <xsl:variable name="table.width">
     <xsl:call-template name="table.width"/>
@@ -59,15 +57,15 @@ xmlns:fo="http://www.w3.org/1999/XSL/Format"
     <xsl:call-template name="make-html-table-columns">
       <xsl:with-param name="count" select="$numcols"/>
     </xsl:call-template>
-    <xsl:apply-templates select="d:thead" mode="htmlTable"/>
-    <xsl:apply-templates select="d:tfoot" mode="htmlTable"/>
+    <xsl:apply-templates select="thead" mode="htmlTable"/>
+    <xsl:apply-templates select="tfoot" mode="htmlTable"/>
     <xsl:choose>
-      <xsl:when test="d:tbody">
-        <xsl:apply-templates select="d:tbody" mode="htmlTable"/>
+      <xsl:when test="tbody">
+        <xsl:apply-templates select="tbody" mode="htmlTable"/>
       </xsl:when>
       <xsl:otherwise>
         <fo:table-body start-indent="0pt" end-indent="0pt">
-          <xsl:apply-templates select="d:tr" mode="htmlTable"/>
+          <xsl:apply-templates select="tr" mode="htmlTable"/>
         </fo:table-body>
       </xsl:otherwise>
     </xsl:choose>
@@ -75,7 +73,7 @@ xmlns:fo="http://www.w3.org/1999/XSL/Format"
 
 </xsl:template>
 
-<xsl:template match="d:caption" mode="htmlTable">
+<xsl:template match="caption" mode="htmlTable">
   <!-- Handled by formal.object.heading -->
 </xsl:template>
 
@@ -110,11 +108,11 @@ xmlns:fo="http://www.w3.org/1999/XSL/Format"
   <xsl:param name="number" select="1"/>
 
   <xsl:choose>
-    <xsl:when test="d:col|d:colgroup/d:col">
-      <xsl:for-each select="d:col|d:colgroup/d:col">
+    <xsl:when test="col|colgroup/col">
+      <xsl:for-each select="col|colgroup/col">
         <fo:table-column>
           <xsl:attribute name="column-number">
-            <xsl:number from="d:table|d:informaltable" level="any" format="1"/>
+            <xsl:number from="table|informaltable" level="any" format="1"/>
           </xsl:attribute>
           <xsl:if test="@width">
             <xsl:attribute name="column-width">
@@ -147,7 +145,7 @@ xmlns:fo="http://www.w3.org/1999/XSL/Format"
   </xsl:choose>
 </xsl:template>
 
-<xsl:template match="d:tbody" mode="htmlTable">
+<xsl:template match="tbody" mode="htmlTable">
   <fo:table-body border-bottom-width="0.25pt"
                  border-bottom-style="solid"
                  border-bottom-color="black"
@@ -157,7 +155,7 @@ xmlns:fo="http://www.w3.org/1999/XSL/Format"
   </fo:table-body>
 </xsl:template>
 
-<xsl:template match="d:td" mode="htmlTable">
+<xsl:template match="td" mode="htmlTable">
   <xsl:variable name="bgcolor">
     <xsl:call-template name="pi.dbfo_bgcolor"/>
   </xsl:variable>
@@ -174,14 +172,14 @@ xmlns:fo="http://www.w3.org/1999/XSL/Format"
   </fo:table-cell>
 </xsl:template>
 
-<xsl:template match="d:tfoot" mode="htmlTable">
+<xsl:template match="tfoot" mode="htmlTable">
   <fo:table-footer start-indent="0pt"
                    end-indent="0pt">
     <xsl:apply-templates mode="htmlTable"/>
   </fo:table-footer>
 </xsl:template>
 
-<xsl:template match="d:th" mode="htmlTable">
+<xsl:template match="th" mode="htmlTable">
   <xsl:variable name="bgcolor">
     <xsl:call-template name="pi.dbfo_bgcolor"/>
   </xsl:variable>
@@ -198,7 +196,7 @@ xmlns:fo="http://www.w3.org/1999/XSL/Format"
   </fo:table-cell>
 </xsl:template>
 
-<xsl:template match="d:thead" mode="htmlTable">
+<xsl:template match="thead" mode="htmlTable">
   <fo:table-header border-bottom-width="0.25pt"
                    border-bottom-style="solid"
                    border-bottom-color="black"
@@ -209,7 +207,7 @@ xmlns:fo="http://www.w3.org/1999/XSL/Format"
   </fo:table-header>
 </xsl:template>
 
-<xsl:template match="d:tr" mode="htmlTable">
+<xsl:template match="tr" mode="htmlTable">
   <fo:table-row>
     <xsl:call-template name="table.row.properties"/>
     <xsl:apply-templates mode="htmlTable"/>

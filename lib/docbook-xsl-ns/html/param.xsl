@@ -1,11 +1,9 @@
-<?xml version="1.0" encoding="ASCII"?>
+<?xml version="1.0"?>
 <!-- This file is generated from param.xweb -->
-<xsl:stylesheet exclude-result-prefixes="d"
-                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:d="http://docbook.org/ns/docbook"
-version="1.0">
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
 
 <!-- ********************************************************************
-     $Id: param.xweb 7679 2008-02-17 13:26:47Z xmldoc $
+     $Id: param.xweb 8092 2008-07-18 21:26:36Z kosek $
      ********************************************************************
 
      This file is part of the XSL DocBook Stylesheet distribution.
@@ -288,7 +286,7 @@ set       toc,title
     
 <xsl:param name="manifest.in.base.dir" select="0"/>
 <xsl:param name="manual.toc"/>
-<xsl:param name="menuchoice.menu.separator"> &#8594; </xsl:param>
+<xsl:param name="menuchoice.menu.separator"> → </xsl:param>
 <xsl:param name="menuchoice.separator">+</xsl:param>
 <xsl:param name="navig.graphics.extension">.gif</xsl:param>
 <xsl:param name="navig.graphics" select="0"/>
@@ -412,3 +410,4 @@ set       toc,title
 <xsl:param name="xref.title-page.separator"><xsl:text> </xsl:text></xsl:param>
 
 </xsl:stylesheet>
+

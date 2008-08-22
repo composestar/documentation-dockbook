@@ -4,13 +4,12 @@
 <!ENTITY uppercase "'ABCDEFGHIJKLMNOPQRSTUVWXYZ'">
  ]>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                xmlns:d="http://docbook.org/ns/docbook"
-xmlns:fo="http://www.w3.org/1999/XSL/Format"
+                xmlns:fo="http://www.w3.org/1999/XSL/Format"
                 xmlns:xlink="http://www.w3.org/1999/xlink"
                 xmlns:stext="http://nwalsh.com/xslt/ext/com.nwalsh.saxon.TextFactory"
                 xmlns:xtext="com.nwalsh.xalan.Text"
                 xmlns:lxslt="http://xml.apache.org/xslt"
-                exclude-result-prefixes="xlink stext xtext lxslt d"
+                exclude-result-prefixes="xlink stext xtext lxslt"
                 extension-element-prefixes="stext xtext"
                 version='1.0'>
 
@@ -123,13 +122,13 @@ xmlns:fo="http://www.w3.org/1999/XSL/Format"
 
 <!-- ==================================================================== -->
 
-<xsl:template match="d:screenshot">
+<xsl:template match="screenshot">
   <fo:block>
     <xsl:apply-templates/>
   </fo:block>
 </xsl:template>
 
-<xsl:template match="d:screeninfo">
+<xsl:template match="screeninfo">
 </xsl:template>
 
 <!-- ==================================================================== -->
@@ -325,9 +324,9 @@ xmlns:fo="http://www.w3.org/1999/XSL/Format"
 
 <!-- ==================================================================== -->
 
-<xsl:template match="d:graphic">
+<xsl:template match="graphic">
   <xsl:choose>
-    <xsl:when test="parent::d:inlineequation">
+    <xsl:when test="parent::inlineequation">
       <xsl:call-template name="process.image"/>
     </xsl:when>
     <xsl:otherwise>
@@ -343,7 +342,7 @@ xmlns:fo="http://www.w3.org/1999/XSL/Format"
   </xsl:choose>
 </xsl:template>
 
-<xsl:template match="d:inlinegraphic">
+<xsl:template match="inlinegraphic">
   <xsl:variable name="vendor" select="system-property('xsl:vendor')"/>
   <xsl:variable name="filename">
     <xsl:choose>
@@ -392,11 +391,11 @@ xmlns:fo="http://www.w3.org/1999/XSL/Format"
 
 <!-- ==================================================================== -->
 
-<xsl:template match="d:mediaobject|d:mediaobjectco">
+<xsl:template match="mediaobject|mediaobjectco">
 
-  <xsl:variable name="olist" select="d:imageobject|d:imageobjectco
-                     |d:videoobject|d:audioobject
-                     |d:textobject"/>
+  <xsl:variable name="olist" select="imageobject|imageobjectco
+                     |videoobject|audioobject
+                     |textobject"/>
 
   <xsl:variable name="object.index">
     <xsl:call-template name="select.mediaobject.index">
@@ -408,7 +407,7 @@ xmlns:fo="http://www.w3.org/1999/XSL/Format"
   <xsl:variable name="object" select="$olist[position() = $object.index]"/>
 
   <xsl:variable name="align">
-    <xsl:value-of select="$object/descendant::d:imagedata[@align][1]/@align"/>
+    <xsl:value-of select="$object/descendant::imagedata[@align][1]/@align"/>
   </xsl:variable>
 
   <xsl:variable name="id">
@@ -423,25 +422,25 @@ xmlns:fo="http://www.w3.org/1999/XSL/Format"
     </xsl:if>
 
     <xsl:apply-templates select="$object"/>
-    <xsl:apply-templates select="d:caption"/>
+    <xsl:apply-templates select="caption"/>
   </fo:block>
 </xsl:template>
 
-<xsl:template match="d:inlinemediaobject">
+<xsl:template match="inlinemediaobject">
   <xsl:call-template name="select.mediaobject"/>
 </xsl:template>
 
 <!-- ==================================================================== -->
 
-<xsl:template match="d:imageobjectco">
-  <xsl:apply-templates select="d:imageobject"/>
-  <xsl:apply-templates select="d:calloutlist"/>
+<xsl:template match="imageobjectco">
+  <xsl:apply-templates select="imageobject"/>
+  <xsl:apply-templates select="calloutlist"/>
 </xsl:template>
 
-<xsl:template match="d:imageobject">
+<xsl:template match="imageobject">
   <xsl:choose>
-    <xsl:when test="d:imagedata">
-      <xsl:apply-templates select="d:imagedata"/>
+    <xsl:when test="imagedata">
+      <xsl:apply-templates select="imagedata"/>
     </xsl:when>
     <xsl:otherwise>
       <fo:instream-foreign-object>
@@ -468,7 +467,7 @@ xmlns:fo="http://www.w3.org/1999/XSL/Format"
 
 <!-- ==================================================================== -->
 
-<xsl:template match="d:imagedata">
+<xsl:template match="imagedata">
   <xsl:variable name="vendor" select="system-property('xsl:vendor')"/>
   <xsl:variable name="filename">
     <xsl:call-template name="mediaobject.filename">
@@ -516,31 +515,31 @@ xmlns:fo="http://www.w3.org/1999/XSL/Format"
 
 <!-- ==================================================================== -->
 
-<xsl:template match="d:videoobject">
-  <xsl:apply-templates select="d:videodata"/>
+<xsl:template match="videoobject">
+  <xsl:apply-templates select="videodata"/>
 </xsl:template>
 
-<xsl:template match="d:videodata">
+<xsl:template match="videodata">
   <xsl:call-template name="process.image"/>
 </xsl:template>
 
 <!-- ==================================================================== -->
 
-<xsl:template match="d:audioobject">
-  <xsl:apply-templates select="d:audiodata"/>
+<xsl:template match="audioobject">
+  <xsl:apply-templates select="audiodata"/>
 </xsl:template>
 
-<xsl:template match="d:audiodata">
+<xsl:template match="audiodata">
   <xsl:call-template name="process.image"/>
 </xsl:template>
 
 <!-- ==================================================================== -->
 
-<xsl:template match="d:textobject">
+<xsl:template match="textobject">
   <xsl:apply-templates/>
 </xsl:template>
 
-<xsl:template match="d:textdata">
+<xsl:template match="textdata">
   <xsl:variable name="vendor" select="system-property('xsl:vendor')"/>
   <xsl:variable name="filename">
     <xsl:choose>
@@ -593,7 +592,7 @@ xmlns:fo="http://www.w3.org/1999/XSL/Format"
 
 <!-- ==================================================================== -->
 
-<xsl:template match="d:caption">
+<xsl:template match="caption">
   <fo:block>
     <xsl:if test="@align = 'right' or @align = 'left' or @align='center'">
       <xsl:attribute name="text-align"><xsl:value-of

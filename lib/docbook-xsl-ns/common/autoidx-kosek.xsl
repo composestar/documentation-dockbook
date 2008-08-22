@@ -1,17 +1,16 @@
 <?xml version="1.0"?>
 <!DOCTYPE xsl:stylesheet [
-<!ENTITY primary   'normalize-space(concat(d:primary/@sortas, d:primary[not(@sortas)]))'>
+<!ENTITY primary   'normalize-space(concat(primary/@sortas, primary[not(@sortas)]))'>
 
 ]>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                xmlns:d="http://docbook.org/ns/docbook"
-version="1.0"
+                version="1.0"
                 xmlns:func="http://exslt.org/functions"
                 xmlns:exslt="http://exslt.org/common"
                 xmlns:l="http://docbook.sourceforge.net/xmlns/l10n/1.0"
                 xmlns:fo="http://www.w3.org/1999/XSL/Format"
                 extension-element-prefixes="func exslt"
-                exclude-result-prefixes="func exslt i l d"
+                exclude-result-prefixes="func exslt i l"
                 xmlns:i="urn:cz-kosek:functions:index">
 
 <!-- ********************************************************************
@@ -145,7 +144,7 @@ version="1.0"
 </func:function>
 
 <xsl:key name="group-code"
-         match="d:indexterm"
+         match="indexterm"
          use="i:group-index(&primary;)"/>
 
 </xsl:stylesheet>

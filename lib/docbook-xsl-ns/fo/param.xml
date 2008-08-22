@@ -3,7 +3,7 @@
 <info>
 <title>FO Parameter Reference</title>
 <releaseinfo role="meta">
-$Id: param.xweb 7583 2007-12-03 17:02:33Z mzjn $
+$Id: param.xweb 8092 2008-07-18 21:26:36Z kosek $
 </releaseinfo>
 <author>
   <personname>
@@ -1093,7 +1093,7 @@ significant index terms</refpurpose>
 <refsection><info><title>Description</title></info>
 
 <para>Properties used to emphasize page number references for
-significant index terms (<tag class="attribute">significance</tag>=<tag class="attvalue">preffered</tag>). Currently works only with
+significant index terms (<tag class="attribute">significance</tag>=<tag class="attvalue">preferred</tag>). Currently works only with
 XEP.</para>
 
 </refsection>
@@ -6506,21 +6506,44 @@ syntax highlighting of the content of the <tag>programlisting</tag> element. The
 XSLTHL extension module. This is an external Java library which is not part of the DocBook XSL distribution.</para>
 
 <para>In order to use this extension, you must add
-<filename>xslthl.jar</filename> to your Java classpath. You can
+<filename>xslthl-2.0.0.jar</filename> to your Java classpath. You can
 download this software from <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://sourceforge.net/projects/xslthl">the XSLT syntax highlighting project</link> at SourceForge.</para>
 
 <para>The configuration of syntax highlighting is stored in 
 <filename>highlighting/xslthl-config.xml</filename>. The Java
-property <literal>xslthl.config</literal> must point to this
+property <literal>xslthl.config</literal> or parameter <parameter>highlight.xslthl.config</parameter> must point to this
 file (using URL syntax).</para>
 
-<para>This extension is known to work with Saxon 6.5.x. Here is an example of a modified Saxon command:</para>
+<para>This extension is known to work with Saxon 6.5.x, Saxon 8.5+ and Xalan-J. Here is an example of a modified Saxon command:</para>
 
-<programlisting>java -cp c:\batch\;&#8230;;c:\path\to\xslthl.jar -Dxslthl.config=file:///c:/docbook-xsl/highlighting/xslthl-config.xml &#8230; com.icl.saxon.StyleSheet &#8230;</programlisting>
+<programlisting>java -cp c:\batch\;&#8230;;c:\path\to\xslthl-2.0.0.jar -Dxslthl.config=file:///c:/docbook-xsl/highlighting/xslthl-config.xml &#8230; com.icl.saxon.StyleSheet &#8230;</programlisting>
 
 <para>You can specify the language for each programlisting by using the <tag class="attribute">language</tag> attribute. The
 <parameter>highlighting.default.language</parameter> parameter can be used for specifying the
 language to be used for programlistings without a <tag class="attribute">language</tag> attribute.</para>
+
+</refsection>
+</refentry>
+
+<refentry version="5.0" xml:id="highlight.xslthl.config">
+<refmeta>
+<refentrytitle>highlight.xslthl.config</refentrytitle>
+<refmiscinfo class="other" otherclass="datatype">uri</refmiscinfo>
+</refmeta>
+<refnamediv>
+<refname>highlight.xslthl.config</refname>
+<refpurpose>Location of XSLTHL configuration file</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv>
+<programlisting xml:id="highlight.xslthl.config.frag">
+&lt;xsl:param name="highlight.xslthl.config"&gt;&lt;/xsl:param&gt;
+</programlisting>
+</refsynopsisdiv>
+
+<refsection><info><title>Description</title></info>
+
+<para>This location has precedence over the corresponding Java property.</para>
 
 </refsection>
 </refentry>
@@ -11429,7 +11452,7 @@ around all these parameters.</para>
 &lt;!-- This file is generated from param.xweb --&gt;
 
 &lt;!-- ********************************************************************
-     $Id: param.xweb 7583 2007-12-03 17:02:33Z mzjn $
+     $Id: param.xweb 8092 2008-07-18 21:26:36Z kosek $
      ********************************************************************
 
      This file is part of the XSL DocBook Stylesheet distribution.
@@ -11560,6 +11583,7 @@ around all these parameters.</para>
 &lt;src:fragref linkend="headers.on.blank.pages.frag"&gt;&lt;/src:fragref&gt;
 &lt;src:fragref linkend="highlight.default.language.frag"&gt;&lt;/src:fragref&gt;
 &lt;src:fragref linkend="highlight.source.frag"&gt;&lt;/src:fragref&gt;
+&lt;src:fragref linkend="highlight.xslthl.config.frag"&gt;&lt;/src:fragref&gt;
 &lt;src:fragref linkend="hyphenate.frag"&gt;&lt;/src:fragref&gt;
 &lt;src:fragref linkend="hyphenate.verbatim.frag"&gt;&lt;/src:fragref&gt;
 &lt;src:fragref linkend="hyphenate.verbatim.characters.frag"&gt;&lt;/src:fragref&gt;

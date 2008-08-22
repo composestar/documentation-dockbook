@@ -1,15 +1,14 @@
 <?xml version='1.0'?>
 <xsl:stylesheet
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-  xmlns:d="http://docbook.org/ns/docbook"
-xmlns:doc="http://nwalsh.com/xsl/documentation/1.0"
+  xmlns:doc="http://nwalsh.com/xsl/documentation/1.0"
   xmlns:fo="http://www.w3.org/1999/XSL/Format"
   xmlns:xlink="http://www.w3.org/1999/xlink"
-  exclude-result-prefixes="doc d"
+  exclude-result-prefixes="doc"
   version='1.0'>
 
 <!-- ********************************************************************
-     $Id: pi.xsl 8012 2008-05-23 16:08:05Z mzjn $
+     $Id: pi.xsl 8084 2008-07-12 12:50:52Z mzjn $
      ********************************************************************
 
      This file is part of the XSL DocBook Stylesheet distribution.
@@ -20,7 +19,7 @@ xmlns:doc="http://nwalsh.com/xsl/documentation/1.0"
 
 <doc:reference xmlns=""><info><title>FO Processing Instruction Reference</title>
     <releaseinfo role="meta">
-      $Id: pi.xsl 8012 2008-05-23 16:08:05Z mzjn $
+      $Id: pi.xsl 8084 2008-07-12 12:50:52Z mzjn $
     </releaseinfo>
   </info>
 
@@ -83,6 +82,7 @@ xmlns:doc="http://nwalsh.com/xsl/documentation/1.0"
   <refdescription>
     <para>Use the <tag class="xmlpi">dbfo bgcolor</tag> PI as child of a table row
       or cell to set a background color for that table row or cell.</para>
+    <para>This PI works for both CALS and HTML tables.</para>
   </refdescription>
   <refsynopsisdiv>
     <synopsis><tag class="xmlpi">dbfo bgcolor="<replaceable>color</replaceable>"</tag></synopsis>
@@ -350,7 +350,7 @@ xmlns:doc="http://nwalsh.com/xsl/documentation/1.0"
 </xsl:template> 
 
 <doc:pi name="dbfo_linenumbering.everyNth" xmlns="">
-  <refpurpose>Specifies interval for lines numbers in verbatims</refpurpose>
+  <refpurpose>Specifies interval for line numbers in verbatims</refpurpose>
   <refdescription>
     <para>Use the <tag class="xmlpi">dbfo linenumbering.everyNth</tag> PI as a child
       of a “verbatim” element – <tag>programlisting</tag>,
@@ -546,9 +546,9 @@ xmlns:doc="http://nwalsh.com/xsl/documentation/1.0"
 </xsl:template>
 
 <doc:pi name="dbfo_orientation" xmlns="">
-  <refpurpose>Specifies the orientation for table row or cell</refpurpose>
+  <refpurpose>Specifies the orientation for a CALS table row or cell</refpurpose>
   <refdescription>
-    <para>Use the <tag class="xmlpi">dbfo orientation</tag> PI as a child of an
+    <para>Use the <tag class="xmlpi">dbfo orientation</tag> PI as a child of a CALS
       <tag>table</tag> row or cell to specify the orientation
       (rotation) for the row or cell.</para>
   </refdescription>
@@ -613,11 +613,11 @@ xmlns:doc="http://nwalsh.com/xsl/documentation/1.0"
 </xsl:template>
 
 <doc:pi name="dbfo_rotated-width" xmlns="">
-  <refpurpose>Specifies the width for a table <tag>entry</tag> or
+  <refpurpose>Specifies the width for a CALS table <tag>entry</tag> or
     <tag>row</tag></refpurpose>
   <refdescription>
-    <para>Use the <tag class="xmlpi">dbfo rotated-width</tag> PI as a child of an
-      <tag>entry</tag> or <tag>row</tag> instance to specify the
+    <para>Use the <tag class="xmlpi">dbfo rotated-width</tag> PI as a child of 
+      <tag>entry</tag> or <tag>row</tag> instance in a CALS table to specify the
       width of that the <tag>entry</tag> or <tag>row</tag>; or
       use it higher up in table to cause the width to be inherited
       recursively down.</para>
@@ -720,12 +720,12 @@ xmlns:doc="http://nwalsh.com/xsl/documentation/1.0"
 </xsl:template>
 
 <doc:pi name="dbfo_table-width" xmlns="">
-  <refpurpose>Specifies the width for a table or for revhistory
+  <refpurpose>Specifies the width for a CALS table or for revhistory
     output</refpurpose>
   <refdescription>
     <para>Use the <tag class="xmlpi">dbfo table-width</tag> PI as a child or
-      sibling of a <tag>table</tag>, or as a child of an
-      <tag>informaltable</tag>, <tag>entrybl</tag>, or
+      sibling of a CALS <tag>table</tag>, or as a child of an
+      <tag>informaltable</tag>, <tag>entrytbl</tag>, or
       <tag>revhistory</tag> instance (which is rendered as a table
       in output) to specify the width of the table in output.</para>
   </refdescription>
@@ -897,47 +897,47 @@ xmlns:doc="http://nwalsh.com/xsl/documentation/1.0"
       <!-- Doesn't work in fop -->
     </xsl:when>
     <xsl:when test="$pi-before != '' and
-      not(following-sibling::d:listitem) and
-      not(following-sibling::d:step)">
+      not(following-sibling::listitem) and
+      not(following-sibling::step)">
       <fo:block space-after="0pt" space-before="{$pi-before}">
         <xsl:copy-of select="$spacer"/>
       </fo:block>
     </xsl:when>
-    <xsl:when test="following-sibling::d:para">
+    <xsl:when test="following-sibling::para">
       <fo:block space-after="0pt" 
         xsl:use-attribute-sets="normal.para.spacing">
         <xsl:copy-of select="$spacer"/>
       </fo:block>
     </xsl:when>
-    <xsl:when test="following-sibling::d:table or
-      following-sibling::d:figure or
-      following-sibling::d:example or
-      following-sibling::d:equation">
+    <xsl:when test="following-sibling::table or
+      following-sibling::figure or
+      following-sibling::example or
+      following-sibling::equation">
       <fo:block space-after="0pt" 
         xsl:use-attribute-sets="formal.object.properties">
         <xsl:copy-of select="$spacer"/>
       </fo:block>
     </xsl:when>
-    <xsl:when test="following-sibling::d:informaltable or
-      following-sibling::d:informalfigure or
-      following-sibling::d:informalexample or
-      following-sibling::d:informalequation">
+    <xsl:when test="following-sibling::informaltable or
+      following-sibling::informalfigure or
+      following-sibling::informalexample or
+      following-sibling::informalequation">
       <fo:block space-after="0pt" 
         xsl:use-attribute-sets="informal.object.properties">
         <xsl:copy-of select="$spacer"/>
       </fo:block>
     </xsl:when>
-    <xsl:when test="following-sibling::d:itemizedlist or
-      following-sibling::d:orderedlist or
-      following-sibling::d:variablelist or
-      following-sibling::d:simplelist">
+    <xsl:when test="following-sibling::itemizedlist or
+      following-sibling::orderedlist or
+      following-sibling::variablelist or
+      following-sibling::simplelist">
       <fo:block space-after="0pt" 
         xsl:use-attribute-sets="informal.object.properties">
         <xsl:copy-of select="$spacer"/>
       </fo:block>
     </xsl:when>
-    <xsl:when test="following-sibling::d:listitem or
-      following-sibling::d:step">
+    <xsl:when test="following-sibling::listitem or
+      following-sibling::step">
       <fo:list-item space-after="0pt" 
         xsl:use-attribute-sets="informal.object.properties">
         <fo:list-item-label/>
@@ -946,12 +946,12 @@ xmlns:doc="http://nwalsh.com/xsl/documentation/1.0"
         </fo:list-item-body>
       </fo:list-item>
     </xsl:when>
-    <xsl:when test="following-sibling::d:sect1 or
-      following-sibling::d:sect2 or
-      following-sibling::d:sect3 or
-      following-sibling::d:sect4 or
-      following-sibling::d:sect5 or
-      following-sibling::d:section">
+    <xsl:when test="following-sibling::sect1 or
+      following-sibling::sect2 or
+      following-sibling::sect3 or
+      following-sibling::sect4 or
+      following-sibling::sect5 or
+      following-sibling::section">
       <fo:block space-after="0pt" 
         xsl:use-attribute-sets="section.title.properties">
         <xsl:copy-of select="$spacer"/>
@@ -968,8 +968,8 @@ xmlns:doc="http://nwalsh.com/xsl/documentation/1.0"
     <xsl:when test="$fop.extensions != 0">
       <!-- Doesn't work in fop -->
     </xsl:when>
-    <xsl:when test="following-sibling::d:listitem or
-      following-sibling::d:step">
+    <xsl:when test="following-sibling::listitem or
+      following-sibling::step">
       <fo:list-item space-before.precedence="force"
         space-before="-{$height}"
         space-after="0pt"

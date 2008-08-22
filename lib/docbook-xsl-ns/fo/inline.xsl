@@ -4,10 +4,9 @@
 %common.entities;
 ]>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                xmlns:d="http://docbook.org/ns/docbook"
-xmlns:fo="http://www.w3.org/1999/XSL/Format"
+                xmlns:fo="http://www.w3.org/1999/XSL/Format"
                 xmlns:xlink='http://www.w3.org/1999/xlink'
-                exclude-result-prefixes="xlink d"
+                exclude-result-prefixes="xlink"
                 version='1.0'>
 
 <!-- ********************************************************************
@@ -348,7 +347,7 @@ xmlns:fo="http://www.w3.org/1999/XSL/Format"
 <!-- ==================================================================== -->
 <!-- some special cases -->
 
-<xsl:template match="d:author">
+<xsl:template match="author">
   <xsl:call-template name="simple.xlink">
     <xsl:with-param name="content">
       <xsl:call-template name="person.name"/>
@@ -356,7 +355,7 @@ xmlns:fo="http://www.w3.org/1999/XSL/Format"
   </xsl:call-template>
 </xsl:template>
 
-<xsl:template match="d:editor">
+<xsl:template match="editor">
   <xsl:call-template name="simple.xlink">
     <xsl:with-param name="content">
       <xsl:call-template name="person.name"/>
@@ -364,7 +363,7 @@ xmlns:fo="http://www.w3.org/1999/XSL/Format"
   </xsl:call-template>
 </xsl:template>
 
-<xsl:template match="d:othercredit">
+<xsl:template match="othercredit">
   <xsl:call-template name="simple.xlink">
     <xsl:with-param name="content">
       <xsl:call-template name="person.name"/>
@@ -372,89 +371,89 @@ xmlns:fo="http://www.w3.org/1999/XSL/Format"
   </xsl:call-template>
 </xsl:template>
 
-<xsl:template match="d:authorinitials">
+<xsl:template match="authorinitials">
   <xsl:call-template name="inline.charseq"/>
 </xsl:template>
 
 <!-- ==================================================================== -->
 
-<xsl:template match="d:accel">
+<xsl:template match="accel">
   <xsl:call-template name="inline.charseq"/>
 </xsl:template>
 
-<xsl:template match="d:action">
+<xsl:template match="action">
   <xsl:call-template name="inline.charseq"/>
 </xsl:template>
 
-<xsl:template match="d:application">
+<xsl:template match="application">
   <xsl:call-template name="inline.charseq"/>
 </xsl:template>
 
-<xsl:template match="d:classname">
+<xsl:template match="classname">
   <xsl:call-template name="inline.monoseq"/>
 </xsl:template>
 
-<xsl:template match="d:exceptionname">
+<xsl:template match="exceptionname">
   <xsl:call-template name="inline.monoseq"/>
 </xsl:template>
 
-<xsl:template match="d:interfacename">
+<xsl:template match="interfacename">
   <xsl:call-template name="inline.monoseq"/>
 </xsl:template>
 
-<xsl:template match="d:methodname">
+<xsl:template match="methodname">
   <xsl:call-template name="inline.monoseq"/>
 </xsl:template>
 
-<xsl:template match="d:command">
+<xsl:template match="command">
   <xsl:call-template name="inline.boldseq"/>
 </xsl:template>
 
-<xsl:template match="d:computeroutput">
+<xsl:template match="computeroutput">
   <xsl:call-template name="inline.monoseq"/>
 </xsl:template>
 
-<xsl:template match="d:constant">
+<xsl:template match="constant">
   <xsl:call-template name="inline.monoseq"/>
 </xsl:template>
 
-<xsl:template match="d:database">
+<xsl:template match="database">
   <xsl:call-template name="inline.charseq"/>
 </xsl:template>
 
-<xsl:template match="d:date">
+<xsl:template match="date">
   <!-- should this support locale-specific formatting? how? -->
   <xsl:call-template name="inline.charseq"/>
 </xsl:template>
 
-<xsl:template match="d:errorcode">
+<xsl:template match="errorcode">
   <xsl:call-template name="inline.charseq"/>
 </xsl:template>
 
-<xsl:template match="d:errorname">
+<xsl:template match="errorname">
   <xsl:call-template name="inline.charseq"/>
 </xsl:template>
 
-<xsl:template match="d:errortype">
+<xsl:template match="errortype">
   <xsl:call-template name="inline.charseq"/>
 </xsl:template>
 
-<xsl:template match="d:errortext">
+<xsl:template match="errortext">
   <xsl:call-template name="inline.charseq"/>
 </xsl:template>
 
-<xsl:template match="d:envar">
+<xsl:template match="envar">
   <xsl:call-template name="inline.monoseq"/>
 </xsl:template>
 
-<xsl:template match="d:filename">
+<xsl:template match="filename">
   <xsl:call-template name="inline.monoseq"/>
 </xsl:template>
 
-<xsl:template match="d:function">
+<xsl:template match="function">
   <xsl:choose>
     <xsl:when test="$function.parens != '0'
-                    and (d:parameter or d:function or d:replaceable)">
+                    and (parameter or function or replaceable)">
       <xsl:variable name="nodes" select="text()|*"/>
       <xsl:call-template name="inline.monoseq">
         <xsl:with-param name="content">
@@ -475,157 +474,157 @@ xmlns:fo="http://www.w3.org/1999/XSL/Format"
   </xsl:choose>
 </xsl:template>
 
-<xsl:template match="d:function/d:parameter" priority="2">
+<xsl:template match="function/parameter" priority="2">
   <xsl:call-template name="inline.italicmonoseq"/>
   <xsl:if test="following-sibling::*">
     <xsl:text>, </xsl:text>
   </xsl:if>
 </xsl:template>
 
-<xsl:template match="d:function/d:replaceable" priority="2">
+<xsl:template match="function/replaceable" priority="2">
   <xsl:call-template name="inline.italicmonoseq"/>
   <xsl:if test="following-sibling::*">
     <xsl:text>, </xsl:text>
   </xsl:if>
 </xsl:template>
 
-<xsl:template match="d:guibutton">
+<xsl:template match="guibutton">
   <xsl:call-template name="inline.charseq"/>
 </xsl:template>
 
-<xsl:template match="d:guiicon">
+<xsl:template match="guiicon">
   <xsl:call-template name="inline.charseq"/>
 </xsl:template>
 
-<xsl:template match="d:guilabel">
+<xsl:template match="guilabel">
   <xsl:call-template name="inline.charseq"/>
 </xsl:template>
 
-<xsl:template match="d:guimenu">
+<xsl:template match="guimenu">
   <xsl:call-template name="inline.charseq"/>
 </xsl:template>
 
-<xsl:template match="d:guimenuitem">
+<xsl:template match="guimenuitem">
   <xsl:call-template name="inline.charseq"/>
 </xsl:template>
 
-<xsl:template match="d:guisubmenu">
+<xsl:template match="guisubmenu">
   <xsl:call-template name="inline.charseq"/>
 </xsl:template>
 
-<xsl:template match="d:hardware">
+<xsl:template match="hardware">
   <xsl:call-template name="inline.charseq"/>
 </xsl:template>
 
-<xsl:template match="d:interface">
+<xsl:template match="interface">
   <xsl:call-template name="inline.charseq"/>
 </xsl:template>
 
-<xsl:template match="d:interfacedefinition">
+<xsl:template match="interfacedefinition">
   <xsl:call-template name="inline.charseq"/>
 </xsl:template>
 
-<xsl:template match="d:keycap">
+<xsl:template match="keycap">
   <xsl:call-template name="inline.boldseq"/>
 </xsl:template>
 
-<xsl:template match="d:keycode">
+<xsl:template match="keycode">
   <xsl:call-template name="inline.charseq"/>
 </xsl:template>
 
-<xsl:template match="d:keysym">
+<xsl:template match="keysym">
   <xsl:call-template name="inline.charseq"/>
 </xsl:template>
 
-<xsl:template match="d:literal">
+<xsl:template match="literal">
   <xsl:call-template name="inline.monoseq"/>
 </xsl:template>
 
-<xsl:template match="d:code">
+<xsl:template match="code">
   <xsl:call-template name="inline.monoseq"/>
 </xsl:template>
 
-<xsl:template match="d:medialabel">
+<xsl:template match="medialabel">
   <xsl:call-template name="inline.italicseq"/>
 </xsl:template>
 
-<xsl:template match="d:shortcut">
+<xsl:template match="shortcut">
   <xsl:call-template name="inline.boldseq"/>
 </xsl:template>
 
-<xsl:template match="d:mousebutton">
+<xsl:template match="mousebutton">
   <xsl:call-template name="inline.charseq"/>
 </xsl:template>
 
-<xsl:template match="d:option">
+<xsl:template match="option">
   <xsl:call-template name="inline.monoseq"/>
 </xsl:template>
 
-<xsl:template match="d:package">
+<xsl:template match="package">
   <xsl:call-template name="inline.charseq"/>
 </xsl:template>
 
-<xsl:template match="d:parameter">
+<xsl:template match="parameter">
   <xsl:call-template name="inline.italicmonoseq"/>
 </xsl:template>
 
-<xsl:template match="d:property">
+<xsl:template match="property">
   <xsl:call-template name="inline.charseq"/>
 </xsl:template>
 
-<xsl:template match="d:prompt">
+<xsl:template match="prompt">
   <xsl:call-template name="inline.monoseq"/>
 </xsl:template>
 
-<xsl:template match="d:replaceable">
+<xsl:template match="replaceable">
   <xsl:call-template name="inline.italicmonoseq"/>
 </xsl:template>
 
-<xsl:template match="d:returnvalue">
+<xsl:template match="returnvalue">
   <xsl:call-template name="inline.charseq"/>
 </xsl:template>
 
-<xsl:template match="d:structfield">
+<xsl:template match="structfield">
   <xsl:call-template name="inline.italicmonoseq"/>
 </xsl:template>
 
-<xsl:template match="d:structname">
+<xsl:template match="structname">
   <xsl:call-template name="inline.charseq"/>
 </xsl:template>
 
-<xsl:template match="d:symbol">
+<xsl:template match="symbol">
   <xsl:call-template name="inline.charseq"/>
 </xsl:template>
 
-<xsl:template match="d:systemitem">
+<xsl:template match="systemitem">
   <xsl:call-template name="inline.monoseq"/>
 </xsl:template>
 
-<xsl:template match="d:token">
+<xsl:template match="token">
   <xsl:call-template name="inline.charseq"/>
 </xsl:template>
 
-<xsl:template match="d:type">
+<xsl:template match="type">
   <xsl:call-template name="inline.charseq"/>
 </xsl:template>
 
-<xsl:template match="d:userinput">
+<xsl:template match="userinput">
   <xsl:call-template name="inline.boldmonoseq"/>
 </xsl:template>
 
-<xsl:template match="d:abbrev">
+<xsl:template match="abbrev">
   <xsl:call-template name="inline.charseq"/>
 </xsl:template>
 
-<xsl:template match="d:acronym">
+<xsl:template match="acronym">
   <xsl:call-template name="inline.charseq"/>
 </xsl:template>
 
-<xsl:template match="d:citerefentry">
+<xsl:template match="citerefentry">
   <xsl:call-template name="inline.charseq"/>
 </xsl:template>
 
-<xsl:template match="d:citetitle">
+<xsl:template match="citetitle">
   <xsl:choose>
     <xsl:when test="@pubwork = 'article'">
       <xsl:call-template name="gentext.startquote"/>
@@ -638,7 +637,7 @@ xmlns:fo="http://www.w3.org/1999/XSL/Format"
   </xsl:choose>
 </xsl:template>
 
-<xsl:template match="d:emphasis">
+<xsl:template match="emphasis">
   <xsl:variable name="depth">
     <xsl:call-template name="dot.count">
       <xsl:with-param name="string">
@@ -676,19 +675,19 @@ xmlns:fo="http://www.w3.org/1999/XSL/Format"
   </xsl:choose>
 </xsl:template>
 
-<xsl:template match="d:foreignphrase">
+<xsl:template match="foreignphrase">
   <xsl:call-template name="inline.italicseq"/>
 </xsl:template>
 
-<xsl:template match="d:markup">
+<xsl:template match="markup">
   <xsl:call-template name="inline.charseq"/>
 </xsl:template>
 
-<xsl:template match="d:phrase">
+<xsl:template match="phrase">
   <xsl:call-template name="inline.charseq"/>
 </xsl:template>
 
-<xsl:template match="d:quote">
+<xsl:template match="quote">
   <xsl:variable name="depth">
     <xsl:call-template name="dot.count">
       <xsl:with-param name="string"><xsl:number level="multiple"/></xsl:with-param>
@@ -708,29 +707,29 @@ xmlns:fo="http://www.w3.org/1999/XSL/Format"
   </xsl:choose>
 </xsl:template>
 
-<xsl:template match="d:varname">
+<xsl:template match="varname">
   <xsl:call-template name="inline.monoseq"/>
 </xsl:template>
 
-<xsl:template match="d:wordasword">
+<xsl:template match="wordasword">
   <xsl:call-template name="inline.italicseq"/>
 </xsl:template>
 
-<xsl:template match="d:lineannotation">
+<xsl:template match="lineannotation">
   <fo:inline font-style="italic">
     <xsl:call-template name="inline.charseq"/>
   </fo:inline>
 </xsl:template>
 
-<xsl:template match="d:superscript">
+<xsl:template match="superscript">
   <xsl:call-template name="inline.superscriptseq"/>
 </xsl:template>
 
-<xsl:template match="d:subscript">
+<xsl:template match="subscript">
   <xsl:call-template name="inline.subscriptseq"/>
 </xsl:template>
 
-<xsl:template match="d:trademark">
+<xsl:template match="trademark">
   <xsl:call-template name="inline.charseq"/>
   <xsl:choose>
     <xsl:when test="@class = 'copyright'
@@ -752,13 +751,13 @@ xmlns:fo="http://www.w3.org/1999/XSL/Format"
   </xsl:choose>
 </xsl:template>
 
-<xsl:template match="d:firstterm">
+<xsl:template match="firstterm">
   <xsl:call-template name="glossterm">
     <xsl:with-param name="firstterm" select="1"/>
   </xsl:call-template>
 </xsl:template>
 
-<xsl:template match="d:glossterm" name="glossterm">
+<xsl:template match="glossterm" name="glossterm">
   <xsl:param name="firstterm" select="0"/>
 
   <xsl:choose>
@@ -790,7 +789,7 @@ xmlns:fo="http://www.w3.org/1999/XSL/Format"
         </xsl:choose>
       </xsl:variable>
       <xsl:variable name="cterm"
-           select="(document($glossary.collection,.)//d:glossentry[d:glossterm=$term])[1]"/>
+           select="(document($glossary.collection,.)//glossentry[glossterm=$term])[1]"/>
 
       <xsl:choose>
         <xsl:when test="not($cterm)">
@@ -831,8 +830,8 @@ xmlns:fo="http://www.w3.org/1999/XSL/Format"
       </xsl:variable>
 
       <xsl:variable name="targets"
-                    select="//d:glossentry[normalize-space(d:glossterm)=$term
-			    or normalize-space(d:glossterm/@baseform)=$term]"/>
+                    select="//glossentry[normalize-space(glossterm)=$term
+			    or normalize-space(glossterm/@baseform)=$term]"/>
 
       <xsl:variable name="target" select="$targets[1]"/>
 
@@ -865,7 +864,7 @@ xmlns:fo="http://www.w3.org/1999/XSL/Format"
   </xsl:choose>
 </xsl:template>
 
-<xsl:template match="d:termdef">
+<xsl:template match="termdef">
   <fo:inline>
     <xsl:call-template name="gentext.template">
       <xsl:with-param name="context" select="'termdef'"/>
@@ -879,7 +878,7 @@ xmlns:fo="http://www.w3.org/1999/XSL/Format"
   </fo:inline>
 </xsl:template>
 
-<xsl:template match="d:sgmltag|d:tag">
+<xsl:template match="sgmltag|tag">
   <xsl:variable name="class">
     <xsl:choose>
       <xsl:when test="@class">
@@ -986,7 +985,7 @@ xmlns:fo="http://www.w3.org/1999/XSL/Format"
   </xsl:choose>
 </xsl:template>
 
-<xsl:template match="d:email">
+<xsl:template match="email">
   <xsl:call-template name="inline.monoseq">
     <xsl:with-param name="content">
       <fo:inline keep-together.within-line="always" hyphenate="false">
@@ -1002,7 +1001,7 @@ xmlns:fo="http://www.w3.org/1999/XSL/Format"
   </xsl:call-template>
 </xsl:template>
 
-<xsl:template match="d:keycombo">
+<xsl:template match="keycombo">
   <xsl:variable name="action" select="@action"/>
   <xsl:variable name="joinchar">
     <xsl:choose>
@@ -1021,14 +1020,14 @@ xmlns:fo="http://www.w3.org/1999/XSL/Format"
   </xsl:for-each>
 </xsl:template>
 
-<xsl:template match="d:uri">
+<xsl:template match="uri">
   <xsl:call-template name="inline.monoseq"/>
 </xsl:template>
 
 <!-- ==================================================================== -->
 
-<xsl:template match="d:menuchoice">
-  <xsl:variable name="shortcut" select="./d:shortcut"/>
+<xsl:template match="menuchoice">
+  <xsl:variable name="shortcut" select="./shortcut"/>
   <xsl:call-template name="process.menuchoice"/>
   <xsl:if test="$shortcut">
     <xsl:text> (</xsl:text>
@@ -1038,7 +1037,7 @@ xmlns:fo="http://www.w3.org/1999/XSL/Format"
 </xsl:template>
 
 <xsl:template name="process.menuchoice">
-  <xsl:param name="nodelist" select="d:guibutton|d:guiicon|d:guilabel|d:guimenu|d:guimenuitem|d:guisubmenu|d:interface"/><!-- not(shortcut) -->
+  <xsl:param name="nodelist" select="guibutton|guiicon|guilabel|guimenu|guimenuitem|guisubmenu|interface"/><!-- not(shortcut) -->
   <xsl:param name="count" select="1"/>
 
   <xsl:variable name="mm.separator">
@@ -1086,20 +1085,20 @@ xmlns:fo="http://www.w3.org/1999/XSL/Format"
 
 <!-- ==================================================================== -->
 
-<xsl:template match="d:optional">
+<xsl:template match="optional">
   <xsl:value-of select="$arg.choice.opt.open.str"/>
   <xsl:call-template name="inline.charseq"/>
   <xsl:value-of select="$arg.choice.opt.close.str"/>
 </xsl:template>
 
-<xsl:template match="d:citation">
+<xsl:template match="citation">
   <!-- todo: integrate with bibliography collection -->
-  <xsl:variable name="targets" select="(//d:biblioentry | //d:bibliomixed)[d:abbrev = string(current())]"/>
+  <xsl:variable name="targets" select="(//biblioentry | //bibliomixed)[abbrev = string(current())]"/>
   <xsl:variable name="target" select="$targets[1]"/>
 
   <xsl:choose>
     <!-- try automatic linking based on match to abbrev -->
-    <xsl:when test="$target and not(d:xref) and not(d:link)">
+    <xsl:when test="$target and not(xref) and not(link)">
 
       <xsl:text>[</xsl:text>
       <fo:basic-link>
@@ -1130,13 +1129,13 @@ xmlns:fo="http://www.w3.org/1999/XSL/Format"
   </xsl:choose>
 </xsl:template>
 
-<xsl:template match="d:citebiblioid">
-  <xsl:variable name="targets" select="//*[d:biblioid = string(current())]"/>
+<xsl:template match="citebiblioid">
+  <xsl:variable name="targets" select="//*[biblioid = string(current())]"/>
   <xsl:variable name="target" select="$targets[1]"/>
 
   <xsl:choose>
     <!-- try automatic linking based on match to parent of biblioid -->
-    <xsl:when test="$target and not(d:xref) and not(d:link)">
+    <xsl:when test="$target and not(xref) and not(link)">
 
       <xsl:text>[</xsl:text>
       <fo:basic-link>
@@ -1160,14 +1159,14 @@ xmlns:fo="http://www.w3.org/1999/XSL/Format"
   </xsl:choose>
 </xsl:template>
 
-<xsl:template match="d:biblioentry|d:bibliomixed" mode="citation">
-  <xsl:number from="d:bibliography" count="d:biblioentry|d:bibliomixed"
+<xsl:template match="biblioentry|bibliomixed" mode="citation">
+  <xsl:number from="bibliography" count="biblioentry|bibliomixed"
 	      level="any" format="1"/>
 </xsl:template>
 
 <!-- ==================================================================== -->
 
-<xsl:template match="d:comment[&comment.block.parents;]|d:remark[&comment.block.parents;]">
+<xsl:template match="comment[&comment.block.parents;]|remark[&comment.block.parents;]">
   <xsl:if test="$show.comments != 0">
     <fo:block font-style="italic">
       <xsl:call-template name="inline.charseq"/>
@@ -1175,7 +1174,7 @@ xmlns:fo="http://www.w3.org/1999/XSL/Format"
   </xsl:if>
 </xsl:template>
 
-<xsl:template match="d:comment|d:remark">
+<xsl:template match="comment|remark">
   <xsl:if test="$show.comments != 0">
     <fo:inline font-style="italic">
       <xsl:call-template name="inline.charseq"/>
@@ -1185,7 +1184,7 @@ xmlns:fo="http://www.w3.org/1999/XSL/Format"
 
 <!-- ==================================================================== -->
 
-<xsl:template match="d:productname">
+<xsl:template match="productname">
   <xsl:call-template name="inline.charseq"/>
   <xsl:if test="@class">
     <xsl:call-template name="dingbat">
@@ -1194,32 +1193,32 @@ xmlns:fo="http://www.w3.org/1999/XSL/Format"
   </xsl:if>
 </xsl:template>
 
-<xsl:template match="d:productnumber">
+<xsl:template match="productnumber">
   <xsl:call-template name="inline.charseq"/>
 </xsl:template>
 
 <!-- ==================================================================== -->
 
-<xsl:template match="d:pob|d:street|d:city|d:state|d:postcode|d:country|d:otheraddr">
+<xsl:template match="pob|street|city|state|postcode|country|otheraddr">
   <xsl:call-template name="inline.charseq"/>
 </xsl:template>
 
-<xsl:template match="d:phone|d:fax">
+<xsl:template match="phone|fax">
   <xsl:call-template name="inline.charseq"/>
 </xsl:template>
 
 <!-- in Addresses, for example -->
-<xsl:template match="d:honorific|d:firstname|d:surname|d:lineage|d:othername">
+<xsl:template match="honorific|firstname|surname|lineage|othername">
   <xsl:call-template name="inline.charseq"/>
 </xsl:template>
 
 <!-- ==================================================================== -->
 
-<xsl:template match="d:person">
-  <xsl:apply-templates select="d:personname"/>
+<xsl:template match="person">
+  <xsl:apply-templates select="personname"/>
 </xsl:template>
 
-<xsl:template match="d:personname">
+<xsl:template match="personname">
   <xsl:call-template name="simple.xlink">
     <xsl:with-param name="content">
       <xsl:call-template name="person.name"/>
@@ -1227,7 +1226,7 @@ xmlns:fo="http://www.w3.org/1999/XSL/Format"
   </xsl:call-template>
 </xsl:template>
 
-<xsl:template match="d:jobtitle">
+<xsl:template match="jobtitle">
   <xsl:call-template name="simple.xlink">
     <xsl:with-param name="content">
       <xsl:apply-templates/>
@@ -1237,25 +1236,25 @@ xmlns:fo="http://www.w3.org/1999/XSL/Format"
 
 <!-- ==================================================================== -->
 
-<xsl:template match="d:org">
+<xsl:template match="org">
   <xsl:call-template name="inline.charseq"/>
 </xsl:template>
 
-<xsl:template match="d:orgname">
+<xsl:template match="orgname">
   <xsl:call-template name="inline.charseq"/>
 </xsl:template>
 
-<xsl:template match="d:orgdiv">
+<xsl:template match="orgdiv">
   <xsl:call-template name="inline.charseq"/>
 </xsl:template>
 
-<xsl:template match="d:affiliation">
+<xsl:template match="affiliation">
   <xsl:call-template name="inline.charseq"/>
 </xsl:template>
 
 <!-- ==================================================================== -->
 
-<xsl:template match="d:beginpage">
+<xsl:template match="beginpage">
   <!-- does nothing; this *is not* markup to force a page break. -->
 </xsl:template>
 

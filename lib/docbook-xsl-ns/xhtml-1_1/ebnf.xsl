@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="ASCII"?>
 <!--This file was created automatically by html2xhtml-->
 <!--from the HTML stylesheets.-->
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:d="http://docbook.org/ns/docbook"
-xmlns:doc="http://nwalsh.com/xsl/documentation/1.0" xmlns="http://www.w3.org/1999/xhtml" exclude-result-prefixes="doc d" version="1.0">
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:doc="http://nwalsh.com/xsl/documentation/1.0" xmlns="http://www.w3.org/1999/xhtml" exclude-result-prefixes="doc" version="1.0">
 
 <!-- ********************************************************************
      $Id: ebnf.xsl 6910 2007-06-28 23:23:30Z xmldoc $
@@ -50,7 +49,7 @@ to be incomplete. Don't forget to read the source, too :-)</para>
 
 <!-- ==================================================================== -->
 
-<xsl:template match="d:productionset">
+<xsl:template match="productionset">
   <table width="100%" cellpadding="5">
     <xsl:if test="$ebnf.table.bgcolor != ''">
       <xsl:attribute name="style"><xsl:text>background-color: </xsl:text>
@@ -65,17 +64,17 @@ to be incomplete. Don't forget to read the source, too :-)</para>
     </xsl:attribute>
     <xsl:attribute name="summary">
       <xsl:text>EBNF</xsl:text>
-      <xsl:if test="d:title">
+      <xsl:if test="title">
         <xsl:text> for </xsl:text>
-        <xsl:value-of select="d:title"/>
+        <xsl:value-of select="title"/>
       </xsl:if>
     </xsl:attribute>
 
-    <xsl:if test="d:title">
+    <xsl:if test="title">
       <tr>
         <th align="left" valign="top">
           <xsl:apply-templates select="." mode="class.attribute"/>
-          <xsl:apply-templates select="d:title"/>
+          <xsl:apply-templates select="title"/>
         </th>
       </tr>
     </xsl:if>
@@ -91,23 +90,23 @@ to be incomplete. Don't forget to read the source, too :-)</para>
             <xsl:value-of select="local-name(.)"/>
           </xsl:attribute>
           <xsl:attribute name="summary">EBNF productions</xsl:attribute>
-          <xsl:apply-templates select="d:production|d:productionrecap"/>
+          <xsl:apply-templates select="production|productionrecap"/>
         </table>
       </td>
     </tr>
   </table>
 </xsl:template>
 
-<xsl:template match="d:productionset/d:title">
+<xsl:template match="productionset/title">
   <xsl:apply-templates/>
 </xsl:template>
 
-<xsl:template match="d:production">
+<xsl:template match="production">
   <xsl:param name="recap" select="false()"/>
   <tr>
     <td align="left" valign="top">
       <xsl:text>[</xsl:text>
-      <xsl:number count="d:production" level="any"/>
+      <xsl:number count="production" level="any"/>
       <xsl:text>]</xsl:text>
     </td>
     <td align="right" valign="top">
@@ -119,12 +118,12 @@ to be incomplete. Don't forget to read the source, too :-)</para>
                 <xsl:with-param name="object" select="."/>
               </xsl:call-template>
             </xsl:attribute>
-            <xsl:apply-templates select="d:lhs"/>
+            <xsl:apply-templates select="lhs"/>
           </a>
         </xsl:when>
         <xsl:otherwise>
           <xsl:call-template name="anchor"/>
-          <xsl:apply-templates select="d:lhs"/>
+          <xsl:apply-templates select="lhs"/>
         </xsl:otherwise>
       </xsl:choose>
     </td>
@@ -132,14 +131,14 @@ to be incomplete. Don't forget to read the source, too :-)</para>
       <xsl:copy-of select="$ebnf.assignment"/>
     </td>
     <td valign="top">
-      <xsl:apply-templates select="d:rhs"/>
+      <xsl:apply-templates select="rhs"/>
       <xsl:copy-of select="$ebnf.statement.terminator"/>
     </td>
     <td align="left" valign="top">
       <xsl:choose>
-        <xsl:when test="d:rhs/d:lineannotation|d:constraint">
-          <xsl:apply-templates select="d:rhs/d:lineannotation" mode="rhslo"/>
-          <xsl:apply-templates select="d:constraint"/>
+        <xsl:when test="rhs/lineannotation|constraint">
+          <xsl:apply-templates select="rhs/lineannotation" mode="rhslo"/>
+          <xsl:apply-templates select="constraint"/>
         </xsl:when>
         <xsl:otherwise>
           <xsl:text>&#160;</xsl:text>
@@ -149,7 +148,7 @@ to be incomplete. Don't forget to read the source, too :-)</para>
   </tr>
 </xsl:template>
 
-<xsl:template match="d:productionrecap">
+<xsl:template match="productionrecap">
   <xsl:variable name="targets" select="key('id',@linkend)"/>
   <xsl:variable name="target" select="$targets[1]"/>
 
@@ -174,19 +173,19 @@ to be incomplete. Don't forget to read the source, too :-)</para>
   </xsl:apply-templates>
 </xsl:template>
 
-<xsl:template match="d:lhs">
+<xsl:template match="lhs">
   <xsl:apply-templates/>
 </xsl:template>
 
-<xsl:template match="d:rhs">
+<xsl:template match="rhs">
   <xsl:apply-templates/>
-  <xsl:if test="following-sibling::d:rhs">
+  <xsl:if test="following-sibling::rhs">
     <xsl:text> |</xsl:text>
     <br/>
   </xsl:if>
 </xsl:template>
 
-<xsl:template match="d:nonterminal">
+<xsl:template match="nonterminal">
   <xsl:variable name="linkend">
     <xsl:call-template name="xpointer.idref">
       <xsl:with-param name="xpointer" select="@def"/>
@@ -244,7 +243,7 @@ to be incomplete. Don't forget to read the source, too :-)</para>
           <xsl:when test="$linkend != ''">
             <xsl:variable name="targets" select="key('id',$linkend)"/>
             <xsl:variable name="target" select="$targets[1]"/>
-            <xsl:apply-templates select="$target/d:lhs"/>
+            <xsl:apply-templates select="$target/lhs"/>
           </xsl:when>
           <xsl:otherwise>
             <xsl:text>???</xsl:text>
@@ -255,18 +254,18 @@ to be incomplete. Don't forget to read the source, too :-)</para>
   </a>
 </xsl:template>
 
-<xsl:template match="d:rhs/d:lineannotation">
+<xsl:template match="rhs/lineannotation">
   <!--nop-->
 </xsl:template>
 
-<xsl:template match="d:rhs/d:lineannotation" mode="rhslo">
+<xsl:template match="rhs/lineannotation" mode="rhslo">
   <xsl:text>/*&#160;</xsl:text>
   <xsl:apply-templates/>
   <xsl:text>&#160;*/</xsl:text>
   <br/>
 </xsl:template>
 
-<xsl:template match="d:constraint">
+<xsl:template match="constraint">
   <xsl:call-template name="check.id.unique">
     <xsl:with-param name="linkend" select="@linkend"/>
   </xsl:call-template>
@@ -307,12 +306,12 @@ to be incomplete. Don't forget to read the source, too :-)</para>
     <xsl:apply-templates select="$target" mode="title.markup"/>
   </a>
   <xsl:text>&#160;]</xsl:text>
-  <xsl:if test="following-sibling::d:constraint">
+  <xsl:if test="following-sibling::constraint">
     <br/>
   </xsl:if>
 </xsl:template>
 
-<xsl:template match="d:constraintdef">
+<xsl:template match="constraintdef">
   <div>
     <xsl:apply-templates select="." mode="class.attribute"/>
     <xsl:call-template name="anchor"/>
@@ -320,7 +319,7 @@ to be incomplete. Don't forget to read the source, too :-)</para>
   </div>
 </xsl:template>
 
-<xsl:template match="d:constraintdef/d:title">
+<xsl:template match="constraintdef/title">
   <p><b><xsl:apply-templates/></b></p>
 </xsl:template>
 

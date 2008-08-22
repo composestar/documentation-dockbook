@@ -5,7 +5,7 @@
   <info>
     <title>Formatting Object Table Reference</title>
     <releaseinfo role="meta">
-      $Id: table.xsl 7681 2008-02-17 19:08:14Z mzjn $
+      $Id: table.xsl 8049 2008-06-13 00:29:04Z bobstayton $
     </releaseinfo>
   </info>
   <partintro xml:id="partintro">

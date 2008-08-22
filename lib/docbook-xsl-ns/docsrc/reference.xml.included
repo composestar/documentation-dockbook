@@ -5219,7 +5219,7 @@ tables.</para>
 <refsection><info><title>Description</title></info>
 
 <para>If non-zero, <tag>variablelist</tag>s will be formatted as
-tables. A processing instruction exists to specify a particualar width for the 
+tables. A processing instruction exists to specify a particular width for the 
 column containing the <tag>term</tag>s:   
 <tag class="xmlpi">dbhtml term-width=".25in"</tag></para>
 
@@ -5228,7 +5228,7 @@ child of <tag>variablelist</tag>: <tag class="xmlpi">dbhtml
 list-presentation="table"</tag> or <tag class="xmlpi">dbhtml
 list-presentation="list"</tag>.</para>
 
-<para>This parameter only applys to the HTML transformations. In the
+<para>This parameter only applies to the HTML transformations. In the
 FO case, proper list markup is robust enough to handle the formatting.
 But see also <parameter>variablelist.as.blocks</parameter>.</para>
 
@@ -11105,7 +11105,7 @@ significant index terms</refpurpose>
 <refsection><info><title>Description</title></info>
 
 <para>Properties used to emphasize page number references for
-significant index terms (<tag class="attribute">significance</tag>=<tag class="attvalue">preffered</tag>). Currently works only with
+significant index terms (<tag class="attribute">significance</tag>=<tag class="attvalue">preferred</tag>). Currently works only with
 XEP.</para>
 
 </refsection>
@@ -26845,7 +26845,7 @@ will be used to indent the TOC.</para>
     <part id="pi-html">
       <info xml:base="../html/pi.xml"><title>HTML Processing Instruction Reference</title>
     <releaseinfo role="meta">
-      $Id: pi.xsl 7684 2008-02-18 01:50:02Z xmldoc $
+      $Id: pi.xsl 8068 2008-07-06 09:15:15Z mzjn $
     </releaseinfo>
   </info>
   <partintro id="partintro" xml:base="../html/pi.xml">
@@ -26906,7 +26906,7 @@ will be used to indent the TOC.</para>
 <refentry id="dbhtml_bgcolor" xml:base="../html/pi.xml">
 <refnamediv>
 <refname>dbhtml_bgcolor</refname>
-<refpurpose>Sets background color on a table row or table cell</refpurpose>
+<refpurpose>Sets background color on a CALS table row or table cell</refpurpose>
 </refnamediv>
 <refsynopsisdiv>
 
@@ -26915,7 +26915,7 @@ will be used to indent the TOC.</para>
 </refsynopsisdiv>
 <refsect1><title/>
     
-<para>Use the <tag class="xmlpi">dbhtml bgcolor</tag> PI as child of a table row
+<para>Use the <tag class="xmlpi">dbhtml bgcolor</tag> PI as child of a CALS table row
       or cell to set a background color for that table row or cell.</para>
 
   </refsect1><refsect1><title>Parameters</title>
@@ -26939,7 +26939,7 @@ will be used to indent the TOC.</para>
 <refentry id="dbhtml_cellpadding" xml:base="../html/pi.xml">
 <refnamediv>
 <refname>dbhtml_cellpadding</refname>
-<refpurpose>Specifies cellpadding in table or qandaset output</refpurpose>
+<refpurpose>Specifies cellpadding in CALS table or qandaset output</refpurpose>
 </refnamediv>
 <refsynopsisdiv>
 
@@ -26949,7 +26949,7 @@ will be used to indent the TOC.</para>
 <refsect1><title/>
     
 <para>Use the <tag class="xmlpi">dbhtml cellpadding</tag> PI as a child of a
-      <tag>table</tag> or <tag>qandaset</tag> to specify the value
+      CALS <tag>table</tag> or <tag>qandaset</tag> to specify the value
       for the HTML <literal>cellpadding</literal> attribute in the
       output HTML table.</para>
 
@@ -26979,7 +26979,7 @@ will be used to indent the TOC.</para>
 <refentry id="dbhtml_cellspacing" xml:base="../html/pi.xml">
 <refnamediv>
 <refname>dbhtml_cellspacing</refname>
-<refpurpose>Specifies cellspacing in table or qandaset output</refpurpose>
+<refpurpose>Specifies cellspacing in CALS table or qandaset output</refpurpose>
 </refnamediv>
 <refsynopsisdiv>
 
@@ -26989,7 +26989,7 @@ will be used to indent the TOC.</para>
 <refsect1><title/>
     
 <para>Use the <tag class="xmlpi">dbhtml cellspacing</tag> PI as a child of a
-      <tag>table</tag> or <tag>qandaset</tag> to specify the value
+      CALS <tag>table</tag> or <tag>qandaset</tag> to specify the value
       for the HTML <literal>cellspacing</literal> attribute in the
       output HTML table.</para>
 
@@ -27019,7 +27019,7 @@ will be used to indent the TOC.</para>
 <refentry id="dbhtml_class" xml:base="../html/pi.xml">
 <refnamediv>
 <refname>dbhtml_class</refname>
-<refpurpose>Set value of the class attribute for a table row</refpurpose>
+<refpurpose>Set value of the class attribute for a CALS table row</refpurpose>
 </refnamediv>
 <refsynopsisdiv>
 
@@ -27250,7 +27250,7 @@ will be used to indent the TOC.</para>
 <refentry id="dbhtml_linenumbering.everyNth" xml:base="../html/pi.xml">
 <refnamediv>
 <refname>dbhtml_linenumbering.everyNth</refname>
-<refpurpose>Specifies interval for lines numbers in verbatims</refpurpose>
+<refpurpose>Specifies interval for line numbers in verbatims</refpurpose>
 </refnamediv>
 <refsynopsisdiv>
 
@@ -27460,7 +27460,7 @@ will be used to indent the TOC.</para>
 <refentry id="dbhtml_row-height" xml:base="../html/pi.xml">
 <refnamediv>
 <refname>dbhtml_row-height</refname>
-<refpurpose>Specifies the height for a table row</refpurpose>
+<refpurpose>Specifies the height for a CALS table row</refpurpose>
 </refnamediv>
 <refsynopsisdiv>
 
@@ -27532,7 +27532,7 @@ will be used to indent the TOC.</para>
 <refentry id="dbhtml_stop-chunking" xml:base="../html/pi.xml">
 <refnamediv>
 <refname>dbhtml_stop-chunking</refname>
-<refpurpose>Do not chunk any descendents of this element.</refpurpose>
+<refpurpose>Do not chunk any descendants of this element.</refpurpose>
 </refnamediv>
 <refsynopsisdiv>
 
@@ -27541,7 +27541,7 @@ will be used to indent the TOC.</para>
 </refsynopsisdiv>
 <refsect1><title/>
     
-<para>When generating chunked html output, adding this as the child of an element that contains elements that would normally be generated on separate pages if generating chunked output causes chunking to stop at this point. No descendants of the current element will be split into new html pages:
+<para>When generating chunked HTML output, adding this PI as the child of an element that contains elements that would normally be generated on separate pages if generating chunked output causes chunking to stop at this point. No descendants of the current element will be split into new HTML pages:
 <programlisting>&lt;section&gt;
 &lt;title&gt;Configuring pencil&lt;/title&gt;
 &lt;?dbhtml stop-chunking?&gt;
@@ -27560,7 +27560,7 @@ will be used to indent the TOC.</para>
 <refentry id="dbhtml_table-summary" xml:base="../html/pi.xml">
 <refnamediv>
 <refname>dbhtml_table-summary</refname>
-<refpurpose>Specifies summary for table, variablelist, segmentedlist, or qandaset output</refpurpose>
+<refpurpose>Specifies summary for CALS table, variablelist, segmentedlist, or qandaset output</refpurpose>
 </refnamediv>
 <refsynopsisdiv>
 
@@ -27570,7 +27570,7 @@ will be used to indent the TOC.</para>
 <refsect1><title/>
     
 <para>Use the <tag class="xmlpi">dbhtml table-summary</tag> PI as a child of
-      a <tag>table</tag>, <tag>variablelist</tag>,
+      a CALS <tag>table</tag>, <tag>variablelist</tag>,
       <tag>segmentedlist</tag>, or <tag>qandaset</tag> to specify
       the text for the HTML <literal>summary</literal> attribute
       in the output HTML table.</para>
@@ -27597,7 +27597,7 @@ will be used to indent the TOC.</para>
 <refentry id="dbhtml_table-width" xml:base="../html/pi.xml">
 <refnamediv>
 <refname>dbhtml_table-width</refname>
-<refpurpose>Specifies the width for a table</refpurpose>
+<refpurpose>Specifies the width for a CALS table</refpurpose>
 </refnamediv>
 <refsynopsisdiv>
 
@@ -27607,7 +27607,7 @@ will be used to indent the TOC.</para>
 <refsect1><title/>
     
 <para>Use the <tag class="xmlpi">dbhtml table-width</tag> PI as a child of a
-      <tag>table</tag> to specify the width of the table in
+      CALS <tag>table</tag> to specify the width of the table in
       output.</para>
 
   </refsect1><refsect1><title>Parameters</title>
@@ -27957,7 +27957,7 @@ will be used to indent the TOC.</para>
     <part id="pi-fo">
       <info xml:base="../fo/pi.xml"><title>FO Processing Instruction Reference</title>
     <releaseinfo role="meta">
-      $Id: pi.xsl 8012 2008-05-23 16:08:05Z mzjn $
+      $Id: pi.xsl 8067 2008-07-06 09:03:24Z mzjn $
     </releaseinfo>
   </info>
 
@@ -28320,7 +28320,7 @@ will be used to indent the TOC.</para>
 <refentry id="dbfo_linenumbering.everyNth" xml:base="../fo/pi.xml">
 <refnamediv>
 <refname>dbfo_linenumbering.everyNth</refname>
-<refpurpose>Specifies interval for lines numbers in verbatims</refpurpose>
+<refpurpose>Specifies interval for line numbers in verbatims</refpurpose>
 </refnamediv>
 <refsynopsisdiv>
 
@@ -31901,7 +31901,7 @@ unchanged.</para>
   <info xml:base="../fo/table.xml">
     <title>Formatting Object Table Reference</title>
     <releaseinfo role="meta">
-      $Id: table.xsl 7681 2008-02-17 19:08:14Z mzjn $
+      $Id: table.xsl 8049 2008-06-13 00:29:04Z bobstayton $
     </releaseinfo>
   </info>
   <partintro id="partintro" xml:base="../fo/table.xml">

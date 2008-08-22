@@ -2,12 +2,10 @@
 <!--This file was created automatically by html2xhtml-->
 <!--from the HTML stylesheets.-->
 <!-- This file is generated from param.xweb -->
-<xsl:stylesheet exclude-result-prefixes="d"
-                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:d="http://docbook.org/ns/docbook"
-xmlns="http://www.w3.org/1999/xhtml" version="1.0">
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns="http://www.w3.org/1999/xhtml" version="1.0">
 
 <!-- ********************************************************************
-     $Id: param.xweb 7679 2008-02-17 13:26:47Z xmldoc $
+     $Id: param.xweb 8092 2008-07-18 21:26:36Z kosek $
      ********************************************************************
 
      This file is part of the XSL DocBook Stylesheet distribution.

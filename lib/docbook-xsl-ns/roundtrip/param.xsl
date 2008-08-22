@@ -1,7 +1,5 @@
-<?xml version="1.0" encoding="ASCII"?>
-<xsl:stylesheet exclude-result-prefixes="d"
-                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:d="http://docbook.org/ns/docbook"
-version="1.0">
+<?xml version="1.0"?>
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
 
 <!-- This file is generated from param.xweb -->
 
@@ -18,3 +16,4 @@ version="1.0">
 <xsl:param name="wordml.template"/>
 <xsl:param name="pages.template"/>
 </xsl:stylesheet>
+
