@@ -14,12 +14,12 @@
 </abstract>
 </info><title>Changes since the 1.74.0 release</title>
 
-<sect1 xml:id="Vsnapshot_8108">
-<title>Release Notes: snapshot_8108</title>
+<sect1 xml:id="Vsnapshot_8110">
+<title>Release Notes: snapshot_8110</title>
 <para>The following is a list of changes that have been made
         since the 1.74.0 release.</para>
 
-<sect2 xml:id="Vsnapshot_8108_Common">
+<sect2 xml:id="Vsnapshot_8110_Common">
 <title>Common</title>
 <para>The following changes have been made to the
             <filename>common</filename> code
@@ -32,9 +32,9 @@
 <para><literal>Keith Fahlgren: Makefile</literal></para><screen><phrase role="commit-message">Get rid of the rest of the hardcoded buildtools references and actually use DOCBOOK_SVN</phrase></screen>
 </listitem>
 </itemizedlist>
-</sect2><!--end of Common changes for snapshot_8108-->
+</sect2><!--end of Common changes for snapshot_8110-->
 
-<sect2 xml:id="Vsnapshot_8108_FO">
+<sect2 xml:id="Vsnapshot_8110_FO">
 <title>FO</title>
 <para>The following changes have been made to the
             <filename>fo</filename> code
@@ -66,9 +66,9 @@ context for computing column widths.</phrase></screen>
 <para><literal>Keith Fahlgren: Makefile</literal></para><screen><phrase role="commit-message">Get rid of the rest of the hardcoded buildtools references and actually use DOCBOOK_SVN</phrase></screen>
 </listitem>
 </itemizedlist>
-</sect2><!--end of FO changes for snapshot_8108-->
+</sect2><!--end of FO changes for snapshot_8110-->
 
-<sect2 xml:id="Vsnapshot_8108_HTML">
+<sect2 xml:id="Vsnapshot_8110_HTML">
 <title>HTML</title>
 <para>The following changes have been made to the
             <filename>html</filename> code
@@ -105,9 +105,9 @@ context for computing column widths.</phrase></screen>
 <para><literal>Mauritz Jeanson: pi.xsl</literal></para><screen><phrase role="commit-message">Clarified that the <tag>table</tag> PIs are for CALS tables.</phrase></screen>
 </listitem>
 </itemizedlist>
-</sect2><!--end of HTML changes for snapshot_8108-->
+</sect2><!--end of HTML changes for snapshot_8110-->
 
-<sect2 xml:id="Vsnapshot_8108_Epub">
+<sect2 xml:id="Vsnapshot_8110_Epub">
 <title>Epub</title>
 <para>The following changes have been made to the
             <filename>epub</filename> code
@@ -155,9 +155,9 @@ DocBook::Epub
 <para><literal>Michael(tm) Smith: bin/spec; bin/spec/files; bin/spec/.gitignore; bin/spec/files/.gitignor⋯</literal></para><screen><phrase role="commit-message">set some ignores</phrase></screen>
 </listitem>
 </itemizedlist>
-</sect2><!--end of Epub changes for snapshot_8108-->
+</sect2><!--end of Epub changes for snapshot_8110-->
 
-<sect2 xml:id="Vsnapshot_8108_HTMLHelp">
+<sect2 xml:id="Vsnapshot_8110_HTMLHelp">
 <title>HTMLHelp</title>
 <para>The following changes have been made to the
             <filename>htmlhelp</filename> code
@@ -167,9 +167,9 @@ DocBook::Epub
 <para><literal>Keith Fahlgren: Makefile</literal></para><screen><phrase role="commit-message">Get rid of the rest of the hardcoded buildtools references and actually use DOCBOOK_SVN</phrase></screen>
 </listitem>
 </itemizedlist>
-</sect2><!--end of HTMLHelp changes for snapshot_8108-->
+</sect2><!--end of HTMLHelp changes for snapshot_8110-->
 
-<sect2 xml:id="Vsnapshot_8108_Eclipse">
+<sect2 xml:id="Vsnapshot_8110_Eclipse">
 <title>Eclipse</title>
 <para>The following changes have been made to the
             <filename>eclipse</filename> code
@@ -179,9 +179,9 @@ DocBook::Epub
 <para><literal>Keith Fahlgren: Makefile</literal></para><screen><phrase role="commit-message">Get rid of the rest of the hardcoded buildtools references and actually use DOCBOOK_SVN</phrase></screen>
 </listitem>
 </itemizedlist>
-</sect2><!--end of Eclipse changes for snapshot_8108-->
+</sect2><!--end of Eclipse changes for snapshot_8110-->
 
-<sect2 xml:id="Vsnapshot_8108_JavaHelp">
+<sect2 xml:id="Vsnapshot_8110_JavaHelp">
 <title>JavaHelp</title>
 <para>The following changes have been made to the
             <filename>javahelp</filename> code
@@ -191,14 +191,20 @@ DocBook::Epub
 <para><literal>Keith Fahlgren: Makefile</literal></para><screen><phrase role="commit-message">Get rid of the rest of the hardcoded buildtools references and actually use DOCBOOK_SVN</phrase></screen>
 </listitem>
 </itemizedlist>
-</sect2><!--end of JavaHelp changes for snapshot_8108-->
+</sect2><!--end of JavaHelp changes for snapshot_8110-->
 
-<sect2 xml:id="Vsnapshot_8108_Roundtrip">
+<sect2 xml:id="Vsnapshot_8110_Roundtrip">
 <title>Roundtrip</title>
 <para>The following changes have been made to the
             <filename>roundtrip</filename> code
             since the 1.74.0 release.</para>
 <itemizedlist>
+<listitem>
+<para><literal>Steve Ball: blocks2dbk.xsl</literal></para><screen><phrase role="commit-message">added error checking for publisher-address</phrase></screen>
+</listitem>
+<listitem>
+<para><literal>Steve Ball: blocks2dbk.xsl</literal></para><screen><phrase role="commit-message">Fixed bug in <tag>emphasis</tag></phrase></screen>
+</listitem>
 <listitem>
 <para><literal>Steve Ball: blocks2dbk.xsl</literal></para><screen><phrase role="commit-message">fixed bug in metadata processing</phrase></screen>
 </listitem>
@@ -247,9 +253,9 @@ from-DocBook: fix for <tag>blockquote</tag> <tag>title</tag></phrase></screen>
 <para><literal>Keith Fahlgren: Makefile</literal></para><screen><phrase role="commit-message">Get rid of the rest of the hardcoded buildtools references and actually use DOCBOOK_SVN</phrase></screen>
 </listitem>
 </itemizedlist>
-</sect2><!--end of Roundtrip changes for snapshot_8108-->
+</sect2><!--end of Roundtrip changes for snapshot_8110-->
 
-<sect2 xml:id="Vsnapshot_8108_Slides">
+<sect2 xml:id="Vsnapshot_8110_Slides">
 <title>Slides</title>
 <para>The following changes have been made to the
             <filename>slides</filename> code
@@ -269,9 +275,9 @@ Closes bug #1859831.</phrase></screen>
 <para><literal>Keith Fahlgren: Makefile</literal></para><screen><phrase role="commit-message">Get rid of the rest of the hardcoded buildtools references and actually use DOCBOOK_SVN</phrase></screen>
 </listitem>
 </itemizedlist>
-</sect2><!--end of Slides changes for snapshot_8108-->
+</sect2><!--end of Slides changes for snapshot_8110-->
 
-<sect2 xml:id="Vsnapshot_8108_Website">
+<sect2 xml:id="Vsnapshot_8110_Website">
 <title>Website</title>
 <para>The following changes have been made to the
             <filename>website</filename> code
@@ -284,9 +290,9 @@ Closes bug #1859831.</phrase></screen>
 <para><literal>Keith Fahlgren: Makefile</literal></para><screen><phrase role="commit-message">Get rid of the rest of the hardcoded buildtools references and actually use DOCBOOK_SVN</phrase></screen>
 </listitem>
 </itemizedlist>
-</sect2><!--end of Website changes for snapshot_8108-->
+</sect2><!--end of Website changes for snapshot_8110-->
 
-<sect2 xml:id="Vsnapshot_8108_Params">
+<sect2 xml:id="Vsnapshot_8110_Params">
 <title>Params</title>
 <para>The following changes have been made to the
             <filename>params</filename> code
@@ -305,9 +311,9 @@ Closes bug #1859831.</phrase></screen>
 <para><literal>Mauritz Jeanson: variablelist.as.table.xml; index.preferred.page.properties.xml</literal></para><screen><phrase role="commit-message">Fixed typos.</phrase></screen>
 </listitem>
 </itemizedlist>
-</sect2><!--end of Params changes for snapshot_8108-->
+</sect2><!--end of Params changes for snapshot_8110-->
 
-<sect2 xml:id="Vsnapshot_8108_Highlighting">
+<sect2 xml:id="Vsnapshot_8110_Highlighting">
 <title>Highlighting</title>
 <para>The following changes have been made to the
             <filename>highlighting</filename> code
@@ -320,9 +326,9 @@ Closes bug #1859831.</phrase></screen>
  -- support for new languages, including Perl, Python and Ruby was added</phrase></screen>
 </listitem>
 </itemizedlist>
-</sect2><!--end of Highlighting changes for snapshot_8108-->
+</sect2><!--end of Highlighting changes for snapshot_8110-->
 
-<sect2 xml:id="Vsnapshot_8108_Lib">
+<sect2 xml:id="Vsnapshot_8110_Lib">
 <title>Lib</title>
 <para>The following changes have been made to the
             <filename>lib</filename> code
@@ -332,9 +338,9 @@ Closes bug #1859831.</phrase></screen>
 <para><literal>Keith Fahlgren: Makefile</literal></para><screen><phrase role="commit-message">Get rid of the rest of the hardcoded buildtools references and actually use DOCBOOK_SVN</phrase></screen>
 </listitem>
 </itemizedlist>
-</sect2><!--end of Lib changes for snapshot_8108-->
+</sect2><!--end of Lib changes for snapshot_8110-->
 
-<sect2 xml:id="Vsnapshot_8108_Tools">
+<sect2 xml:id="Vsnapshot_8110_Tools">
 <title>Tools</title>
 <para>The following changes have been made to the
             <filename>tools</filename> code
@@ -351,9 +357,9 @@ is used to generate docbook-elements.xsl).</phrase></screen>
 <para><literal>Mauritz Jeanson: xsl/build/reference-fo.xsl</literal></para><screen><phrase role="commit-message">Removed junk.</phrase></screen>
 </listitem>
 </itemizedlist>
-</sect2><!--end of Tools changes for snapshot_8108-->
+</sect2><!--end of Tools changes for snapshot_8110-->
 
-<sect2 xml:id="Vsnapshot_8108_Extensions">
+<sect2 xml:id="Vsnapshot_8110_Extensions">
 <title>Extensions</title>
 <para>The following changes have been made to the
             <filename>extensions</filename> code
@@ -363,9 +369,9 @@ is used to generate docbook-elements.xsl).</phrase></screen>
 <para><literal>Keith Fahlgren: Makefile</literal></para><screen><phrase role="commit-message">Get rid of the rest of the hardcoded buildtools references and actually use DOCBOOK_SVN</phrase></screen>
 </listitem>
 </itemizedlist>
-</sect2><!--end of Extensions changes for snapshot_8108-->
+</sect2><!--end of Extensions changes for snapshot_8110-->
 
-<sect2 xml:id="Vsnapshot_8108_XSL-Saxon">
+<sect2 xml:id="Vsnapshot_8110_XSL-Saxon">
 <title>XSL-Saxon</title>
 <para>The following changes have been made to the
             <filename>xsl-saxon</filename> code
@@ -375,9 +381,9 @@ is used to generate docbook-elements.xsl).</phrase></screen>
 <para><literal>Mauritz Jeanson: src/com/nwalsh/saxon/ImageIntrinsics.java; src/com/nwalsh/saxon/LineCount⋯</literal></para><screen><phrase role="commit-message">Cleaned up import statements.</phrase></screen>
 </listitem>
 </itemizedlist>
-</sect2><!--end of XSL-Saxon changes for snapshot_8108-->
+</sect2><!--end of XSL-Saxon changes for snapshot_8110-->
 
-<sect2 xml:id="Vsnapshot_8108_XSL-Xalan">
+<sect2 xml:id="Vsnapshot_8110_XSL-Xalan">
 <title>XSL-Xalan</title>
 <para>The following changes have been made to the
             <filename>xsl-xalan</filename> code
@@ -387,7 +393,7 @@ is used to generate docbook-elements.xsl).</phrase></screen>
 <para><literal>Mauritz Jeanson: src/com/nwalsh/xalan/Callout.java; src/com/nwalsh/xalan/FormatUnicodeCall⋯</literal></para><screen><phrase role="commit-message">Cleaned up import statements.</phrase></screen>
 </listitem>
 </itemizedlist>
-</sect2><!--end of XSL-Xalan changes for snapshot_8108-->
+</sect2><!--end of XSL-Xalan changes for snapshot_8110-->
 
 </sect1>
 </article>

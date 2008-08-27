@@ -2,11 +2,11 @@ Release Notes for the DocBook XSL Stylesheets
 
 $Revision: 8042 $ $Date: 2008-06-05 01:35:09 +0900 (Thu, 05 Jun 2008) $
 
-2008-08-20
+2008-08-26
 
 This is a pre-release ?snapshot? of the DocBook XSL Stylesheets. The change
 information in the first section of this file (for ?Release Notes:
-snapshot_8108?) is auto-generated from change descriptions stored in the
+snapshot_8110?) is auto-generated from change descriptions stored in the
 project source-code repository.
 
 That means the first section contains descriptions both of bug fixes and of
@@ -19,7 +19,7 @@ descriptions that document enhancements and changes to the public APIs
 
 Table of Contents
 
-Release Notes: snapshot_8108
+Release Notes: snapshot_8110
 
     Common
     FO
@@ -169,7 +169,7 @@ Release 1.56.0
 Older releases
 About dot-zero releases
 
-Release Notes: snapshot_8108
+Release Notes: snapshot_8110
 
 The following is a list of changes that have been made since the 1.74.0
 release.
@@ -361,6 +361,14 @@ Roundtrip
 
 The following changes have been made to the roundtrip code since the 1.74.0
 release.
+
+  * Steve Ball: blocks2dbk.xsl
+
+    added error checking for publisher-address
+
+  * Steve Ball: blocks2dbk.xsl
+
+    Fixed bug in emphasis
 
   * Steve Ball: blocks2dbk.xsl
 

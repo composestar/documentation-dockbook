@@ -11,7 +11,7 @@ history, you can obtain one by running the following commands:
 
 Table of Contents
 
-Release Notes: snapshot_8108
+Release Notes: snapshot_8110
 
     Common
     FO
@@ -31,7 +31,7 @@ Release Notes: snapshot_8108
     XSL-Saxon
     XSL-Xalan
 
-Release Notes: snapshot_8108
+Release Notes: snapshot_8110
 
 The following is a list of changes that have been made since the 1.74.0
 release.
@@ -223,6 +223,14 @@ Roundtrip
 
 The following changes have been made to the roundtrip code since the 1.74.0
 release.
+
+  * Steve Ball: blocks2dbk.xsl
+
+    added error checking for publisher-address
+
+  * Steve Ball: blocks2dbk.xsl
+
+    Fixed bug in emphasis
 
   * Steve Ball: blocks2dbk.xsl
 

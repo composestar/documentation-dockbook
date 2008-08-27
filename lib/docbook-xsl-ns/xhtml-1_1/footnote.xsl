@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="ASCII"?>
 <!--This file was created automatically by html2xhtml-->
 <!--from the HTML stylesheets.-->
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:exsl="http://exslt.org/common" xmlns="http://www.w3.org/1999/xhtml" exclude-result-prefixes="exsl" version="1.0">
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:d="http://docbook.org/ns/docbook"
+xmlns:exsl="http://exslt.org/common" xmlns="http://www.w3.org/1999/xhtml" exclude-result-prefixes="exsl d" version="1.0">
 
 <!-- ********************************************************************
      $Id: footnote.xsl 6910 2007-06-28 23:23:30Z xmldoc $
@@ -13,7 +14,7 @@
 
      ******************************************************************** -->
 
-<xsl:template match="footnote">
+<xsl:template match="d:footnote">
   <xsl:variable name="name">
     <xsl:call-template name="object.id"/>
   </xsl:variable>
@@ -23,7 +24,7 @@
   </xsl:variable>
 
   <xsl:choose>
-    <xsl:when test="ancestor::tgroup">
+    <xsl:when test="ancestor::d:tgroup">
       <sup>
         <xsl:text>[</xsl:text>
         <a id="{$name}" href="{$href}">
@@ -46,7 +47,7 @@
   </xsl:choose>
 </xsl:template>
 
-<xsl:template match="footnoteref">
+<xsl:template match="d:footnoteref">
   <xsl:variable name="targets" select="key('id',@linkend)"/>
   <xsl:variable name="footnote" select="$targets[1]"/>
 
@@ -72,14 +73,14 @@
   </sup>
 </xsl:template>
 
-<xsl:template match="footnote" mode="footnote.number">
+<xsl:template match="d:footnote" mode="footnote.number">
   <xsl:choose>
     <xsl:when test="string-length(@label) != 0">
       <xsl:value-of select="@label"/>
     </xsl:when>
-    <xsl:when test="ancestor::tgroup">
+    <xsl:when test="ancestor::d:tgroup">
       <xsl:variable name="tfnum">
-        <xsl:number level="any" from="table|informaltable" format="1"/>
+        <xsl:number level="any" from="d:table|d:informaltable" format="1"/>
       </xsl:variable>
 
       <xsl:choose>
@@ -87,13 +88,13 @@
           <xsl:value-of select="substring($table.footnote.number.symbols, $tfnum, 1)"/>
         </xsl:when>
         <xsl:otherwise>
-          <xsl:number level="any" from="tgroup" format="{$table.footnote.number.format}"/>
+          <xsl:number level="any" from="d:tgroup" format="{$table.footnote.number.format}"/>
         </xsl:otherwise>
       </xsl:choose>
     </xsl:when>
     <xsl:otherwise>
-      <xsl:variable name="pfoot" select="preceding::footnote[not(@label)]"/>
-      <xsl:variable name="ptfoot" select="preceding::tgroup//footnote"/>
+      <xsl:variable name="pfoot" select="preceding::d:footnote[not(@label)]"/>
+      <xsl:variable name="ptfoot" select="preceding::d:tgroup//d:footnote"/>
       <xsl:variable name="fnum" select="count($pfoot) - count($ptfoot) + 1"/>
 
       <xsl:choose>
@@ -110,19 +111,19 @@
 
 <!-- ==================================================================== -->
 
-<xsl:template match="footnote/para[1]|footnote/simpara[1]" priority="2">
+<xsl:template match="d:footnote/d:para[1]|d:footnote/d:simpara[1]" priority="2">
   <!-- this only works if the first thing in a footnote is a para, -->
   <!-- which is ok, because it usually is. -->
   <xsl:variable name="name">
     <xsl:text>ftn.</xsl:text>
     <xsl:call-template name="object.id">
-      <xsl:with-param name="object" select="ancestor::footnote"/>
+      <xsl:with-param name="object" select="ancestor::d:footnote"/>
     </xsl:call-template>
   </xsl:variable>
   <xsl:variable name="href">
     <xsl:text>#</xsl:text>
     <xsl:call-template name="object.id">
-      <xsl:with-param name="object" select="ancestor::footnote"/>
+      <xsl:with-param name="object" select="ancestor::d:footnote"/>
     </xsl:call-template>
   </xsl:variable>
   <p>
@@ -135,7 +136,7 @@
       <xsl:text>[</xsl:text>
       <a id="{$name}" href="{$href}">
         <xsl:apply-templates select="." mode="class.attribute"/>
-        <xsl:apply-templates select="ancestor::footnote" mode="footnote.number"/>
+        <xsl:apply-templates select="ancestor::d:footnote" mode="footnote.number"/>
       </a>
       <xsl:text>] </xsl:text>
     </sup>
@@ -149,13 +150,13 @@
   <xsl:variable name="name">
     <xsl:text>ftn.</xsl:text>
     <xsl:call-template name="object.id">
-      <xsl:with-param name="object" select="ancestor::footnote"/>
+      <xsl:with-param name="object" select="ancestor::d:footnote"/>
     </xsl:call-template>
   </xsl:variable>
   <xsl:variable name="href">
     <xsl:text>#</xsl:text>
     <xsl:call-template name="object.id">
-      <xsl:with-param name="object" select="ancestor::footnote"/>
+      <xsl:with-param name="object" select="ancestor::d:footnote"/>
     </xsl:call-template>
   </xsl:variable>
   <xsl:variable name="footnote.mark">
@@ -163,7 +164,7 @@
       <xsl:text>[</xsl:text>
       <a id="{$name}" href="{$href}">
         <xsl:apply-templates select="." mode="class.attribute"/>
-        <xsl:apply-templates select="ancestor::footnote" mode="footnote.number"/>
+        <xsl:apply-templates select="ancestor::d:footnote" mode="footnote.number"/>
       </a>
       <xsl:text>] </xsl:text>
     </sup>
@@ -221,8 +222,8 @@
 <!-- ==================================================================== -->
 
 <xsl:template name="process.footnotes">
-  <xsl:variable name="footnotes" select=".//footnote"/>
-  <xsl:variable name="table.footnotes" select=".//tgroup//footnote"/>
+  <xsl:variable name="footnotes" select=".//d:footnote"/>
+  <xsl:variable name="table.footnotes" select=".//d:tgroup//d:footnote"/>
 
   <!-- Only bother to do this if there's at least one non-table footnote -->
   <xsl:if test="count($footnotes)&gt;count($table.footnotes)">
@@ -233,7 +234,7 @@
     </div>
   </xsl:if>
 
-  <xsl:if test="$annotation.support != 0 and //annotation">
+  <xsl:if test="$annotation.support != 0 and //d:annotation">
     <div class="annotation-list">
       <div class="annotation-nocss">
 	<p>The following annotations are from this essay. You are seeing
@@ -241,7 +242,7 @@
 	techniques used to make them appear as &#8216;popups&#8217; on modern browsers.</p>
       </div>
 
-      <xsl:apply-templates select="//annotation" mode="annotation-popup"/>
+      <xsl:apply-templates select="//d:annotation" mode="annotation-popup"/>
     </div>
   </xsl:if>
 </xsl:template>
@@ -250,7 +251,7 @@
   <!-- nop -->
 </xsl:template>
 
-<xsl:template match="footnote" name="process.footnote" mode="process.footnote.mode">
+<xsl:template match="d:footnote" name="process.footnote" mode="process.footnote.mode">
   <xsl:choose>
     <xsl:when test="local-name(*[1]) = 'para' or local-name(*[1]) = 'simpara'">
       <div>
@@ -282,10 +283,10 @@
   </xsl:choose>
 </xsl:template>
 
-<xsl:template match="tgroup//footnote" mode="process.footnote.mode">
+<xsl:template match="d:tgroup//d:footnote" mode="process.footnote.mode">
 </xsl:template>
 
-<xsl:template match="footnote" mode="table.footnote.mode">
+<xsl:template match="d:footnote" mode="table.footnote.mode">
   <xsl:call-template name="process.footnote"/>
 </xsl:template>
 

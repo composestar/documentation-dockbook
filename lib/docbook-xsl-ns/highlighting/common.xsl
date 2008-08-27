@@ -11,7 +11,7 @@
 		
 		xmlns:exsl="http://exslt.org/common"
 		xmlns:xslthl="http://xslthl.sf.net"
-		exclude-result-prefixes="exsl d xslthl s6hl sbhl xhl"
+		exclude-result-prefixes="exsl d xslthl s6hl sbhl xhl d"
 		version='1.0'>
 
 <!-- ********************************************************************
