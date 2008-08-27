@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <chapter xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://docbook.org/ns/docbook ../../lib/docbook-5/xsd/docbook.xsd " xml:id="filtercomp"
->
+	xsi:schemaLocation="http://docbook.org/ns/docbook ../../lib/docbook-5/xsd/docbook.xsd " xml:id="filtercomp">
 	<title>Filter Composition</title>
 	<para> The following is based on the filter composition as discussed in Pascal D&#xFC;rr's PhD thesis in section 6.3.
 	</para>
