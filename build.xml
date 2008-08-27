@@ -95,12 +95,12 @@
 				<param name="paper.type" expression="A4" />
 				<param name="fop1.extensions" expression="1" />
 				<param name="variablelist.as.blocks" expression="1" />
-				<param name="shade.verbatim" expression="1" />
 				<param name="hyphenate" expression="false" />
 				<param name="admon.graphics.extension" expression=".svg" />
 				<param name="callout.graphics.path" expression="lib/docbook-xsl-ns/images/callouts/" />
 				<param name="admon.graphics.path" expression="lib/docbook-xsl-ns/images/" />
 				<param name="draft.watermark.image" expression="lib/docbook-xsl-ns/images/draft.png" />
+				<param name="shade.verbatim" expression="1" />
 			</xslt-params>
 		</docbook>
 

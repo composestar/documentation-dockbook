@@ -2,6 +2,16 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0" xmlns:d="http://docbook.org/ns/docbook"
 	xmlns:xslthl="http://xslthl.sf.net" exclude-result-prefixes="xslthl d">
 	<xsl:import href="../lib/docbook-xsl-ns/html/docbook.xsl" />
+	
+	<!-- extra css -->
+	<xsl:template name="user.head.content">
+		<style type="text/css">
+			<xsl:comment>
+				pre.programlisting { background-color: #f0f0f0; }
+			</xsl:comment>
+		</style>
+	</xsl:template>
+
 
 	<!-- add syntax highlighting to "code" elements -->
 	<xsl:template match="d:code">
@@ -19,7 +29,7 @@
 			<xsl:attribute name="class">
 				<xsl:value-of select="concat('hl-', local-name(.))" />
 			</xsl:attribute>
-			<xsl:apply-templates mode="xslthl"/>
+			<xsl:apply-templates mode="xslthl" />
 		</span>
 	</xsl:template>
 	<xsl:template match="xslthl:string" mode="xslthl">
@@ -27,7 +37,7 @@
 			<xsl:attribute name="class">
 				<xsl:value-of select="concat('hl-', local-name(.))" />
 			</xsl:attribute>
-			<xsl:apply-templates mode="xslthl"/>
+			<xsl:apply-templates mode="xslthl" />
 		</span>
 	</xsl:template>
 	<xsl:template match="xslthl:number" mode="xslthl">
@@ -35,7 +45,7 @@
 			<xsl:attribute name="class">
 				<xsl:value-of select="concat('hl-', local-name(.))" />
 			</xsl:attribute>
-			<xsl:apply-templates mode="xslthl"/>
+			<xsl:apply-templates mode="xslthl" />
 		</span>
 	</xsl:template>
 	<xsl:template match="xslthl:comment" mode="xslthl">
@@ -43,7 +53,7 @@
 			<xsl:attribute name="class">
 				<xsl:value-of select="concat('hl-', local-name(.))" />
 			</xsl:attribute>
-			<xsl:apply-templates mode="xslthl"/>
+			<xsl:apply-templates mode="xslthl" />
 		</span>
 	</xsl:template>
 	<xsl:template match="xslthl:doccomment|xslthl:doctype" mode="xslthl">
@@ -51,7 +61,7 @@
 			<xsl:attribute name="class">
 				<xsl:value-of select="concat('hl-', local-name(.))" />
 			</xsl:attribute>
-			<xsl:apply-templates mode="xslthl"/>
+			<xsl:apply-templates mode="xslthl" />
 		</span>
 	</xsl:template>
 	<xsl:template match="xslthl:directive" mode="xslthl">
@@ -59,7 +69,7 @@
 			<xsl:attribute name="class">
 				<xsl:value-of select="concat('hl-', local-name(.))" />
 			</xsl:attribute>
-			<xsl:apply-templates mode="xslthl"/>
+			<xsl:apply-templates mode="xslthl" />
 		</span>
 	</xsl:template>
 	<xsl:template match="xslthl:annotation" mode="xslthl">
@@ -67,7 +77,7 @@
 			<xsl:attribute name="class">
 				<xsl:value-of select="concat('hl-', local-name(.))" />
 			</xsl:attribute>
-			<xsl:apply-templates mode="xslthl"/>
+			<xsl:apply-templates mode="xslthl" />
 		</span>
 	</xsl:template>
 	<xsl:template match="xslthl:tag" mode="xslthl">
@@ -75,7 +85,7 @@
 			<xsl:attribute name="class">
 				<xsl:value-of select="concat('hl-', local-name(.))" />
 			</xsl:attribute>
-			<xsl:apply-templates mode="xslthl"/>
+			<xsl:apply-templates mode="xslthl" />
 		</span>
 	</xsl:template>
 	<xsl:template match="xslthl:attribute" mode="xslthl">
@@ -83,7 +93,7 @@
 			<xsl:attribute name="class">
 				<xsl:value-of select="concat('hl-', local-name(.))" />
 			</xsl:attribute>
-			<xsl:apply-templates mode="xslthl"/>
+			<xsl:apply-templates mode="xslthl" />
 		</span>
 	</xsl:template>
 	<xsl:template match="xslthl:value" mode="xslthl">
@@ -91,7 +101,7 @@
 			<xsl:attribute name="class">
 				<xsl:value-of select="concat('hl-', local-name(.))" />
 			</xsl:attribute>
-			<xsl:apply-templates mode="xslthl"/>
+			<xsl:apply-templates mode="xslthl" />
 		</span>
 	</xsl:template>
 	

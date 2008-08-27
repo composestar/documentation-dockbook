@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<chapter xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://docbook.org/ns/docbook ../../lib/docbook-5/xsd/docbook.xsd " xml:id="filtercomp">
+<chapter xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://docbook.org/ns/docbook ../../lib/docbook-5/xsd/docbook.xsd " xml:id="filtercomp"
+>
 	<title>Filter Composition</title>
-	<para>
-		The following is based on the filter composition as discussed in Pascal D&#xFC;rr's PhD thesis in section 6.3.
+	<para> The following is based on the filter composition as discussed in Pascal D&#xFC;rr's PhD thesis in section 6.3.
 	</para>
 	<para>
 		D&#xFC;rr proposes a new language construction for the Compose* language where new filter types are defined
@@ -91,16 +90,9 @@ concern TracingFilters
 	<para>
 		When this filter module is used these arguments must be provided.
 		<xref xlink:href="#filtercomp.ex4" />
-		shows how this filter type can be used. Because filter modules are a bit different than ordinary filter types
-		they are prefixed with an @ followed by the fully qualified name of the filter module. Also note that the
-		arguments given to the filter module filter type are not named as they are in case of normal filters. This is
-		because the filter module parameters are not strictly named, and they are not used like that when using the
-		superimposition block either. However, this does pose a problem when these arguments should be set in the filter
-		elements. But in that case primitive identifiers could be used:
-		<code>filter._1</code>
-		,
-		<code>filter._2</code>
-		.
+		shows how this filter type can be used. The fully qualified name of a filter module should be used as the name 
+		of the filter type. The filter arguments use the same name as the names of the filter module parameters, but 
+		without the question marks.
 	</para>
 
 	<example xml:id="filtercomp.ex4">
@@ -111,15 +103,19 @@ concern TracingConcern
 	filtermodule TracingModule
 	{
 		externals
-			tracer : TracingLib.Tracer = TracingLib.Tracer.Instance;
+			tracerInst : TracingLib.Tracer = TracingLib.Tracer.Instance;
 		conditions
 			shouldTrace : tracer.shouldTrace;
 		inputfilters
-			tracingIn : @TracingFilters.TracingIn(tracer, 'traceIn') =
-				(shouldTrace)
+			tracingIn : TracingFilters.TracingIn (
+					tracer=tracerInst; 
+					traceMethod='traceIn';
+				) = (shouldTrace)
 		outputfilters 
-			tracingOut: @TracingFilters.TracingOut(tracer, 'traceOut') =
-				(shouldTrace)
+			tracingOut: TracingFilters.TracingOut (
+					tracer=tracerInst; 
+					traceMethod='traceOut';
+				) = (shouldTrace)
 	}
 }		
 		]]></programlisting>
@@ -139,15 +135,61 @@ concern TracingConcern
 	{
 		// ...	
 		inputfilters
-			tracingIn : @TracingIn(tracer, 'traceIn') =
-				(shouldTrace)
+			tracingIn : TracingIn (
+					tracer=tracerInst; 
+					traceMethod='traceIn';
+				) =	(shouldTrace)
 		outputfilters 
-			tracingOut: @TracingOut(tracer, 'traceOut') =
-				(shouldTrace)
+			tracingOut: TracingOut (
+					tracer=tracerInst; 
+					traceMethod='traceOut';
+				) =	(shouldTrace)
 	
 	}
 }
 		]]></programlisting>
 	</para>
+	
+	<section>
+		<title>Filter composition using atomic filters</title>
+		<para>This sections shows the composition of various filter types using atomic filters. For more information see section 6.2 of D&#xFC;rr's thesis.</para>
+		
+		<example>
+			<title>Default filters defined by atomic filters</title>
+			<programlisting language="composestar"><![CDATA[
+concern DefaultFilters
+{
+	/**
+	 * Dispatch the message and return the result.
+	 * This filter assumes the new target and/or selector 
+	 * have already been set in the assignment part.
+	 */
+	filtermodule Dispatch
+	{
+		inputfilters
+			c: Call = (true);
+			r: Return = (true)
+	}
+
+	filtermodule Send
+	{
+		outputfilters
+			c: Call = (true) {
+				message.sender = message.server;
+				message.server = message.target;
+			};
+			r: Return = (true);
+	}
+	
+	filtermodule Error
+	{
+		inputfilters
+			...
+	}
+}
+			]]></programlisting>
+		</example>
+		<remark role="todo">How should the input/output filter part be handled? Some filters can be used on both input and output.</remark>
+	</section>
 
 </chapter>
