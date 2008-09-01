@@ -185,10 +185,71 @@ concern DefaultFilters
 		inputfilters
 			...
 	}
+	
+	filtermodule PreDefFilter
+	{
+		filters
+			filterOne: Foo = (....) { .... }; // <-- ';' is _not_ an operator
+			secondFilt: Bar = (....) { ..... };
+		inputfilters
+			filterOne;
+			secondFilt;
+			filterOne;
+		outputfilters
+			secondFilt;
+	}
 }
 			]]></programlisting>
 		</example>
 		<remark role="todo">How should the input/output filter part be handled? Some filters can be used on both input and output.</remark>
+		
+		
+		<example>
+			<title>Default filters defined by atomic filters</title>
+			<programlisting language="composestar"><![CDATA[
+concern ProfilingTest
+{
+	filtermodule Profile(?profiler)
+	{
+		inputcallfilters
+			p1 : Advice = (true) {
+				target = ?profiler;
+				selector = 'startIn';
+			}			
+		inputreturnfilters
+			p2 : Advice = (true) {
+				target = ?profiler;
+				selector = 'stopIn';
+			}
+		outputcallfilters
+			p3 : Advice = (true) {
+				target = ?profiler;
+				selector = 'startOut';
+			}
+		outputreturnfilters
+			p4 : Advice = (true) {
+				target = ?profiler;
+				selector = 'stopOut';
+			}
+	}
+	
+	filtermodule ProfileSelf()
+	{
+		internal
+			profiler : net.example.Profiler;
+		inputcallfilters
+			p1 : ProfilingTest.Profile(profiler=profiler) = ( true )
+		inputreturnfilters
+			p2 : ProfilingTest.Profile(profiler=profiler) = ( true )
+		outputcallfilters
+			p3 : ProfilingTest.Profile(profiler=profiler) = ( target != self || target != inner )
+		outputreturnfilters
+			p4 : ProfilingTest.Profile(profiler=profiler) = ( target != self || target != inner )
+	}
+}
+			]]>
+			</programlisting>
+		</example>
 	</section>
 
 </chapter>
