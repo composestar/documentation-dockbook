@@ -8,7 +8,7 @@ Blah blah blah blah blah blah blah blah. Blah blah blah blah.
 <book id="book">
 <bookinfo>
 <title>Unit Test: lot.001</title>
-<releaseinfo role="CVS">$Id: lot.001.xml 4056 2004-11-23 13:28:50Z nwalsh $
+<releaseinfo role="CVS">$Id$
 </releaseinfo>
 <author><firstname>Norman</firstname><surname>Walsh</surname>
         <affiliation><address><email>ndw@nwalsh.com</email></address></affiliation>

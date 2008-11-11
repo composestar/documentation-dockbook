@@ -15,7 +15,7 @@
   <!-- * WARNING WARNING WARNING -->
   <!-- * WARNING WARNING WARNING -->
   <title>DocBook XSL Stylesheets: Reference Documentation</title>
-  <info><releaseinfo role="meta">$Id: reference.xml 7685 2008-02-18 01:51:37Z xmldoc $ </releaseinfo>
+  <info><releaseinfo role="meta">$Id$ </releaseinfo>
     <xi:include href="./authors.xml"/>
     <xi:include href="./copyright.xml" xpointer="xpointer(//*[local-name() = 'copyright'])"/>
     <xi:include href="./license.xml"/>

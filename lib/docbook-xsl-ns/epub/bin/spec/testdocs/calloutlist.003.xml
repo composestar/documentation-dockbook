@@ -3,7 +3,7 @@
 <article>
   <articleinfo>
     <title>Unit Test: calloutlist.003</title>
-    <releaseinfo role="CVS">$Id: calloutlist.003.xml 7856 2008-03-06 15:31:26Z abdelazer $</releaseinfo>
+    <releaseinfo role="CVS">$Id$</releaseinfo>
     <author>
       <firstname>Benoit</firstname>
       <surname>Guillon</surname>

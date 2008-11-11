@@ -6,7 +6,7 @@
 <book id="legalnotice.001">
 <bookinfo>
 <title>Unit Test: legalnotice.001</title>
-<releaseinfo role="CVS">$Id: legalnotice.001.xml 4056 2004-11-23 13:28:50Z nwalsh $</releaseinfo>
+<releaseinfo role="CVS">$Id$</releaseinfo>
 <author><firstname>Adam</firstname><surname>Di Carlo</surname>
         <affiliation><address><email>adam@onshored.com</email></address></affiliation>
 </author>

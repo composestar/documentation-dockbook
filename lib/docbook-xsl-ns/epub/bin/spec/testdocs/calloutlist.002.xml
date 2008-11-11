@@ -5,7 +5,7 @@
 <articleinfo>
 <title>Unit Test: calloutlist.001</title>
 <subtitle>A screen with 20+ callouts</subtitle>
-<releaseinfo role="CVS">$Id: calloutlist.002.xml 5230 2005-10-07 01:34:14Z xmldoc $</releaseinfo>
+<releaseinfo role="CVS">$Id$</releaseinfo>
 <author><firstname>Norman</firstname><surname>Walsh</surname>
         <affiliation><address><email>ndw@nwalsh.com</email></address></affiliation>
 </author>

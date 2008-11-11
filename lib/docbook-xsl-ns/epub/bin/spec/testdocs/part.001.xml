@@ -3,7 +3,7 @@
           "http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd">
 <part>
   <partinfo>
-    <releaseinfo role="CVS">$Id: part.001.xml 8020 2008-05-30 16:28:36Z abdelazer $</releaseinfo>
+    <releaseinfo role="CVS">$Id$</releaseinfo>
   </partinfo>
   <title>Unit Test: part.001</title>
   <chapter>

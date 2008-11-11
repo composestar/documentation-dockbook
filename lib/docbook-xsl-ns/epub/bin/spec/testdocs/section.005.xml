@@ -5,7 +5,7 @@
   <articleinfo>
     <title>Unit Test: section.005</title>
     <subtitle>Deeply nested sections with subtitles</subtitle>
-    <releaseinfo role="CVS">$Id: section.005.xml 4056 2004-11-23 13:28:50Z nwalsh $</releaseinfo>
+    <releaseinfo role="CVS">$Id$</releaseinfo>
     <author><firstname>Michael</firstname><surname>Smith</surname>
     <affiliation><address><email>smith@sideshowbarker.net</email></address></affiliation>
     </author>

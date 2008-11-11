@@ -5,7 +5,7 @@
 <articleinfo>
 <title>Unit Test: refentry.008</title>
 <releaseinfo role="CVS"
->$Id: refentry.008.xml 7220 2007-08-09 09:02:56Z xmldoc $</releaseinfo>
+>$Id$</releaseinfo>
 <author><firstname>Norman</firstname><surname>Walsh</surname>
         <affiliation><address><email>ndw@nwalsh.com</email></address></affiliation>
 </author>

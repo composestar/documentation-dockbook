@@ -4,7 +4,7 @@
 <article>
 <articleinfo>
 <title>Unit Test: imageobjectco.001</title>
-<releaseinfo role="CVS">$Id: imageobjectco.001.xml 4637 2005-04-21 16:24:26Z nwalsh $</releaseinfo>
+<releaseinfo role="CVS">$Id$</releaseinfo>
 <author><firstname>Norman</firstname><surname>Walsh</surname>
         <affiliation><address><email>ndw@nwalsh.com</email></address></affiliation>
 </author>

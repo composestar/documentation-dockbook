@@ -4,7 +4,7 @@
 <article>
 <articleinfo>
 <title>Unit Test: svg.001.xml</title>
-<releaseinfo role="CVS">$Id: svg.001.xml 4105 2004-12-15 23:00:31Z xmldoc $</releaseinfo>
+<releaseinfo role="CVS">$Id$</releaseinfo>
 <author><firstname>Norman</firstname><surname>Walsh</surname>
         <affiliation><address><email>ndw@nwalsh.com</email></address></affiliation>
 </author>

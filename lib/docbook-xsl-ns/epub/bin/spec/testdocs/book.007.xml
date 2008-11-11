@@ -19,7 +19,7 @@
   <bookinfo>
     <title>Unit Test: book.001</title>
     <subtitle>A Part + several Chapters + a Glossary</subtitle>
-    <releaseinfo role="CVS">$Id: book.007.xml 5268 2005-10-13 00:45:42Z xmldoc $</releaseinfo>
+    <releaseinfo role="CVS">$Id$</releaseinfo>
     <corpauthor>DocBook Project Development Team</corpauthor>
   </bookinfo>
   <xi:include href="part.001.xml"/>

@@ -2,7 +2,7 @@
 <article xmlns="http://docbook.org/ns/docbook" version="lillet">
 <info><title>Unit Test: table.006</title>
 
-<releaseinfo role="CVS">$Id: table.019.xml 6345 2006-10-04 11:49:42Z xmldoc $</releaseinfo>
+<releaseinfo role="CVS">$Id$</releaseinfo>
 <author><personname><firstname>Norman</firstname><surname>Walsh</surname></personname><affiliation><address><email>ndw@nwalsh.com</email></address></affiliation></author>
 </info>
 

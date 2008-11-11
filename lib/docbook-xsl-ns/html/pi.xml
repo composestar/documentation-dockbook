@@ -2,7 +2,7 @@
 
 <reference><info><title>HTML Processing Instruction Reference</title>
     <releaseinfo role="meta">
-      $Id: pi.xsl 8097 2008-08-03 13:20:21Z mzjn $
+      $Id$
     </releaseinfo>
   </info>
   <partintro xml:id="partintro">

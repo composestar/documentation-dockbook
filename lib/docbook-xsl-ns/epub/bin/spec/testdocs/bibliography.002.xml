@@ -4,7 +4,7 @@
 <bibliography>
 <bibliographyinfo>
 <title>Unit Test: bibliography.002</title>
-<releaseinfo role="CVS">$Id: bibliography.002.xml 5266 2005-10-12 23:49:28Z xmldoc $</releaseinfo>
+<releaseinfo role="CVS">$Id$</releaseinfo>
 <author><firstname>Norman</firstname><surname>Walsh</surname>
         <affiliation><address><email>ndw@nwalsh.com</email></address></affiliation>
 </author>

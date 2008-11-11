@@ -4,7 +4,7 @@
 <article>
 <articleinfo>
 <title>Unit Test: cmdsynopsis.001</title>
-<releaseinfo role="CVS">$Id: cmdsynopsis.001.xml 5628 2006-03-09 11:33:44Z xmldoc $</releaseinfo>
+<releaseinfo role="CVS">$Id$</releaseinfo>
 <author><firstname>Norman</firstname><surname>Walsh</surname>
         <affiliation><address><email>ndw@nwalsh.com</email></address></affiliation>
 </author>

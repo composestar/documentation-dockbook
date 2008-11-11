@@ -1,6 +1,6 @@
 Release Notes for the DocBook XSL Stylesheets
 
-$Revision: 8042 $ $Date: 2008-06-05 01:35:09 +0900 (Thu, 05 Jun 2008) $
+$Revision$ $Date: 2008-06-05 01:35:09 +0900 (Thu, 05 Jun 2008) $
 
 2008-08-26
 

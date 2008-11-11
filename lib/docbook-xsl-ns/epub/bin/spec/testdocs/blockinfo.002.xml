@@ -4,7 +4,7 @@
 <article>
 <articleinfo>
 <title>Unit Test: blockinfo.002</title>
-<releaseinfo role="CVS">$Id: blockinfo.002.xml 4613 2005-04-20 11:54:35Z nwalsh $</releaseinfo>
+<releaseinfo role="CVS">$Id$</releaseinfo>
 <author><firstname>Adam</firstname><surname>Di Carlo</surname>
         <affiliation><address><email>adam@onshored.com</email></address></affiliation>
 </author>

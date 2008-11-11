@@ -5,7 +5,7 @@
 <articleinfo>
 <title>Unit Test: article.006.xml</title>
 <subtitle>The Subtitle</subtitle>
-<releaseinfo role="CVS">$Id: article.006.xml 4056 2004-11-23 13:28:50Z nwalsh $</releaseinfo>
+<releaseinfo role="CVS">$Id$</releaseinfo>
 <author><firstname>Adam</firstname><surname>Di Carlo</surname>
         <affiliation><address><email>aph@debian.org</email></address></affiliation>
 </author>

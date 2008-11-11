@@ -7,7 +7,7 @@
 <book id="book">
 <bookinfo>
 <title>Unit Test: book.001</title>
-<releaseinfo role="CVS">$Id: book.001.xml 4056 2004-11-23 13:28:50Z nwalsh $</releaseinfo>
+<releaseinfo role="CVS">$Id$</releaseinfo>
 <authorgroup>
 <corpauthor>SomeCorp</corpauthor>
 <author><firstname>Norman</firstname><surname>Walsh</surname>

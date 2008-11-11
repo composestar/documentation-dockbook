@@ -5,7 +5,7 @@
   <articleinfo>
     <title>Unit Test: programlisting.005</title>
     <subtitle>A programlisting within a table</subtitle>
-    <releaseinfo role="CVS">$Id: programlisting.005.xml 4056 2004-11-23 13:28:50Z nwalsh $</releaseinfo>
+    <releaseinfo role="CVS">$Id$</releaseinfo>
     <author><firstname>Michael</firstname><surname>Smith</surname>
     <affiliation><address><email>smith@sideshowbarker.net</email></address></affiliation>
     </author>

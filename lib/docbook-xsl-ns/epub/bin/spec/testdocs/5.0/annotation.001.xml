@@ -2,7 +2,7 @@
 	 xmlns:xlink="http://www.w3.org/1999/xlink">
 <info>
 <title>Unit Test: annotation.001</title>
-<releaseinfo role="CVS">$Id: annotation.001.xml 5295 2005-10-16 20:39:44Z nwalsh $</releaseinfo>
+<releaseinfo role="CVS">$Id$</releaseinfo>
 <author><personname>
 <firstname>Norman</firstname><surname>Walsh</surname>
 </personname>

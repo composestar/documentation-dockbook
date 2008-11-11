@@ -4,7 +4,7 @@
 <article id="article" status="draft">
 <articleinfo>
 <title>Unit Test: article.002.xml</title>
-<releaseinfo role="CVS">$Id: article.002.xml 6120 2006-08-03 07:20:20Z xmldoc $</releaseinfo>
+<releaseinfo role="CVS">$Id$</releaseinfo>
 <authorgroup>
 <author><firstname>Norman</firstname><surname>Walsh</surname>
         <affiliation><address><email>ndw@nwalsh.com</email></address></affiliation>

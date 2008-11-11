@@ -8,7 +8,7 @@
   <articleinfo>
     <title>Unit Test: programlistingco.002</title>
     <subtitle>Tests for inserting external text files, with callouts</subtitle>
-    <releaseinfo role="CVS">$Id: programlistingco.002.xml 5366 2005-10-27 02:46:53Z xmldoc $</releaseinfo>
+    <releaseinfo role="CVS">$Id$</releaseinfo>
     <corpauthor>DocBook Project Development Team</corpauthor>
   </articleinfo>
 

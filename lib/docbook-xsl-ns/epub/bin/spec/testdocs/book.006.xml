@@ -19,7 +19,7 @@
   <bookinfo>
     <title>Unit Test: book.001</title>
     <subtitle>Wrapper for all bibiliography.nnn.xml files</subtitle>
-    <releaseinfo role="CVS">$Id: book.006.xml 5271 2005-10-13 01:13:51Z xmldoc $</releaseinfo>
+    <releaseinfo role="CVS">$Id$</releaseinfo>
     <corpauthor>DocBook Project Development Team</corpauthor>
   </bookinfo>
   <xi:include href="bibliography.005.xml"/>

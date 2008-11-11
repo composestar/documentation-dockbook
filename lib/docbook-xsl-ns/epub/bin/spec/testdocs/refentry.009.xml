@@ -6,7 +6,7 @@
     <title>Unit Test: refentry.009</title>
     <subtitle>Refentry for a OO Class</subtitle>
     <releaseinfo role="CVS"
-                 >$Id: refentry.009.xml 5443 2005-11-09 12:20:29Z xmldoc $</releaseinfo>
+                 >$Id$</releaseinfo>
     <corpauthor>DocBook Project Development Team</corpauthor>
   </articleinfo>
 

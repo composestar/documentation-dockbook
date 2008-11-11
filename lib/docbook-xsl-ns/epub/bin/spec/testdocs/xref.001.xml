@@ -23,7 +23,7 @@ Blah. Blah blah blah blah. Blah blah. Blah blah blah blah.
 <book>
 <bookinfo>
 <title>Unit Test: xref.001</title>
-<releaseinfo role="CVS">$Id: xref.001.xml 4056 2004-11-23 13:28:50Z nwalsh $</releaseinfo>
+<releaseinfo role="CVS">$Id$</releaseinfo>
 <author><firstname>Norman</firstname><surname>Walsh</surname>
         <affiliation><address><email>ndw@nwalsh.com</email></address></affiliation>
 </author>

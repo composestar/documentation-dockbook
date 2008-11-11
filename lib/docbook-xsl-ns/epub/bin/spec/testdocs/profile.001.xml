@@ -4,7 +4,7 @@
 <article>
 <articleinfo>
 <title>Unit Test: profile.001</title>
-<releaseinfo role="CVS">$Id: profile.001.xml 4056 2004-11-23 13:28:50Z nwalsh $</releaseinfo>
+<releaseinfo role="CVS">$Id$</releaseinfo>
 <author><firstname>John</firstname><surname>Himpel</surname>
         <affiliation><address><email>jwhimpel@users.sourceforge.net</email></address></affiliation>
 </author>

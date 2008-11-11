@@ -4,7 +4,7 @@
 <article id="article">
 <articleinfo>
 <title>Unit Test: changebars.001.xml</title>
-<releaseinfo role="CVS">$Id: changebars.001.xml 5255 2005-10-12 13:45:58Z nwalsh $</releaseinfo>
+<releaseinfo role="CVS">$Id$</releaseinfo>
 <author><firstname>Norman</firstname><surname>Walsh</surname>
         <affiliation><address><email>ndw@nwalsh.com</email></address></affiliation>
 </author>

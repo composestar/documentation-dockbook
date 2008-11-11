@@ -3,7 +3,7 @@
           "http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd">
 <chapter id="chapter" dir="ltr">
 <chapterinfo>
-<releaseinfo role="CVS">$Id: dir.001.xml 5600 2006-03-03 08:43:12Z nwalsh $</releaseinfo>
+<releaseinfo role="CVS">$Id$</releaseinfo>
 <author><firstname>Norman</firstname><surname>Walsh</surname>
         <affiliation><address><email>ndw@nwalsh.com</email></address></affiliation>
 </author>

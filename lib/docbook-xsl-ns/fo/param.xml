@@ -3,7 +3,7 @@
 <info>
 <title>FO Parameter Reference</title>
 <releaseinfo role="meta">
-$Id: param.xweb 8092 2008-07-18 21:26:36Z kosek $
+$Id$
 </releaseinfo>
 <author>
   <personname>
@@ -11452,7 +11452,7 @@ around all these parameters.</para>
 &lt;!-- This file is generated from param.xweb --&gt;
 
 &lt;!-- ********************************************************************
-     $Id: param.xweb 8092 2008-07-18 21:26:36Z kosek $
+     $Id$
      ********************************************************************
 
      This file is part of the XSL DocBook Stylesheet distribution.

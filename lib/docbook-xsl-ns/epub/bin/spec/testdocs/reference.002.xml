@@ -4,7 +4,7 @@
 <reference>
   <referenceinfo>
     <title>Unit Test: reference.002</title>
-    <releaseinfo role="CVS">$Id: reference.002.xml 4056 2004-11-23 13:28:50Z nwalsh $</releaseinfo>
+    <releaseinfo role="CVS">$Id$</releaseinfo>
     <author><firstname>Michael</firstname><surname>Smith</surname>
       <affiliation><address><email>smith@xml-doc.org</email></address></affiliation>
     </author>
