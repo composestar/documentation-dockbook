@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<section xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://docbook.org/ns/docbook ../../lib/docbook-5/xsd/docbook.xsd "
-	xml:id="filtertypes.dispatch">
+<section xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://docbook.org/ns/docbook ../../lib/docbook-5/xsd/docbook.xsd " xml:id="filtertypes.dispatch">
 
 	<title>Dispatch/Send</title>
 
 	<para>
 		When the message is accepted it will dispatch the message to set target and selector. After the dispatch the
-		message will enter the return flow. The dispatch and send filter are identical in their behavior, except that
-		the dispatch filter is used in the input filters where the send filter is used in the output filters.
+		message
+		will enter the return flow. The dispatch and send filter are almost identical in their behavior, except that the send
+		filter updates the
+		<emphasis>sender</emphasis>
+		value of the message to current object (which would be identical to
+		<emphasis>message.self</emphasis>
+		). The send filter is commonly used as output filter, where the dispatch filter is commonly used as input filter.
 	</para>
 
 	<section>

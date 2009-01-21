@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<section xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://docbook.org/ns/docbook ../../lib/docbook-5/xsd/docbook.xsd"
-	xml:id="canonfilters.semantics">
+<section xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://docbook.org/ns/docbook ../../lib/docbook-5/xsd/docbook.xsd" xml:id="canonfilters.semantics">
 	<title>Semantics</title>
 	<para></para>
 
@@ -44,7 +42,8 @@
 							</member>
 						</simplelist>
 						New objects can be created through internals and externals in the current filter module,
-						otherwise only the existing objects (target, inner, etc.) can be used.
+						otherwise only the
+						existing objects (target, inner, etc.) can be used.
 					</para>
 				</listitem>
 			</varlistentry>
@@ -57,7 +56,8 @@
 						(and therefore
 						<code language="composestar">message.selector</code>
 						) has this type. A selector is much like a method signature (it has a name, return type and
-						argument types), except that the selector can contain wildcards for the return type and accepted
+						argument types), except
+						that the selector can contain wildcards for the return type and accepted
 						arguments.
 						<remark role="todo">Is type information really useful here?</remark>
 					</para>
@@ -74,7 +74,8 @@
 						. Literals are used
 						<emphasis>as is</emphasis>
 						, no standard (pre-)processing is performed on these values. In certain cases literals are
-						converted to other types, for example in case of name matching with a selector.
+						converted to other
+						types, for example in case of name matching with a selector.
 					</para>
 				</listitem>
 			</varlistentry>
@@ -83,14 +84,18 @@
 				<listitem>
 					<para>
 						A fully qualified name is resolved to a program element using the language model of the base
-						program. A FQN is a combination of identifiers and periods, for example:
+						program. A FQN is a
+						combination of identifiers and periods, for example:
 						<code language="composestar">thisIsAFQN</code>
 						or
 						<code language="composestar">this.is.also.a.fully.qualifiedName</code>
 						. A FQN looks much like a reference to an internal/external/condition, they also use an
-						identifier. Locally declared identifiers have precedence over fully qualified names. This means
-						that if a identifier is encountered in either the matching expression or assignment part, it
-						will first be looked up in the list of internals/externals/conditions of the current filter
+						identifier. Locally
+						declared identifiers have precedence over fully qualified names. This means
+						that if a identifier is encountered in
+						either the matching expression or assignment part, it
+						will first be looked up in the list of
+						internals/externals/conditions of the current filter
 						module and predefined variables (like:
 						<code language="composestar">target</code>
 						,
@@ -98,10 +103,14 @@
 						,
 						<code language="composestar">message.*</code>
 						, etc.). If nothing was found the the identifier will be looked up in the language model This of
-						course means that locally declared identifiers can hide certain program elements in the language
-						model. No warning will be issued if hiding takes place. A warning or error will be issued when
-						the identifier could not be resolved. If a error will be issued depends on where the identifier
-						is used. For example in compare statements only a warning will be issued if an identifier on the
+						course means that
+						locally declared identifiers can hide certain program elements in the language
+						model. No warning will be issued if
+						hiding takes place. A warning or error will be issued when
+						the identifier could not be resolved. If a error will be
+						issued depends on where the identifier
+						is used. For example in compare statements only a warning will be issued if
+						an identifier on the
 						right hand side could not be resolved. But when it is on the left hand side, or used as a
 						condition an error will be created.
 					</para>
@@ -112,11 +121,16 @@
 				<listitem>
 					<para>
 						Program elements cannot be entered directly in the source code. Program elements are entities in
-						the language model of the base program which is created during the compilation process. Program
-						elements are only indirectly available through a lookup, a lookup can be created through a FQN
-						or through filter module parameters. A filter module parameter can contain a (set of) program
-						elements when a selector is used in the filter module binding. Filter module conditions can also
-						be used as a program element (in this case a method program elements), but only at places where
+						the language
+						model of the base program which is created during the compilation process. Program
+						elements are only indirectly
+						available through a lookup, a lookup can be created through a FQN
+						or through filter module parameters. A filter
+						module parameter can contain a (set of) program
+						elements when a selector is used in the filter module binding.
+						Filter module conditions can also
+						be used as a program element (in this case a method program elements), but only
+						at places where
 						program elements can be used. The following program element types are used in the canonical
 						notations: Type (and therefore Class and Interface), Method, and Annotation.
 					</para>
@@ -126,16 +140,15 @@
 
 		<example xml:id="canonfilters.semantics.types.example">
 			<title>Usage of different types</title>
-			<!-- <programlistingco>
-				<areaspec>
-				<area coords="8 23" xml:id="canonfilters.semantics.types.example.internal" />
-				<area coords="9 23" xml:id="canonfilters.semantics.types.example.condition" />
-				<area coords="10 33" xml:id="canonfilters.semantics.types.example.fqnTypo" />
-				<area coords="11 34" xml:id="canonfilters.semantics.types.example.target" />
-				<area coords="12 38" xml:id="canonfilters.semantics.types.example.fqn" />
-				<area coords="13 34" xml:id="canonfilters.semantics.types.example.literal" />
-				<area coords="14 28" xml:id="canonfilters.semantics.types.example.fmparam" />
-				</areaspec> -->
+			<!--
+				<programlistingco> <areaspec> <area coords="8 23" xml:id="canonfilters.semantics.types.example.internal" /> <area
+				coords="9 23" xml:id="canonfilters.semantics.types.example.condition" /> <area coords="10 33"
+				xml:id="canonfilters.semantics.types.example.fqnTypo" /> <area coords="11 34"
+				xml:id="canonfilters.semantics.types.example.target" /> <area coords="12 38"
+				xml:id="canonfilters.semantics.types.example.fqn" /> <area coords="13 34"
+				xml:id="canonfilters.semantics.types.example.literal" /> <area coords="14 28"
+				xml:id="canonfilters.semantics.types.example.fmparam" /> </areaspec>
+			-->
 			<programlisting language="composestar" xml:space="preserve">filtermodule ExampleFM(?myParam) {
 	internals
 		foo : FQNExample.MyClass;
@@ -186,7 +199,8 @@
 						. As a result
 						<code language="composestar">filters.item1</code>
 						is regarded as a FQN and will be resolved in the language model of the base program. When no
-						such element can be found a warning will be issued, and the resulting value is
+						such element can be
+						found a warning will be issued, and the resulting value is
 						<emphasis>void</emphasis>
 						.
 						<remark role="todo">
@@ -207,8 +221,10 @@
 						The current filter module does not contain a declaration with the name
 						<code language="composestar">FQNExample.MyClass</code>
 						, so this entry is considered to be a fully qualified name and is resolved to a program element.
-						This program element resolved to a type, not to an object. An object is an instance of a type,
-						and instances are not present in the language model.
+						This program
+						element resolved to a type, not to an object. An object is an instance of a type,
+						and instances are not present in
+						the language model.
 					</simpara>
 				</callout>
 				<callout arearefs="canonfilters.semantics.types.example.literal">
@@ -226,7 +242,8 @@
 						Therefore the value of
 						<code language="composestar">filter.item7</code>
 						will not be known until this filter module has been instantiated. The value will most likely be
-						a program element or a literal.
+						a program element
+						or a literal.
 					</simpara>
 				</callout>
 			</calloutlist>
@@ -239,7 +256,8 @@
 		<title>Matching Expression</title>
 		<para>
 			The matching expression is constructed from a combination of boolean statements and boolean operators. There
-			are three boolean operators. The
+			are three
+			boolean operators. The
 			<code>&amp;</code>
 			(
 			<emphasis>and</emphasis>
@@ -270,7 +288,8 @@
 					<listitem>
 						<simpara>
 							These are the conditions defined in the filter module. These conditions can only be
-							evaluated at runtime because they require the execution of the method to get its boolean
+							evaluated at runtime
+							because they require the execution of the method to get its boolean
 							value.
 						</simpara>
 					</listitem>
@@ -280,7 +299,8 @@
 					<listitem>
 						<simpara>
 							A statement that compares two entities according to a given rule set. The result would be
-							either true or false. More about the compare statements can be found in
+							either true or false.
+							More about the compare statements can be found in
 							<xref xlink:href="#canonfilters.semantics.matchexpr.opers" />
 							. In order to avoid confusion compare statements must be placed in a compound statement to
 							negate them.
@@ -303,9 +323,12 @@
 
 			<para>
 				Below is an overview of all compare operators and what arguments types they support. The left hand side
-				of the operator can only contain a selector or object variable. The right hand side be a single element
-				or a list of elements that are allowed for the used operator. This list may contain any combination of
-				allowed right hand parameter types. For example:
+				of the
+				operator can only contain a selector or object variable. The right hand side be a single element
+				or a list of
+				elements that are allowed for the used operator. This list may contain any combination of
+				allowed right hand
+				parameter types. For example:
 				<code language="composestar">target ~= [myList, java.util.AbstractList]</code>
 			</para>
 
@@ -324,7 +347,8 @@
 					</member>
 				</simplelist>
 				. Only message properties that contain a selector or object type are legal. If the property contains any
-				other data the compare will always result in false. The following message properties are always safe to
+				other data
+				the compare will always result in false. The following message properties are always safe to
 				be used:
 				<simplelist type="inline">
 					<member>
@@ -343,11 +367,19 @@
 				. The
 				<code language="composestar">message.sender</code>
 				is theoretically safe, however but in practice this is not always the case (it could be unset).
+				<note>
+					<simpara>
+						During static analysis no information about the sender is known, therefore it will always be unset. In the
+						Compose* runtime component, information about the sender is known when the message was send from a non-static
+						context.
+					</simpara>
+				</note>
 			</para>
 
 			<para>
 				All variables that can be used in the left hand side can also be used on the right hand side.
-				Additionally the following variables are also allowed:
+				Additionally the
+				following variables are also allowed:
 				<simplelist type="inline">
 					<member>
 						<code language="composestar">inner</code>
@@ -393,7 +425,8 @@
 							<entry>
 								<emphasis>Name matching.</emphasis>
 								The name part of the selector is matched with the literal. Possible values of the return
-								and argument types in the selector are ignored.
+								and argument types in
+								the selector are ignored.
 							</entry>
 						</row>
 						<row>
@@ -401,12 +434,17 @@
 							<entry>
 								<emphasis>Method instance matching.</emphasis>
 								The selector will be resolved to methods in the current target that match the selector
-								(respecting wildcards for the return and arguments fields). This operator will return
-								true if the method on the right hand side is in the list of resolved methods. This form
-								is usually used in conjunction with filter module parameters that contain method program
+								(respecting wildcards for
+								the return and arguments fields). This operator will return
+								true if the method on the right hand side is in the
+								list of resolved methods. This form
+								is usually used in conjunction with filter module parameters that contain
+								method program
 								elements. These program elements are usually very specifically selected, and therefore
-								this comparison is performed to the latter. To compare on only the signature of a method
-								use the method signature matching listed below.
+								this
+								comparison is performed to the latter. To compare on only the signature of a method
+								use the method signature
+								matching listed below.
 							</entry>
 						</row>
 						<row>
@@ -414,7 +452,8 @@
 							<entry>
 								<emphasis>Instance matching.</emphasis>
 								Will be true when both selectors have identical properties for name, return type and
-								selector. This form is rarely used, it can only be used when a selector is stored in a
+								selector. This form is
+								rarely used, it can only be used when a selector is stored in a
 								message property by an earlier filter.
 							</entry>
 						</row>
@@ -427,9 +466,12 @@
 							<entry>
 								<emphasis>Signature matching.</emphasis>
 								This operator returns true if the type program element on the right hand side contains a
-								method that has a signature that matches the selector. The signature is matched against
-								the name, return type and arguments set in the selector. If the return or argument
-								fields of the selector contain wildcards they will be ignored. This form is usually used
+								method that has a
+								signature that matches the selector. The signature is matched against
+								the name, return type and arguments set in
+								the selector. If the return or argument
+								fields of the selector contain wildcards they will be ignored. This form
+								is usually used
 								with filter module parameters.
 							</entry>
 						</row>
@@ -438,7 +480,8 @@
 							<entry>
 								<emphasis>Signature matching.</emphasis>
 								Just like the signature matching above, the type of the object is used as the type
-								program element. This is the most commonly used form of signature matching.
+								program element. This is the
+								most commonly used form of signature matching.
 							</entry>
 						</row>
 						<row>
@@ -446,7 +489,8 @@
 							<entry>
 								<emphasis>Signature matching.</emphasis>
 								The fully qualified name is resolved to a type program element. After that the earlier
-								mentioned signature matching rules apply.
+								mentioned signature
+								matching rules apply.
 							</entry>
 						</row>
 						<row>
@@ -454,7 +498,8 @@
 							<entry>
 								<emphasis>Method signature matching.</emphasis>
 								This will return true if the selector matches the signature of the given method.
-								Wildcards in the selector are respected. This is a less strict method comparison than
+								Wildcards in the selector are
+								respected. This is a less strict method comparison than
 								the method instance matching.
 							</entry>
 						</row>
@@ -467,9 +512,12 @@
 							<entry>
 								<emphasis>Compatibility matching.</emphasis>
 								Returns true if the object on the left hand size could be assigned to a variable of the
-								type in the right hand side. This means that the type on the right hand side is in the
-								parent list of the type of the object on the left hand side. Or, in case the type in the
-								right hand side is an interface, the object's type implements the interface on the right
+								type in the right hand
+								side. This means that the type on the right hand side is in the
+								parent list of the type of the object on the left
+								hand side. Or, in case the type in the
+								right hand side is an interface, the object's type implements the
+								interface on the right
 								hand side. This operator basically does the following:
 								<code language="pseudo">matches if (lhs instance of rhs)</code>
 							</entry>
@@ -479,7 +527,8 @@
 							<entry>
 								<emphasis>Compatibility matching.</emphasis>
 								Just like the compatibility matching above, the type of the object on the right hand
-								side is used as the type program element.
+								side is used as the type
+								program element.
 							</entry>
 						</row>
 						<row>
@@ -487,7 +536,8 @@
 							<entry>
 								<emphasis>Compatibility matching.</emphasis>
 								The fully qualified name is resolved to a type program element. After that the
-								compatibility matching between an object and type applies.
+								compatibility matching between an
+								object and type applies.
 							</entry>
 						</row>
 						<row>
@@ -496,9 +546,12 @@
 							<entry>
 								<emphasis>Compatibility matching.</emphasis>
 								The literal is used to look up all methods in the current target that have a name
-								matching the literal. The selector is matched against the signatures of these methods
-								according to the signature matching rules (the name was already given). If any method
-								signature matches with the selector this compare statement will be true. If the current
+								matching the literal. The
+								selector is matched against the signatures of these methods
+								according to the signature matching rules (the name
+								was already given). If any method
+								signature matches with the selector this compare statement will be true. If the
+								current
 								target does not have a method with the given name, or no signature matches, it will
 								result in false.
 							</entry>
@@ -508,7 +561,8 @@
 							<entry>
 								<emphasis>Compatibility matching.</emphasis>
 								Matches if the return type and arguments given in the selector match those of the method
-								given in the right hand side. Wildcards in the selector are respected, in this case the
+								given in the right hand
+								side. Wildcards in the selector are respected, in this case the
 								selector would match any method.
 							</entry>
 						</row>
@@ -517,7 +571,8 @@
 							<entry>
 								<emphasis>Compatibility matching.</emphasis>
 								Matches if the return and type arguments are the same (wildcards are respected). So
-								bascially, only the name is ignored.
+								bascially, only the name is
+								ignored.
 							</entry>
 						</row>
 						<row>
@@ -529,7 +584,8 @@
 							<entry>
 								<emphasis>Annotation matching.</emphasis>
 								This operator will match when the type of the object on the left hand side contains the
-								annotation given on the right hand side.
+								annotation given on the
+								right hand side.
 							</entry>
 						</row>
 						<row>
@@ -537,7 +593,8 @@
 							<entry>
 								<emphasis>Annotation matching.</emphasis>
 								The fully qualified name is resolved to an annotation program element after which it is
-								compared along the same rules as listen above.
+								compared along the same
+								rules as listen above.
 							</entry>
 						</row>
 						<row>
@@ -546,7 +603,8 @@
 							<entry>
 								<emphasis>Annotation matching.</emphasis>
 								Using the selector a selection is made of methods in the current target. If any of these
-								methods contains the annotation given in the right hand side this operator will return
+								methods contains the
+								annotation given in the right hand side this operator will return
 								true. In any other case it will return false.
 							</entry>
 						</row>
@@ -555,7 +613,8 @@
 							<entry>
 								<emphasis>Annotation matching.</emphasis>
 								The fully qualified name is resolved to an annotation program element after which it is
-								compared along the same rules as listen above.
+								compared along the same
+								rules as listen above.
 							</entry>
 						</row>
 					</tbody>
@@ -570,7 +629,8 @@
 		<para>
 			In the assignment part certain variables can be given a new value. Not all variables can be assigned a new
 			value. Below is an overview of all variables. The assignment part is only executed when the message was
-			accepted according to the matching expression.
+			accepted
+			according to the matching expression.
 		</para>
 
 		<table pgwide="1">
@@ -599,7 +659,8 @@
 						<entry>Object</entry>
 						<entry>
 							A target always points to an object instance, therefore it can only accept objects as new
-							value. So on the right hand side of the assignment operator can be a reference to an
+							value. So on the right
+							hand side of the assignment operator can be a reference to an
 							internal, external,
 							<code>inner</code>
 							,
@@ -621,15 +682,18 @@
 						<entry>Literal</entry>
 						<entry>
 							The literal is converted to a selector with the return value and arguments set to a
-							wildcard. This is the most common assignment for selectors, and the only way to directly set
-							a new value for a selector in the source code.
+							wildcard. This is the
+							most common assignment for selectors, and the only way to directly set
+							a new value for a selector in the source
+							code.
 						</entry>
 					</row>
 					<row>
 						<entry>Program Element (Method)</entry>
 						<entry>
 							The program element is converted to a selector. This selector is more specific than the
-							selector created from the literal. This selector has complete information regarding the
+							selector created
+							from the literal. This selector has complete information regarding the
 							return type and accepted arguments.
 						</entry>
 					</row>
@@ -637,8 +701,10 @@
 						<entry>Selector</entry>
 						<entry>
 							The selector variable has the type selector, so it can always be assigned a different
-							selector value. Because selectors can not be directly created assigning a new selector can
-							only be done by first saving a selector in a message property.
+							selector value.
+							Because selectors can not be directly created assigning a new selector can
+							only be done by first saving a selector
+							in a message property.
 						</entry>
 					</row>
 					<row>
@@ -692,12 +758,15 @@
 							Where
 							<emphasis>property</emphasis>
 							is any identifier other than target, selector, sender, server, or self. Message properties
-							will be carried over to the next filter. They can contain any type, how these properties are
-							interpreted is up to the filter type using them. Information on what filter types make use
+							will be carried over to
+							the next filter. They can contain any type, how these properties are
+							interpreted is up to the filter type using
+							them. Information on what filter types make use
 							of these message properties can be found in
 							<xref xlink:href="#filtertypes" />
 							. Assigning message properties never results in a warning or error. However, a filter type
-							can produce an error or warning when an unexpected value is set.
+							can produce an error or
+							warning when an unexpected value is set.
 						</entry>
 					</row>
 					<row>
@@ -711,8 +780,10 @@
 							The filter arguments can contain any value, it is up to the filter type to interpret them.
 							<xref xlink:href="#filtertypes" />
 							provides information about the filter arguments that can be set for certain filter types.
-							Assigning values to filter arguments results in a warning that these argument are not used.
-							Failing to set a required argument, or assigning an incompatible type, results in an error.
+							Assigning values to
+							filter arguments results in a warning that these argument are not used.
+							Failing to set a required argument, or
+							assigning an incompatible type, results in an error.
 							<remark role="todo">Last 2 lines are not correct/wrong</remark>
 						</entry>
 					</row>
@@ -720,40 +791,6 @@
 			</tgroup>
 		</table>
 
-		<section>
-			<title>Message Substitution</title>
-			<para>
-				Assigning new values to the target and selector variables results in a direct message substitution.
-				Substitution of the message used to be defined by the filter type in the classic filter notation. This
-				was mostly due to the lack of ways to provide information to the filter types like
-				<emphasis>Meta</emphasis>
-				or
-				<emphasis>After</emphasis>
-				.
-			</para>
-			<para>
-				With the canonical notation it will be possible to send a new message before the current message is
-				dispatched and substitute the message's destination. For example in
-				<xref xlink:href="#canonfilters.semantics.assignments.beforesubst" />
-				the method
-				<code language="composestar">fooWasCalled</code>
-				of the internal
-				<code language="composestar">someInternal</code>
-				will be called. And the current message will be given the new selector
-				<code language="composestar">bar</code>
-				. Which eventually might lead to the execution of the method
-				<code language="composestar">bar</code>
-				.
-			</para>
-			<example xml:id="canonfilters.semantics.assignments.beforesubst">
-				<title>Before and substitute</title>
-				<programlisting language="composestar"><![CDATA[flt : Before = ( selector == 'foo' ) {
-	selector = 'bar';
-	filter.target = someInternal;
-	filter.selector = 'fooWasCalled';
-}]]></programlisting>
-			</example>
-		</section>
 
 		<section>
 			<title>The Message and Filter Structures</title>
@@ -765,17 +802,22 @@
 				<code language="composestar">filter.</code>
 				<emphasis>property</emphasis>
 				. Where property is an identifier specifying which property to set. The message structure contains some
-				reserved names, but other than that all identifiers can be used.
+				reserved
+				names, but other than that all identifiers can be used.
 			</para>
 			<para>
 				The message structure can be used to pass certain information on to other filters. The other filters
-				must ofcourse be aware of these properties and how to interpret these values.
+				must
+				ofcourse be aware of these properties and how to interpret these values.
 			</para>
 			<para>
 				The filter structure provides local access to the filter arguments. It can be used to override the
-				filter arguments set in the filter definition for a specific filter element. Other than that it is
-				identical to the filter arguments. The preferred form is to set the filter arguments after the filter
-				type in the filter definition and not in the assignment part.
+				filter
+				arguments set in the filter definition for a specific filter element. Other than that it is
+				identical to the filter
+				arguments. The preferred form is to set the filter arguments after the filter
+				type in the filter definition and not
+				in the assignment part.
 			</para>
 			<example>
 				<title>Setting Filter Arguments</title>
@@ -787,7 +829,8 @@ f1 : Exception = (true) { filter.exception = 'MyException' }]]></programlisting>
 				How the filter arguments are used depends on the used filter type. See
 				<xref xlink:href="#filtertypes" />
 				for more information. Filter arguments are not carried on to the next filter, they are specific for the
-				current filter. To pass information to other filters you will need to use message properties.
+				current
+				filter. To pass information to other filters you will need to use message properties.
 			</para>
 		</section>
 
@@ -797,9 +840,12 @@ f1 : Exception = (true) { filter.exception = 'MyException' }]]></programlisting>
 		<title>Filter Module Parameters</title>
 		<para>
 			Filter module parameters can be used in the matching expressions and assignment parts. This section will
-			explain how the parameters are used. As a reminder, the values for the filter module parameters are provided
-			by an external source during the binding of a filter module. The value types are not strictly defined, it
-			could be a literal but also a program element. A single filter module parameter is prefixed with a single
+			explain how
+			the parameters are used. As a reminder, the values for the filter module parameters are provided
+			by an external source
+			during the binding of a filter module. The value types are not strictly defined, it
+			could be a literal but also a
+			program element. A single filter module parameter is prefixed with a single
 			question mark
 			<code language="composestar">?singleFMP</code>
 			, and a filter module parameter list is prefixed with two question marks
@@ -813,8 +859,10 @@ f1 : Exception = (true) { filter.exception = 'MyException' }]]></programlisting>
 			<title>Matching Expression</title>
 			<para>
 				Filter module parameters can only be used on the right hand side of compare statements. A filter module
-				parameter list will be regarded just like a list construction. When a filter module parameter is used in
-				a list all values of the filter module parameter are added to the list. For example: we have the
+				parameter
+				list will be regarded just like a list construction. When a filter module parameter is used in
+				a list all values of
+				the filter module parameter are added to the list. For example: we have the
 				following filter module parameters:
 				<code language="composestar">?fmp = 'foo'; ??lst = ['bar', 'quux'];</code>
 				And the following matching expression:
@@ -832,9 +880,12 @@ f1 : Exception = (true) { filter.exception = 'MyException' }]]></programlisting>
 			</para>
 			<para>
 				The matching operators expect certain types to be on the right hand side. However, filter module
-				parameters can contain any type. When the filter module parameters are processed only compatible values
-				will be used, the other values are silently ignored. When the filter module does not contain a single
-				compatible type a warning will be issued, in this case the compare statement will always evaluate to
+				parameters can
+				contain any type. When the filter module parameters are processed only compatible values
+				will be used, the other
+				values are silently ignored. When the filter module does not contain a single
+				compatible type a warning will be
+				issued, in this case the compare statement will always evaluate to
 				<code>false</code>
 				. See
 				<xref xlink:href="#canonfilters.semantics.matchexpr.opers" />
@@ -846,17 +897,23 @@ f1 : Exception = (true) { filter.exception = 'MyException' }]]></programlisting>
 			<title>Assignments</title>
 			<para>
 				A variable can only be assigned a single value, not a list of values. When a parameter list is used as
-				source for the new value, the first compatible element will be used. When the filter module parameter
-				does not contain a compatible value a error or warning is issued and the assignment statement is
-				discarded. In case of assignments to the target and selector values an error is created. For assignments
-				to other message properties or filter arguments a warning is issued. This can subsequently result in an
+				source
+				for the new value, the first compatible element will be used. When the filter module parameter
+				does not contain a
+				compatible value a error or warning is issued and the assignment statement is
+				discarded. In case of assignments to
+				the target and selector values an error is created. For assignments
+				to other message properties or filter arguments a
+				warning is issued. This can subsequently result in an
 				error when an assignment is required by the filter type.
 			</para>
 			<warning>
 				<simpara>
 					The order in which elements are listed in parameter lists is nondeterministic. A second compile of
-					the exact same code can result in a different value to be used in the assignment. A warning is
-					issued when a parameter list contains more than one compatible value.
+					the exact
+					same code can result in a different value to be used in the assignment. A warning is
+					issued when a parameter list
+					contains more than one compatible value.
 				</simpara>
 			</warning>
 		</section>

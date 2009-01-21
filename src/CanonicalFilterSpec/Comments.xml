@@ -1,0 +1,43 @@
+<section xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://docbook.org/ns/docbook ../../lib/docbook-5/xsd/docbook.xsd" xml:id="canonfilters.comments">
+	<title>Comments</title>
+
+	<section>
+		<title>Message Substitution</title>
+		<para>
+			Assigning new values to the target and selector variables results in a direct message substitution.
+			Substitution of
+			the message used to be defined by the filter type in the old filter notation. This
+			was mostly due to the lack of
+			ways to provide information to the filter types like
+			<emphasis>Meta</emphasis>
+			or
+			<emphasis>After</emphasis>
+			.
+		</para>
+		<para>
+			With the canonical notation it will be possible to send a new message before the current message is
+			dispatched and
+			substitute the message's destination. For example in
+			<xref xlink:href="#canonfilters.semantics.assignments.beforesubst" />
+			the method
+			<code language="composestar">fooWasCalled</code>
+			of the internal
+			<code language="composestar">someInternal</code>
+			will be called. And the current message will be given the new selector
+			<code language="composestar">bar</code>
+			. Which eventually might lead to the execution of the method
+			<code language="composestar">bar</code>
+			.
+		</para>
+		<example xml:id="canonfilters.semantics.assignments.beforesubst">
+			<title>Before and substitute</title>
+			<programlisting language="composestar"><![CDATA[flt : Before = ( selector == 'foo' ) {
+	selector = 'bar';
+	filter.target = someInternal;
+	filter.selector = 'fooWasCalled';
+}]]></programlisting>
+		</example>
+	</section>
+
+</section>

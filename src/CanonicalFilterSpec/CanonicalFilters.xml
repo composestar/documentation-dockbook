@@ -17,6 +17,7 @@
 	<xi:include href="Semantics.xml" />
 	<xi:include href="Examples.xml" />
 	<xi:include href="Conversion.xml" />
+	<xi:include href="Comments.xml" />
 
 	<section xml:id="canonfilters.faq">
 		<title>FAQ</title>

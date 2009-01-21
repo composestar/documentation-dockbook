@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<chapter xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xi="http://www.w3.org/2001/XInclude"
-	xsi:schemaLocation="http://docbook.org/ns/docbook ../../lib/docbook-5/xsd/docbook.xsd " xml:id="filtertypes">
+<chapter xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:xi="http://www.w3.org/2001/XInclude" xsi:schemaLocation="http://docbook.org/ns/docbook ../../lib/docbook-5/xsd/docbook.xsd "
+	xml:id="filtertypes">
 
 	<title>Filter Types</title>
 
@@ -26,20 +26,15 @@
 							<member>Reject-return</member>
 						</simplelist>
 						. When the matching expression matches the accept-* flow is taken. Otherwise the reject-* flow
-						is used. The message is in the *-call flow when it has not be placed in the return flow. See the
+						is used. The message
+						is in the *-call flow when it has not be placed in the return flow. See the
 						message flow behavior.
-						<important>
-							<simpara>
-								Currently the reject actions are still listed, but these are scheduled to be deprecated.
-							</simpara>
-						</important>
-						<note>
-							<simpara>
-								The call and return flow is currently combined in the filter sets. But there are ideas
-								to create separate filter sets for the call and return flow to provide more fine grained
-								control.
-							</simpara>
-						</note>
+						<!--
+							<important> <simpara> Currently the reject actions are still listed, but these are scheduled to be deprecated.
+							</simpara> </important> <note> <simpara> The call and return flow is currently combined in the filter sets. But
+							there are ideas to create separate filter sets for the call and return flow to provide more fine grained control.
+							</simpara> </note>
+						-->
 					</para>
 				</listitem>
 			</varlistentry>
@@ -58,22 +53,20 @@
 					</para>
 				</listitem>
 			</varlistentry>
-			<varlistentry>
-				<term>Message substitution</term>
-				<listitem>
-					<important>
-						<simpara>
-							Message substitution used to be a part of the filter type behavior. This was mostly because
-							of lack of expression power in the filter element notation. Message substitution is not
-							directly performed by changing the target and selector variables in the assignment part.
-						</simpara>
-					</important>
-				</listitem>
-			</varlistentry>
+			<!--
+				<varlistentry> <term>Message substitution</term> <listitem> <important> <simpara> Message substitution used to be a
+				part of the filter type behavior. This was mostly because of lack of expression power in the filter element
+				notation. Message substitution is now directly performed by changing the target and selector variables in the
+				assignment part. </simpara> </important> </listitem> </varlistentry>
+			-->
 			<varlistentry>
 				<term>Resource operations</term>
 				<listitem>
 					<para>This defines what operations the filter type will perform and on what resources.</para>
+					<important>
+						<simpara>The resource operation model as used here is subject to change. This is due to the introduction of the
+							canonical filter notation.</simpara>
+					</important>
 				</listitem>
 			</varlistentry>
 		</variablelist>
@@ -85,8 +78,8 @@
 	<xi:include href="AfterFilter.xml" />
 	<xi:include href="MetaFilter.xml" />
 	<xi:include href="../Proposals/ExceptionFilter.xml" />
-	<xi:include href="../Proposals/WaitFilter.xml" />
-	<xi:include href="../Proposals/DeadlineFilter.xml" />
-	<xi:include href="../Proposals/MinTimeFilter.xml" />
-
+	<!--
+		<xi:include href="../Proposals/WaitFilter.xml" /> <xi:include href="../Proposals/DeadlineFilter.xml" /> <xi:include
+		href="../Proposals/MinTimeFilter.xml" />
+	-->
 </chapter>

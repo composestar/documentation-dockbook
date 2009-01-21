@@ -1,12 +1,94 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<section xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<section xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://docbook.org/ns/docbook ../../lib/docbook-5/xsd/docbook.xsd" xml:id="filtertypes.meta">
 
 	<title>Meta</title>
 
 	<para>
-		<emphasis>... TODO ...</emphasis>
+		The meta filter is a very powerful, but also dangerous, filter type. It provides the functionality to modify the
+		message in any way at runtime. The meta filter calls a user defined method with as argument the current message.
+		Static analysis of the filters is not possible when meta filters are used, this is because the behavior of the
+		meta
+		filter is unknown (unless code analysis is performed on the called method).
+		<warning>
+			<simpara>
+				Try to avoid using the meta filter. Try to do as much as possible with the other filter types. When the
+				standard
+				filter types do not offer the needed functionality, and when this functionality is needed at multiple
+				locations it
+				might be better to define a custom filter type. See ... for more information.
+				<remark role="todo">Add information for custom filter types</remark>
+			</simpara>
+		</warning>
 	</para>
+
+	<section>
+		<title>Behavior</title>
+
+		<variablelist>
+			<varlistentry>
+				<term>Filter activity</term>
+				<listitem>
+					<simpara>Accept-return</simpara>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term>Message flow</term>
+				<listitem>
+					<simpara>Unknown, continue by default</simpara>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term>Resource operations</term>
+				<listitem>
+					<simpara>...</simpara>
+				</listitem>
+			</varlistentry>
+		</variablelist>
+	</section>
+
+	<section xml:id="filtertypes.meta.arguments">
+		<title>Arguments</title>
+
+		<informaltable rules="all">
+			<tgroup cols="4">
+				<colspec align="center" colwidth="3*" />
+				<colspec align="center" colwidth="3*" />
+				<colspec align="center" colwidth="2*" />
+				<colspec align="justify" colwidth="9*" />
+				<thead>
+					<row>
+						<entry>Name</entry>
+						<entry>Type</entry>
+						<entry>Required</entry>
+						<entry>Description</entry>
+					</row>
+				</thead>
+				<tbody>
+					<row>
+						<entry>target</entry>
+						<entry>object</entry>
+						<entry morerows="3">at least one must be set</entry>
+						<entry morerows="2">
+							...
+						</entry>
+					</row>
+					<row>
+						<entry morerows="2">selector</entry>
+						<entry>literal</entry>
+					</row>
+					<row>
+						<entry>selector</entry>
+					</row>
+					<row>
+						<entry>method program element</entry>
+						<entry>
+							...
+						</entry>
+					</row>
+				</tbody>
+			</tgroup>
+		</informaltable>
+	</section>
 
 </section>

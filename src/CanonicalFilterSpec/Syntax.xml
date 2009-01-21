@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<section xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<section xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://docbook.org/ns/docbook ../../lib/docbook-5/xsd/docbook.xsd" xml:id="canonfilters.syntax">
 	<title>Syntax</title>
 
@@ -14,36 +13,35 @@
 
 	<example xml:id="canonfilters.syntax.template">
 		<title>Canonical Filter Definition Template</title>
-		<!-- <programlistingco>
-			<areaspec>
-			<area coords="1 47" xml:id="canonfilters.syntax.template.filter" />
-			<area coords="2 22" xml:id="canonfilters.syntax.template.expr" />
-			<area coords="4 14" xml:id="canonfilters.syntax.template.assignments" />
-			<area coords="7 5" xml:id="canonfilters.syntax.template.oper" />
-			<area coords="7 28" xml:id="canonfilters.syntax.template.noexpr" />
-			</areaspec>-->
+		<!--
+			<programlistingco> <areaspec> <area coords="1 47" xml:id="canonfilters.syntax.template.filter" /> <area coords="2 22"
+			xml:id="canonfilters.syntax.template.expr" /> <area coords="4 14" xml:id="canonfilters.syntax.template.assignments"
+			/> <area coords="7 5" xml:id="canonfilters.syntax.template.oper" /> <area coords="7 28"
+			xml:id="canonfilters.syntax.template.noexpr" /> </areaspec>
+		-->
 		<programlisting language="composestar" xml:space="preserve">FilterName : FilterType ( FilterArguments ) = <co
-				xml:id="canonfilters.syntax.template.filter" /> 
+			xml:id="canonfilters.syntax.template.filter" /> 
 	( MatchingExpression ) <co xml:id="canonfilters.syntax.template.expr" />
 	{
 		Assignment; <co xml:id="canonfilters.syntax.template.assignments" />
 		Assignment;
 	}
 	cor<co xml:id="canonfilters.syntax.template.oper" /> ( MatchingExpression )<co
-				xml:id="canonfilters.syntax.template.noexpr" />
+			xml:id="canonfilters.syntax.template.noexpr" />
 </programlisting>
 		<!-- </programlistingco> -->
 		<calloutlist>
 			<callout arearefs="canonfilters.syntax.template.filter">
 				<para>
-					The filter declaration for canonical filters is identical to the notation used for the classical
-					filters.
+					Declaration of a filter. It defines the filter types and optionally arguments to change the default behavior
+					of the filter type.
 				</para>
 			</callout>
 			<callout arearefs="canonfilters.syntax.template.expr">
 				<para>
 					The expression that needs to evaluate to true for the message to be accepted by the current filter
-					definition. The syntax for these expressions will be explained in
+					definition. The
+					syntax for these expressions will be explained in
 					<xref xlink:href="#canonfilters.syntax.matchexpr" />
 					.
 				</para>
@@ -58,7 +56,8 @@
 			<callout arearefs="canonfilters.syntax.template.oper">
 				<para>
 					The operators that links multiple filter elements in a filter definition. Currently there is only a
-					single operator defined, namely the conditional
+					single operator
+					defined, namely the conditional
 					<emphasis>or</emphasis>
 					operator:
 					<function>cor</function>
@@ -68,7 +67,8 @@
 			<callout arearefs="canonfilters.syntax.template.noexpr">
 				<para>
 					The assignment part is optional. When no assignments are needed this part can simply be omitted. An
-					empty assignment part is also allowed:
+					empty assignment
+					part is also allowed:
 					<code language="composestar">( MatchingExpression ) {}</code>
 					.
 				</para>
@@ -235,8 +235,7 @@
 		<title>Matching Expressions</title>
 		<para>
 			A matching expression is an expression that evaluates to a boolean value. A matching expression defines if a
-			message is accepted for the current filter. Only when the message is accepted the filter type will be
-			executed.
+			message is accepted by the current filter. Only when the message is accepted the assignment part of the filter element will be processed.
 		</para>
 		<para>
 			The expression is a combination of condition references and compare statements combined with boolean
@@ -257,7 +256,7 @@
 			.
 		</para>
 		<para>
-			Condition references are the identifiers of the conditions defined in the current filter modules. Besides
+			Condition references are the identifiers of the conditions defined in the current filter module. Besides
 			condition references there are also the constants
 			<constant>true</constant>
 			and
