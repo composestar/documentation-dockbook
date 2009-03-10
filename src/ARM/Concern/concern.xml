@@ -97,7 +97,7 @@ ConcernBlock = '{' {FilterModule} [SuperImposition] [Implementation] '}';
 		</itemizedlist>
 	</section>
 
-	<xi:include href="concern-comments.xml" />
+	<!-- <xi:include href="concern-comments.xml" />  -->
 
 	<section>
 		<title>Further Reading</title>

@@ -4,7 +4,8 @@
 	xsi:schemaLocation="http://docbook.org/ns/docbook ../lib/docbook-5/xsd/docbook.xsd" status="draft">
 	<title>Annotated Reference Manual</title>
 
-	<xi:include href="ARM/concern.xml" />
+	<xi:include href="ARM/Concern/concern.xml" />
+	<xi:include href="ARM/FilterModule/filtermodule.xml" />
 
 	<xi:include href="bib/ARM.bib.xml" />
 </book>

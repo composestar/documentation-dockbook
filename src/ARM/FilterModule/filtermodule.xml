@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:xi="http://www.w3.org/2001/XInclude" xsi:schemaLocation="http://docbook.org/ns/docbook ../../lib/docbook-5/xsd/docbook.xsd"
+	xml:id="filtermodule">
+	<title>Filter Module</title>
+	<para>
+		The filter module is a reusable entity that holds two sets of filters: the input filters and the output filters.
+		These filters can use objects and conditions, which are also defined in the filter module. A filter module is
+		superimposed on an object and the filter module can extend the signature and the behavior of the object on which it is
+		superimposed.
+	</para>
+
+	<section xml:id="filtermodule.syntax">
+		<title>Syntax</title>
+		<figure xml:id="filtermodule.grammar">
+			<title>Filter Module syntax</title>
+			<programlisting language="EBNF"><![CDATA[FilterModule = 'filtermodule' Identifier [FilterModuleParameters] '{' [Internals] [Externals] [Conditions] [InputFilters] [OutputFilters] '}';]]></programlisting>
+			<remark role="todo">This needs to be converted to a productionset</remark>
+		</figure>
+		<para>
+			A filter module has a unique identifier in a concern; the uniqueness is defined over the name and not the name in
+			combination with the parameters.
+			The ordering of the blocks of a filter module is fixed, thus it is only possible to
+			use them in the ordering as shown in
+			the syntax of
+			<xref xlink:href="#filtermodule.grammar" />
+			.
+			The filter module template is demonstrated in the template in
+			<xref xlink:href="#filtermodule.template" />
+			All the blocks are optional, making it possible to write a completely empty filter module.
+		</para>
+		<example xml:id="filtermodule.template">
+			<title>Filter Module Template</title>
+			<programlisting language="composestar"><![CDATA[filtermodule ( ... ) {
+  internals
+    ...
+  externals
+    ...
+  conditions
+    ...
+  inputfilters
+    ...
+  outputfilters
+    ...
+}]]></programlisting>
+		</example>
+	</section>
+
+	<section xml:id="filtermodule.semantics">
+		<title>Semantics</title>
+		<mediaobject xml:id="filtermodule.schema">
+			<imageobject>
+				<imagedata fileref="images/ARM-filtermodule.svg" format="SVG" />
+			</imageobject>
+			<imageobject>
+				<imagedata fileref="images/ARM-filtermodule.pdf" format="PDF" />
+			</imageobject>
+			<caption>
+				<formalpara>
+					<title>x</title>
+					Schematic representation of a filter module
+				</formalpara>
+			</caption>
+		</mediaobject>
+		<para>
+			A filter module is an entity that holds filter sets which are composed together.
+			The objects and the conditions that
+			are used in the filters are also declared in the filter module.
+			<xref xlink:href="#filtermodule.schema" />
+			demonstrates how a
+			filter module can be visualized in a schema.
+			The schema shows a filter module superimposed to an
+			object, this object
+			is called the
+			<emph>inner</emph>
+			object.
+			Any message that is sent to the object goes through the input filters and any message that is sent goes
+			through the
+			output filters.
+			Both filter sets can use internals, externals, and conditions.
+			These elements are declared
+			in the internals, externals, and conditions blocks.
+		</para>
+	</section>
+
+</chapter>
