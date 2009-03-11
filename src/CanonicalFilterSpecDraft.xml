@@ -22,13 +22,14 @@
 			processed and is included in this document. The first section (
 			<xref xlink:href="#canonfilters" />
 			) should be complete and sound, anything that is missing or ambiguous should be considered a bug (please
-			report this). The other sections (
+			report this). <!-- The other sections (
 			<xref xlink:href="#filtertypes" />
 			,
 			<xref xlink:href="#filtercomp" />
 			) should not be considered waterproof, they are included in this document for support or as future
-			improvement proposals.
+			improvement proposals. -->
 		</para>
+		<!--
 		<para>
 			Note
 			<xref xlink:href="#filtertypes.mintime.example1" />
@@ -52,9 +53,10 @@ Write programs to handle text streams, because that is a universal interface.</l
 			<xref xlink:href="#filtercomp" />
 			proposes some changes to the way these compositions are made.
 		</para>
+		-->
 	</dedication>
 
 	<xi:include href="CanonicalFilterSpec/CanonicalFilters.xml" />
 	<xi:include href="FilterTypes/FilterTypes.xml" />
-	<xi:include href="Proposals/FilterComposition.xml" />
+	<!--<xi:include href="Proposals/FilterComposition.xml" />-->
 </book>
